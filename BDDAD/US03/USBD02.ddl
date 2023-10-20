@@ -76,7 +76,7 @@ CREATE TABLE Plantation(
     "Agricultural_ParcelparcelID" number(20) NOT NULL,
     CropcropID                    number(20) NOT NULL,
     PRIMARY KEY (plantationID),
-    FOREIGN KEY ("Agricultural_ParcelparcelID") REFERENCES "Agricultural Parcel" (parcelID),
+    FOREIGN KEY ("Agricultural_ParcelparcelID") REFERENCES "AgriculturalParcel" (parcelID),
     FOREIGN KEY (CropcropID) REFERENCES Crop (cropID)
 );
 
@@ -120,7 +120,7 @@ CREATE TABLE Classification
     classificationName          varchar2(40),
     "Production_FactorfactorID" number(20) NOT NULL,
     PRIMARY KEY (classificationID),
-    FOREIGN KEY ("Production_FactorfactorID") REFERENCES "Production Factor" (factorID)
+    FOREIGN KEY ("Production_FactorfactorID") REFERENCES "ProductionFactor" (factorID)
 );
 
 CREATE TABLE "FormulationType"
@@ -129,7 +129,7 @@ CREATE TABLE "FormulationType"
     formulationTypeName         varchar2(40),
     "Production_FactorfactorID" number(20) NOT NULL,
     PRIMARY KEY (formulationTypeID),
-    FOREIGN KEY ("Production_FactorfactorID") REFERENCES "Production Factor" (factorID)
+    FOREIGN KEY ("Production_FactorfactorID") REFERENCES "ProductionFactor" (factorID)
 );
 
 CREATE TABLE "BuildingType"
@@ -155,10 +155,8 @@ CREATE TABLE Datasheet
     compositionID               number(20) GENERATED AS IDENTITY,
     "Production_FactorfactorID" number(20) NOT NULL,
     PRIMARY KEY (compositionID),
-    FOREIGN KEY ("Production_FactorfactorID") REFERENCES "Production Factor" (factorID)
+    FOREIGN KEY ("Production_FactorfactorID") REFERENCES "ProductionFactor" (factorID)
 );
-
--- Continue with the remaining CREATE TABLE statements
 
 CREATE TABLE Element
 (
