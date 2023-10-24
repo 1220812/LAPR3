@@ -14,12 +14,14 @@ DROP TABLE Datasheet_Substance CASCADE CONSTRAINTS;
 DROP TABLE Element CASCADE CONSTRAINTS;
 DROP TABLE FormulationType CASCADE CONSTRAINTS;
 DROP TABLE Harvest CASCADE CONSTRAINTS;
+DROP TABLE Manufacturer CASCADE CONSTRAINTS;
 DROP TABLE Plantation CASCADE CONSTRAINTS;
 DROP TABLE Prediction CASCADE CONSTRAINTS;
 DROP TABLE Product CASCADE CONSTRAINTS;
 DROP TABLE ProductionFactor CASCADE CONSTRAINTS;
 DROP TABLE ProductionFactor_Product CASCADE CONSTRAINTS;
 DROP TABLE Substance CASCADE CONSTRAINTS;
+DROP TABLE UnityOfMeasurement CASCADE CONSTRAINTS;
 
 
 CREATE TABLE AgriculturalParcel (
@@ -35,36 +37,31 @@ CREATE TABLE Analysis (
                           PRIMARY KEY (analysisID));
 CREATE TABLE Building (
                           buildingID                    number(20) GENERATED AS IDENTITY,
-                          "Building TypebuildingTypeID" number(20) NOT NULL,
+                          designation                   varchar2(40),
+                          area                          number(20) NOT NULL,
                           PRIMARY KEY (buildingID));
+
 CREATE TABLE BuildingType (
                               buildingTypeID     number(20) GENERATED AS IDENTITY,
                               typeName           varchar2(40),
-                              BuildingbuildingID number(20) NOT NULL,
                               PRIMARY KEY (buildingTypeID));
+
 CREATE TABLE Classification (
                                 classificationID            number(20) GENERATED AS IDENTITY,
                                 classificationName          varchar2(40),
-                                "Production FactorfactorID" number(20) NOT NULL,
                                 PRIMARY KEY (classificationID));
 CREATE TABLE Crop (
                       cropID                        number(20) GENERATED AS IDENTITY,
-                      "Crop NamecropNameID"         number(20) NOT NULL,
-                      "Crop TypeCropTypeID"         number(20) NOT NULL,
-                      "Crop CyclecycleID"           number(20) NOT NULL,
-                      "Crop ObjectiveobjectiveID"   number(20) NOT NULL,
-                      "Agricultural ParcelparcelID" number(20) NOT NULL,
+                      quantity                      number(20),
                       PRIMARY KEY (cropID));
 CREATE TABLE CropCycle (
                            cycleID    number(20) GENERATED AS IDENTITY,
                            startDate  date,
                            endDate    date,
-                           CropcropID number(20) NOT NULL,
                            PRIMARY KEY (cycleID));
 CREATE TABLE CropName (
                           cropNameID number(20) NOT NULL,
                           cropName   varchar2(40),
-                          CropcropID number(20) NOT NULL,
                           PRIMARY KEY (cropNameID));
 CREATE TABLE CropObjective (
                                objectiveID   number(20) GENERATED AS IDENTITY,
@@ -99,8 +96,6 @@ CREATE TABLE Element (
 CREATE TABLE FormulationType (
                                  formulationTypeID           number(20) GENERATED AS IDENTITY,
                                  formulationTypeName         varchar2(40),
-                                 "Production FactorfactorID" number(20) NOT NULL,
-                                 ProductproductID            number(20) NOT NULL,
                                  PRIMARY KEY (formulationTypeID));
 CREATE TABLE Harvest (
                          harvestID              number(20) GENERATED AS IDENTITY,
@@ -108,6 +103,13 @@ CREATE TABLE Harvest (
                          quantity               number(10),
                          PlantationplantationID number(20) NOT NULL,
                          PRIMARY KEY (harvestID));
+
+CREATE TABLE Manufacturer(
+                        manufacturerID          number(10) GENERATED AS IDENTITY,
+                        name                    varchar2(40),
+                        PRIMARY KEY (manufacturerID)
+);
+
 CREATE TABLE Plantation (
                             plantationID                  number(20) GENERATED AS IDENTITY,
                             plantationDate                date,
@@ -143,3 +145,13 @@ CREATE TABLE Substance (
                            substanceName varchar2(40),
                            quantity      number(10),
                            PRIMARY KEY (substanceID));
+
+CREATE TABLE UnityOfMeasurement (
+                                    unityID number(10) GENERATED AS IDENTITY,
+                                    name varchar2(10),
+                                    PRIMARY KEY (unityID);
+);
+
+
+ALTER TABLE Building ADD CONSTRAINT buildingTypeID FOREIGN KEY (buildingTypeID) REFERENCES BuildingType(buildingTypeID);
+ALTER TABLE Building ADD CONSTRAINT unityID FOREIGN KEY (unityID) REFERENCES UnityOfMeasurement(unityID);
