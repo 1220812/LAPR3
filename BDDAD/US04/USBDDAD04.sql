@@ -30,10 +30,18 @@ INSERT INTO UnityOfMeasurement(unityID, name)
 VALUES(01, 'm2');
 INSERT INTO UnityOfMeasurement(unityID, name)
 VALUES(02, 'm3');
+INSERT INTO UnityOfMeasurement(unityID, name)
+VALUES(03, 'ha');
+INSERT INTO UnityOfMeasurement(unityID, name)
+VALUES(04, 'un');
+INSERT INTO UnityOfMeasurement(unityID, name)
+VALUES(05, 'kg');
+INSERT INTO UnityOfMeasurement(unityID, name)
+VALUES(06, '%');
 
 -- **Table Building**
 
-INSERT INTO Building(buildingID, designation, area, buildingTypeID, unityID)
+INSERT INTO Building(buildingID, designation, area, buildingTypeID, unityID, farmID)
 VALUES(201, 'Espigueiro', 600, 200, 01);
 INSERT INTO Building(buildingID, designation, area, buildingTypeID, unityID)
 VALUES(202, 'Armazém novo', 800, 200, 01);
@@ -55,6 +63,10 @@ VALUES(03, 'K+S');
 INSERT INTO Manufacturer(manufacturerID, name)
 VALUES(04, 'Biocal');
 
+-- **Table Farm**
+INSERT INTO Farm(farmID, name, area, unityID)
+VALUES(01, 'Quinta da Malafaia', 200, 03);
+
 -- **Table FormulationType**
 
 INSERT INTO FormulationType(formulationTypeID, formulationTypeName)
@@ -74,4 +86,69 @@ INSERT INTO Classification(classificationID, classificationName)
 VALUES(03, 'Corretor');
 
 -- **Table ApplicationType**
+
+-- **Table UserType**
+INSERT INTO UserType(userID, userTypeName)
+VALUES (01, 'Gestor Agrícola');
+INSERT INTO UserType(userID, userTypeName)
+VALUES (02, 'Cliente');
+INSERT INTO UserType(userID, userTypeName)
+VALUES (03, 'Condutor');
+INSERT INTO UserType(userID, userTypeName)
+VALUES (04, 'Gestor de Distribuição');
+
+-- **Table OperationType**
+INSERT INTO OperationType(operationTypeID, operationTypeName)
+VALUES (01, 'Plantação');
+INSERT INTO OperationType(operationTypeID, operationTypeName)
+VALUES (02, 'Rega');
+INSERT INTO OperationType(operationTypeID, operationTypeName)
+VALUES (03, 'Poda');
+INSERT INTO OperationType(operationTypeID, operationTypeName)
+VALUES (04, 'Fertelização');
+INSERT INTO OperationType(operationTypeID, operationTypeName)
+VALUES (05, 'Colheita');
+INSERT INTO OperationType(operationTypeID, operationTypeName)
+VALUES (06, 'Sementeira');
+INSERT INTO OperationType(operationTypeID, operationTypeName)
+VALUES (07, 'Incorporação no solo');
+
+-- **Table Operation**
+
+
+
+-- **Table Crop**
+
+-- **Table Species
+INSERT INTO Species(speciesID, spiecesName, commonName, plantationPeriod, pruningPeriod, floweringPeriod, harvestPeriod)
+VALUES (01, 'Prunus domestica', 'Ameixoeira', '', 'novembro a dezembro', 'fevereiro a março', 'julho a agosto');
+INSERT INTO Species(speciesID, spiecesName, commonName, plantationPeriod, pruningPeriod, floweringPeriod, harvestPeriod)
+VALUES (02, 'Prunus armeniaca', 'Damasqueiro', '', 'novembro a dezembro', 'fevereiro a março', 'julho a agosto');
+INSERT INTO Species(speciesID, spiecesName, commonName, plantationPeriod, pruningPeriod, floweringPeriod, harvestPeriod)
+VALUES (03, 'Malus domestica', 'Macieira', '', 'novembro a dezembro', 'março a abril', 'agosto a setembro');
+INSERT INTO Species(speciesID, spiecesName, commonName, plantationPeriod, pruningPeriod, floweringPeriod, harvestPeriod)
+VALUES (04, 'Malus domestica', 'Macieira', '', 'janeiro', 'abril a maio', 'novembro a dezembro');
+INSERT INTO Species(speciesID, spiecesName, commonName, plantationPeriod, pruningPeriod, floweringPeriod, harvestPeriod)
+VALUES (05, 'Pyrus pyrifolia', 'Pera Nashi', '', '', '', '');
+INSERT INTO Species(speciesID, spiecesName, commonName, plantationPeriod, pruningPeriod, floweringPeriod, harvestPeriod)
+VALUES (06, 'Daucus carota subsp. Sativus', 'Cenoura', '', '', '', '80 dias');
+INSERT INTO Species(speciesID, spiecesName, commonName, plantationPeriod, pruningPeriod, floweringPeriod, harvestPeriod)
+VALUES (07, 'Lupinus albus', 'Tremoço', '', '', '', '');
+INSERT INTO Species(speciesID, spiecesName, commonName, plantationPeriod, pruningPeriod, floweringPeriod, harvestPeriod)
+VALUES (08, 'Zea mays', 'Milho', 'Abril a junho', '', '', 'julho a setembro');
+INSERT INTO Species(speciesID, spiecesName, commonName, plantationPeriod, pruningPeriod, floweringPeriod, harvestPeriod)
+VALUES (09, 'Brassica rapa', 'Nabo greleiro', 'março a setembro', '', '', 'julho a fevereiro');
+INSERT INTO Species(speciesID, spiecesName, commonName, plantationPeriod, pruningPeriod, floweringPeriod, harvestPeriod)
+VALUES (09, 'Olea europaea', 'Oliveira', '', '', '', 'outubro a fevereiro');
+INSERT INTO Species(speciesID, spiecesName, commonName, plantationPeriod, pruningPeriod, floweringPeriod, harvestPeriod)
+VALUES (10, 'Brassica rapa L.', 'Nabo', 'fevereiro a abril, agosto a outubro', '', '', '90 dias');
+
+-- **Table CropType**
+INSERT INTO CropType(cropTypeID, typeName)
+VALUES(01, 'Permanente');
+INSERT INTO CropType(cropTypeID, typeName)
+VALUES(02, 'Temporário');
+
+
+
 
