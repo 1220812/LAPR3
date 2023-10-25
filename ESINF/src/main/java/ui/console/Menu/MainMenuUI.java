@@ -12,7 +12,7 @@ public class MainMenuUI implements Runnable {
     }
 
     public void run() {
-        List<MenuItem> options = new ArrayList<MenuItem>();
+        List<MenuItem> options = new ArrayList<>();
         options.add(new MenuItem("Do Login", new AuthenticationUI()));
 
         int option = 0;
