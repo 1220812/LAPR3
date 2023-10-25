@@ -63,10 +63,6 @@ VALUES(03, 'K+S');
 INSERT INTO Manufacturer(manufacturerID, name)
 VALUES(04, 'Biocal');
 
--- **Table Farm**
-INSERT INTO Farm(farmID, name, area, unityID)
-VALUES(01, 'Quinta da Malafaia', 200, 03);
-
 -- **Table FormulationType**
 
 INSERT INTO FormulationType(formulationTypeID, formulationTypeName)
@@ -86,16 +82,6 @@ INSERT INTO Classification(classificationID, classificationName)
 VALUES(03, 'Corretor');
 
 -- **Table ApplicationType**
-
--- **Table UserType**
-INSERT INTO UserType(userID, userTypeName)
-VALUES (01, 'Gestor Agrícola');
-INSERT INTO UserType(userID, userTypeName)
-VALUES (02, 'Cliente');
-INSERT INTO UserType(userID, userTypeName)
-VALUES (03, 'Condutor');
-INSERT INTO UserType(userID, userTypeName)
-VALUES (04, 'Gestor de Distribuição');
 
 -- **Table OperationType**
 INSERT INTO OperationType(operationTypeID, operationTypeName)
@@ -148,6 +134,8 @@ INSERT INTO CropType(cropTypeID, typeName)
 VALUES(01, 'Permanente');
 INSERT INTO CropType(cropTypeID, typeName)
 VALUES(02, 'Temporário');
+
+-- **Table Crop**
 
 
 
