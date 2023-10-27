@@ -1,4 +1,4 @@
-package ui.console.menu;
+package menu;
 
 
 import java.util.Objects;

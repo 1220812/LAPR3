@@ -1,4 +1,4 @@
-package ui.utils;
+package ui;
 
 import data.ResultEntry;
 import readers.ReadInstructionsFromFile;

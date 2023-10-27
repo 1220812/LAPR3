@@ -1,7 +1,7 @@
-package ui.console.menu;
+package menu;
 
-import ui.console.Utils;
-import ui.utils.IrrigationUI;
+import console.Utils;
+import ui.IrrigationUI;
 
 import java.util.ArrayList;
 import java.util.List;

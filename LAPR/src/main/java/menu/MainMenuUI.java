@@ -1,7 +1,7 @@
-package ui.console.menu;
+package menu;
 
 
-import ui.console.Utils;
+import console.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

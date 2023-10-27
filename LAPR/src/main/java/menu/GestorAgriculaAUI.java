@@ -1,4 +1,4 @@
-package ui.console.menu;
+package menu;
 
 public class GestorAgriculaAUI implements Runnable {
     @Override
