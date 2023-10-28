@@ -1,5 +1,5 @@
 package ui;
-import menu.MainMenuUI;
+import ui.console.menu.MainMenuUI;
 
 /**
  * The type Main.

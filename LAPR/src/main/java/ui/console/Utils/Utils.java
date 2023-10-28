@@ -1,4 +1,4 @@
-package console;
+package ui.console.Utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -10,14 +10,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The type Utils.
+ * The type ui.console.Utils.Utils.
  *
  * @author Paulo Maio pam@isep.ipp.pt
  */
 public class Utils {
 
     /**
-     * Read line from console string.
+     * Read line from ui.console string.
      *
      * @param prompt the prompt
      * @return the string
@@ -37,7 +37,7 @@ public class Utils {
     }
 
     /**
-     * Read integer from console int.
+     * Read integer from ui.console int.
      *
      * @param prompt the prompt
      * @return the int
@@ -57,7 +57,7 @@ public class Utils {
     }
 
     /**
-     * Read double from console double.
+     * Read double from ui.console double.
      *
      * @param prompt the prompt
      * @return the double
@@ -72,14 +72,14 @@ public class Utils {
 
                 return value;
             } catch (NumberFormatException ex) {
-                //Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(ui.console.Utils.Utils.class.getName()).log(Level.SEVERE, null, ex);
                 throw ex;
             }
         } while (true);
     }
 
     /**
-     * Read date from console date.
+     * Read date from ui.console date.
      *
      * @param prompt the prompt
      * @return the date
@@ -140,7 +140,7 @@ public class Utils {
     }
 
     /**
-     * Show and select main menu index int.
+     * Show and select main ui.console.menu index int.
      *
      * @param list   the list
      * @param header the header
@@ -171,7 +171,7 @@ public class Utils {
     }
 
     /**
-     * Show main menu list.
+     * Show main ui.console.menu list.
      *
      * @param list   the list
      * @param header the header
