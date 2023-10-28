@@ -30,7 +30,7 @@ CREATE TABLE AgriculturalParcel (
                                     UnityOfMeasurementunityID number(10) NOT NULL,
                                     PRIMARY KEY (parcelID));
 CREATE TABLE ApplicationType (
-                                 applicationID number(10),
+                                 applicationID number(10) ,
                                  name          varchar2(40),
                                  PRIMARY KEY (applicationID));
 CREATE TABLE ApplicationType_Product (
@@ -55,7 +55,7 @@ CREATE TABLE Classification (
                                 PRIMARY KEY (classificationID));
 CREATE TABLE Component (
                            componentID   number(10),
-                           componentName varchar2(10),
+                           componentName varchar2(50),
                            PRIMARY KEY (componentID));
 CREATE TABLE Component_Datasheet (
                                      ComponentcomponentID      number(10) NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE Manufacturer (
                               PRIMARY KEY (manufacturerID));
 CREATE TABLE Operation (
                            operationID                  number(10),
-                           "date"                       varchar2(40),
+                           "date"                       date,
                            quantity                     number(10),
                            UnityOfMeasurementunityID    number(10) NOT NULL,
                            OperationTypeoperationTypeID number(10) NOT NULL,
@@ -100,8 +100,8 @@ CREATE TABLE OperationType (
                                PRIMARY KEY (operationTypeID));
 CREATE TABLE Plantation (
                             cycleID                    number(10),
-                            startDate                  varchar2(40),
-                            endDate                    varchar2(40),
+                            startDate                  date,
+                            endDate                    date,
                             quantity                   number(10),
                             AgriculturalParcelparcelID number(20) NOT NULL,
                             UnityOfMeasurementunityID  number(10) NOT NULL,
