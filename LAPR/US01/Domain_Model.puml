@@ -1,0 +1,139 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam line type polyline
+
+title Domain Model
+hide circle
+hide methods
+
+class AgriculturalParcel {
+parcelID
+parcelDesignation
+area
+}
+
+class Plantation {
+cycleID
+startDate
+endDate
+quantity
+}
+
+class Operation {
+operationID
+date
+quantity
+}
+
+class OperationType {
+operationTypeID
+operationTypeName
+}
+
+class BuildingType {
+buildingTypeID
+typeName
+}
+
+class Building {
+buildingID
+designation
+area
+}
+
+class UnityOfMeasurement {
+unityID
+name
+}
+
+class Crop {
+cropID
+variety
+}
+
+class Species {
+speciesID
+speciesName
+commonName
+plantationPeriod
+pruningPeriod
+floweringPeriod
+harvestPeriod
+}
+
+class CropType {
+cropTypeID
+typeName
+}
+
+class Manufacturer {
+manufacturerID
+name
+}
+
+class FormulationType {
+formulationTypeID
+formulationTypeName
+}
+
+class Classification {
+classificationID
+classificationName
+}
+
+class ApplicationType {
+applicationID
+name
+}
+
+class Product {
+productID
+commercialName
+}
+
+class Datasheet{
+compositionID
+}
+
+class Component{
+componentID
+componentName
+}
+
+class Component_Datasheet{
+quantity
+}
+
+AgriculturalParcel "*" -- "1" UnityOfMeasurement: has an >
+AgriculturalParcel "1" -- "*" Plantation: has >
+
+Plantation "*" -- "1" UnityOfMeasurement: has an >
+Plantation "1" --- "*" Operation: has >
+Plantation "*" -- "1" Crop: is in <
+Plantation "*" -- "*" Product: are applied in <
+
+Operation "*" -- "1" OperationType: has an >
+Operation "*" -- "1" UnityOfMeasurement: has an >
+
+Building "*" -- "1" BuildingType: has a >
+Building "*" -- "1" UnityOfMeasurement: has an >
+
+Crop "*" -- "1" Species : has a >
+Crop "*" -- "1" CropType: has a >
+
+Product "*" -- "1" Manufacturer : has a >
+Product "*" -- "1" FormulationType : has a >
+Product "*" -- "1" Classification : has a >
+Product "*" -- "*" ApplicationType : has >
+Product "1" -- "1" Datasheet : has a >
+
+Datasheet "1" -- "*" Component_Datasheet
+
+Component "1" -- "*" Component_Datasheet
+
+Component_Datasheet "*" -- "1" UnityOfMeasurement : has an >
+
+
+@enduml
