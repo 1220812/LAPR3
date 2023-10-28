@@ -88,7 +88,7 @@ CREATE TABLE Manufacturer (
                               PRIMARY KEY (manufacturerID));
 CREATE TABLE Operation (
                            operationID                  number(10),
-                           "date"                       date,
+                           date                       date,
                            quantity                     number(10),
                            UnityOfMeasurementunityID    number(10) NOT NULL,
                            OperationTypeoperationTypeID number(10) NOT NULL,
