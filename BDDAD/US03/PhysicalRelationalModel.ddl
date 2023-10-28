@@ -17,7 +17,7 @@ DROP TABLE Operation CASCADE CONSTRAINTS;
 DROP TABLE OperationType CASCADE CONSTRAINTS;
 DROP TABLE Plantation CASCADE CONSTRAINTS;
 DROP TABLE Product CASCADE CONSTRAINTS;
-DROP TABLE Product_Plantation CASCADE CONSTRAINTS;
+DROP TABLE Product_Operation CASCADE CONSTRAINTS;
 DROP TABLE Species CASCADE CONSTRAINTS;
 DROP TABLE UnityOfMeasurement CASCADE CONSTRAINTS;
 
@@ -30,7 +30,7 @@ CREATE TABLE AgriculturalParcel (
                                     UnityOfMeasurementunityID number(10) NOT NULL,
                                     PRIMARY KEY (parcelID));
 CREATE TABLE ApplicationType (
-                                 applicationID number(10) ,
+                                 applicationID number(10),
                                  name          varchar2(40),
                                  PRIMARY KEY (applicationID));
 CREATE TABLE ApplicationType_Product (
@@ -88,7 +88,7 @@ CREATE TABLE Manufacturer (
                               PRIMARY KEY (manufacturerID));
 CREATE TABLE Operation (
                            operationID                  number(10),
-                           "date"                         date,
+                           "date"                       date,
                            quantity                     number(10),
                            UnityOfMeasurementunityID    number(10) NOT NULL,
                            OperationTypeoperationTypeID number(10) NOT NULL,
@@ -114,11 +114,11 @@ CREATE TABLE Product (
                          FormulationTypeformulationTypeID number(20) NOT NULL,
                          ManufacturermanufacturerID       number(10) NOT NULL,
                          PRIMARY KEY (productID));
-CREATE TABLE Product_Plantation (
-                                    ProductproductID  number(20) NOT NULL,
-                                    PlantationcycleID number(10) NOT NULL,
-                                    PRIMARY KEY (ProductproductID,
-                                                 PlantationcycleID));
+CREATE TABLE Product_Operation (
+                                   ProductproductID     number(20) NOT NULL,
+                                   OperationoperationID number(10) NOT NULL,
+                                   PRIMARY KEY (ProductproductID,
+                                                OperationoperationID));
 CREATE TABLE Species (
                          speciesID        number(10),
                          speciesName      varchar2(40),
@@ -133,10 +133,10 @@ CREATE TABLE UnityOfMeasurement (
                                     name    varchar2(10) NOT NULL,
                                     PRIMARY KEY (unityID));
 
--- **Alter Tables**
+-- **Alter tables**
 
-ALTER TABLE Product_Plantation ADD CONSTRAINT FKProduct_Pl524542 FOREIGN KEY (PlantationcycleID) REFERENCES Plantation (cycleID);
-ALTER TABLE Product_Plantation ADD CONSTRAINT FKProduct_Pl432922 FOREIGN KEY (ProductproductID) REFERENCES Product (productID);
+ALTER TABLE Product_Operation ADD CONSTRAINT FKProduct_Op134936 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
+ALTER TABLE Product_Operation ADD CONSTRAINT FKProduct_Op476540 FOREIGN KEY (ProductproductID) REFERENCES Product (productID);
 ALTER TABLE Component_Datasheet ADD CONSTRAINT FKComponent_773772 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID);
 ALTER TABLE Plantation ADD CONSTRAINT FKPlantation239203 FOREIGN KEY (CropcropID) REFERENCES Crop (cropID);
 ALTER TABLE ApplicationType_Product ADD CONSTRAINT FKApplicatio15336 FOREIGN KEY (ProductproductID) REFERENCES Product (productID);
