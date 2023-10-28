@@ -1,6 +1,6 @@
-package ui;
+package ui.console;
 
-import data.ResultEntry;
+import domain.ResultEntry;
 import readers.ReadInstructionsFromFile;
 
 import java.io.File;

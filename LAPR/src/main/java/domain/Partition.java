@@ -1,4 +1,4 @@
-package data;
+package domain;
 
 public class Partition {
     private String designation;

@@ -1,8 +1,8 @@
 package readers;
 
-import data.Partition;
-import data.ResultEntry;
-import data.SprinklingSystem;
+import domain.Partition;
+import domain.ResultEntry;
+import domain.SprinklingSystem;
 
 import java.io.IOException;
 import java.util.ArrayList;
