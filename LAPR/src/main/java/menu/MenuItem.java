@@ -3,9 +3,7 @@ package menu;
 
 import java.util.Objects;
 
-/**
- * @author Paulo Maio pam@isep.ipp.pt
- */
+
 
 public class MenuItem {
     private final String description;
