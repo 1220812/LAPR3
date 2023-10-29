@@ -1,5 +1,7 @@
 SELECT
+    AP.ParcelID AS "ID Parcela",
     AP.parcelDesignation AS "Parcela",
+    P.comercialName AS "Nome do Produto",
     FT.formulationTypeName AS "Tipo de Fator",
     COUNT(DISTINCT P.productID) AS "Número de Fatores de Produção Aplicados"
 FROM
@@ -12,4 +14,4 @@ FROM
 WHERE
         OP."date" >= TO_DATE('06-10-2016','DD-MM-YYYY') AND OP."date" <= TO_DATE('29-10-2023','DD-MM-YYYY')
 GROUP BY
-    AP.parcelDesignation, FT.formulationTypeName;
+    AP.ParcelID, AP.parcelDesignation, P.comercialName, FT.formulationTypeName;
