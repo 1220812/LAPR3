@@ -94,11 +94,11 @@ CREATE TABLE Product (
                          FormulationTypeformulationTypeID number(20) NOT NULL,
                          ManufacturermanufacturerID       number(10) NOT NULL,
                          PRIMARY KEY (productID));
-CREATE TABLE Product_Plantation (
+CREATE TABLE Product_Operation(
                                     ProductproductID  number(20) NOT NULL,
-                                    PlantationcycleID number(10) NOT NULL,
+                                    OperationoperationID number(10) NOT NULL,
                                     PRIMARY KEY (ProductproductID,
-                                                 PlantationcycleID));
+                                                 OperationoperationID));
 CREATE TABLE Species (
                          speciesID        number(10) UNIQUE,
                          speciesName      varchar2(40) NOT NULL,
@@ -117,8 +117,8 @@ CREATE TABLE UnityOfMeasurement (
 
 -- The 'ON DELETE RESTRICT' constraint restrict the exclusion of the elements defined on the tables with foreign keys associated to them
 
-ALTER TABLE Product_Plantation ADD CONSTRAINT FKProduct_Pl524542 FOREIGN KEY (PlantationcycleID) REFERENCES Plantation (cycleID)ON DELETE RESTRICT ;
-ALTER TABLE Product_Plantation ADD CONSTRAINT FKProduct_Pl432922 FOREIGN KEY (ProductproductID) REFERENCES Product (productID)ON DELETE RESTRICT ;
+ALTER TABLE Product_Operation ADD CONSTRAINT FKProduct_Op134936 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID)ON DELETE RESTRICT;
+ALTER TABLE Product_Operation ADD CONSTRAINT FKProduct_Op476540 FOREIGN KEY (ProductproductID) REFERENCES Product (productID)ON DELETE RESTRICT;
 ALTER TABLE Component_Datasheet ADD CONSTRAINT FKComponent_773772 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID)ON DELETE RESTRICT ;
 ALTER TABLE Plantation ADD CONSTRAINT FKPlantation239203 FOREIGN KEY (CropcropID) REFERENCES Crop (cropID) ON DELETE RESTRICT ;
 ALTER TABLE ApplicationType_Product ADD CONSTRAINT FKApplicatio15336 FOREIGN KEY (ProductproductID) REFERENCES Product (productID);

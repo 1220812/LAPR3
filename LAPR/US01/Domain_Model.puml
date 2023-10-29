@@ -112,7 +112,6 @@ AgriculturalParcel "1" -- "*" Plantation: has >
 Plantation "*" -- "1" UnityOfMeasurement: has an >
 Plantation "1" --- "*" Operation: has >
 Plantation "*" -- "1" Crop: is in <
-Plantation "*" -- "*" Product: are applied in <
 
 Operation "*" -- "1" OperationType: has an >
 Operation "*" -- "1" UnityOfMeasurement: has an >
@@ -128,6 +127,7 @@ Product "*" -- "1" FormulationType : has a >
 Product "*" -- "1" Classification : has a >
 Product "*" -- "*" ApplicationType : has >
 Product "1" -- "1" Datasheet : has a >
+Product "*" -- "*" Operation : are used in >
 
 Datasheet "1" -- "*" Component_Datasheet
 
