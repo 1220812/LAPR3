@@ -36,6 +36,7 @@ rectangle "Agricultural facility app"{
     usecase "USBD21 - I want the relational model to be updated (logical and physical level) in light of new requirements and user stories." as UC29
     usecase "USBD22 - I want updated data from a legacy system to be imported, provided in a spreadsheet." as UC30
     usecase "USBD23 - I want the dictionary to be updated data/glossary" as UC31
+    usecase "USLP09 - I want the domain model to be updated (conceptual level)." as UC32
 
     PO -- UC1
     PO -- UC2
@@ -69,6 +70,7 @@ rectangle "Agricultural facility app"{
     PO -- UC29
     PO -- UC30
     PO -- UC31
+    PO -- UC32
 
 
 }
