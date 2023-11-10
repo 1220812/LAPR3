@@ -33,6 +33,9 @@ rectangle "Agricultural facility app"{
     usecase "USLP06 - I intend to develop functionalities that allow the evocation of UC13." as UC26
     usecase "USLP07 - I intend to develop functionalities that allow the evocation of UC14." as UC27
     usecase "USLP08 - I intend to develop functionalities that allow the evocation of UC15." as UC28
+    usecase "USBD21 - I want the relational model to be updated (logical and physical level) in light of new requirements and user stories." as UC29
+    usecase "USBD22 - I want updated data from a legacy system to be imported, provided in a spreadsheet." as UC30
+    usecase "USBD23 - I want the dictionary to be updated data/glossary" as UC31
 
     PO -- UC1
     PO -- UC2
@@ -63,6 +66,10 @@ rectangle "Agricultural facility app"{
     AG -- UC19
     AG -- UC20
     AG -- UC21
+    PO -- UC29
+    PO -- UC30
+    PO -- UC31
+
 
 }
 @enduml

@@ -29,11 +29,6 @@ CREATE TABLE AgriculturalParcel (
                                     area                      number(30),
                                     UnityOfMeasurementunityID number(10) NOT NULL,
                                     PRIMARY KEY (parcelID));
-CREATE TABLE AgriculturalParcel_Plantation (
-                                               AgriculturalParcelparcelID number(20) NOT NULL,
-                                               PlantationcycleID          number(10) NOT NULL,
-                                               PRIMARY KEY (AgriculturalParcelparcelID,
-                                                            PlantationcycleID));
 CREATE TABLE ApplicationType (
                                  applicationID number(10),
                                  name          varchar2(40),
@@ -63,9 +58,10 @@ CREATE TABLE Component (
                            componentName varchar2(50),
                            PRIMARY KEY (componentID));
 CREATE TABLE Component_Datasheet (
-                                     ComponentcomponentID   number(10) NOT NULL,
-                                     DatasheetcompositionID number(20) NOT NULL,
-                                     quantity               number(10),
+                                     ComponentcomponentID      number(10) NOT NULL,
+                                     DatasheetcompositionID    number(20) NOT NULL,
+                                     quantity                  number(10),
+                                     UnityOfMeasurementunityID number(10) NOT NULL,
                                      PRIMARY KEY (ComponentcomponentID,
                                                   DatasheetcompositionID));
 CREATE TABLE Crop (
@@ -139,10 +135,9 @@ CREATE TABLE UnityOfMeasurement (
 
 -- **Alter tables**
 
-ALTER TABLE AgriculturalParcel_Plantation ADD CONSTRAINT FKAgricultur106787 FOREIGN KEY (PlantationcycleID) REFERENCES Plantation (cycleID);
-ALTER TABLE AgriculturalParcel_Plantation ADD CONSTRAINT FKAgricultur150794 FOREIGN KEY (AgriculturalParcelparcelID) REFERENCES AgriculturalParcel (parcelID);
 ALTER TABLE Product_Operation ADD CONSTRAINT FKProduct_Op134936 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
 ALTER TABLE Product_Operation ADD CONSTRAINT FKProduct_Op476540 FOREIGN KEY (ProductproductID) REFERENCES Product (productID);
+ALTER TABLE Component_Datasheet ADD CONSTRAINT FKComponent_773772 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID);
 ALTER TABLE Plantation ADD CONSTRAINT FKPlantation239203 FOREIGN KEY (CropcropID) REFERENCES Crop (cropID);
 ALTER TABLE ApplicationType_Product ADD CONSTRAINT FKApplicatio15336 FOREIGN KEY (ProductproductID) REFERENCES Product (productID);
 ALTER TABLE ApplicationType_Product ADD CONSTRAINT FKApplicatio354257 FOREIGN KEY (ApplicationTypeapplicationID) REFERENCES ApplicationType (applicationID);
@@ -150,7 +145,9 @@ ALTER TABLE Operation ADD CONSTRAINT FKOperation394768 FOREIGN KEY (PlantationCy
 ALTER TABLE Operation ADD CONSTRAINT FKOperation62574 FOREIGN KEY (OperationTypeoperationTypeID) REFERENCES OperationType (operationTypeID);
 ALTER TABLE Operation ADD CONSTRAINT FKOperation5286 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID);
 ALTER TABLE Plantation ADD CONSTRAINT FKPlantation272550 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID);
+ALTER TABLE Plantation ADD CONSTRAINT FKPlantation374211 FOREIGN KEY (AgriculturalParcelparcelID) REFERENCES AgriculturalParcel (parcelID);
 ALTER TABLE Crop ADD CONSTRAINT FKCrop394614 FOREIGN KEY (SpeciesspeciesID) REFERENCES Species (speciesID);
+ALTER TABLE AgriculturalParcel ADD CONSTRAINT FKAgricultur310538 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID);
 ALTER TABLE Component_Datasheet ADD CONSTRAINT FKComponent_576098 FOREIGN KEY (DatasheetcompositionID) REFERENCES Datasheet (compositionID);
 ALTER TABLE Component_Datasheet ADD CONSTRAINT FKComponent_180622 FOREIGN KEY (ComponentcomponentID) REFERENCES Component (componentID);
 ALTER TABLE Product ADD CONSTRAINT FKProduct587362 FOREIGN KEY (ClassificationclassificationID) REFERENCES Classification (classificationID);
