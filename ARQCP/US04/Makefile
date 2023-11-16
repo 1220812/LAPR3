@@ -10,8 +10,8 @@ asm.o: asm.s
 clean:
 	rm -f *.o exUS04
 
-run: exUS03
-	./exUS03
+run: exUS04
+	./exUS04
 
 debug: exUS04
 	gdb -tui ./exUS04

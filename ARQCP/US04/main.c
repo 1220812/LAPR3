@@ -8,7 +8,7 @@ int *ptr = array;
 
 int main(){
 
-    array_sort(ptr, num);
+    sort_array(ptr, num);
 
     for(int i = 0; i < num; i++){
         printf("%d ", array[i]);
