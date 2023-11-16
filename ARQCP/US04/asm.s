@@ -1,9 +1,9 @@
 .section .data
 
 .section .text
-    .global array_sort # array_sort is the name of the function
+    .global sort_array # sort_array is the name of the function
 
-array_sort:
+sort_array:
     movl $0, %r9d # set r9d to 0
 
 first_loop:
