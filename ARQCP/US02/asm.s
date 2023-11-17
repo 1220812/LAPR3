@@ -24,8 +24,8 @@ enqueue_value:
 write_value:
     mov %r9d, %eax         # Copies the value of %r9 to %rax (for subsequent calculations) - write
 
-    lea (%rdi, %rax, 4), %rdx # Calculate the memory address to write the value
-    mov %r8d, (%rdx)      # Write the value to the array
+    leaq (%rdi, %rax, 4), %r10 # Calculate the memory address to write the value
+    mov %r10d, (%rdx)      # Write the value to the array
 
     inc %r9d               # Increment the write pointer
     cmp %r9d, %esi         # Compare with the length of the array
