@@ -4,8 +4,6 @@
 
     .global move_num_vec
 
-move_num_vec:
-
     # Arguments:
     # rdi -> int* array
     # rsi -> int length
@@ -14,73 +12,67 @@ move_num_vec:
     # r8  -> int num
     # r9  -> int* vec
 
-#--------------------Save registers-------------------------------------
 
-    pushq %rbx          # Save current value of %rdx
-    pushq %rbp          # Save current value of %rbp
+#-------------------------BEGINING--------------------------------------
+
+
+move_num_vec:
+
+    pushq %rbx
+    pushq %rbp
     movq %rsp, %rbp
 
-#-------------------Extract parameters----------------------------------
+    cmpq %r8, %rbx            # Compare with the requested number to move
 
-    movq %rdi, %rax     # array
-    movq %rsi, %rbx     # length
-    movq %rdx, %rcx     # read
-    movq %rcx, %rdx     # Save read in rdx for later use
-    movq %r8, %rsi      # num
-    movq %r9, %rdi      # vec
+		#IF R8 < RBX
+		jl not_enough_elements    # Jump if not enough elements
 
-#------------------Copy elements to the destination array-------------
+    movq %r9, %r11           # Store the destination address in %r11
 
-    movq %rdi, %r11            # Store the destination address in a temporary register
-
-    # Check if there are enough elements to move
-
-    cmpq %rsi, %rbx            # Compare with the requested number to move
+    movq $0, %rax            # use %rax as a counter start it at 0
 
 
-    jle not_n_elements_array    # JUMP IF NOT ENOUGH ELEMENTS
+#--------------------------START COPY-----------------------------------
 
-    subq %rcx, %rdx            # Calculate the number of elements in the buffer
+copy:
 
-copy_elements_loop:
+     movslq (%rdx, %rax, 4), %r9   # Move the 32-bit value to the destination
+     movq %r9, (%r11)
 
-    movslq (%rax, %rdx, 4), %rdi   # Move the 32-bit value to the destination
-    movq %rdi, (%r11)              # Store the element in the destination array
+     addq $1, %rax                 # add 1 to the counter
+     addq $4, %r11                 # adds 4 bits to the vec to pass to the next positon
 
-    addq $1, %rdx                  # Move to the next position in the circular buffer
-    addq $4, %r11                  # Move to the next position in the destination array
+     decq %r8                      # decrement num
 
-    decq %rsi                      # Decrement the counter for the number of elements to move
-
-		#IF ALL ELEMENTS ARE MOVED
-		jz n_elements             # JUMP TO ENOUGH_ELEMENTS
-
-    cmpq %rdx, %rbx                # CHECK IF IS THE END OF THE CIRCULAR BUFFER
-
-		#IF IS NOT THE END
-		jge copy_elements_loop         # JUMP TO THE BEGINING (copy_elements_loop)
-
-    subq %rdx, %rbx                # Adjust the remaining elements count
+		#IF NUM = 0
+		jz enough_elements            # jumps to enough_elements
 
 
+     jmp copy              # jump to the loop again
 
-#----------------ENOUGH ELEMENTS IN ARRAY-------------------------------
 
-n_elements:
+#-------------------ENOUGHT ELEMENTS IN ARRAY---------------------------
+
+
+enough_elements:
 
     movq $1, %rax                 # Set return value to 1
     jmp final                      # Jump to done
 
 
-#----------------NOT ENOUGH ELEMTS IN ARRAY-----------------------------
+#------------------NOT ENOUGH ELEMENTS IN ARRAY-------------------------
 
-not_n_elements_array:
+
+not_enough_elements:
+
     movq $0, %rax                 # Set return value to 0
 
 
-#-----------------------FINAL-------------------------------------------
+#------------------------FINAL------------------------------------------
 
 final:
-    popq %rbp                     # Restore old value of %rdp
-    popq %rbx                     # Restore old value of %rdx
+
+    popq %rbp                     # Restore registers
+    popq %rbx                     # Restore old value %rdx
+
     ret                           # Return value
