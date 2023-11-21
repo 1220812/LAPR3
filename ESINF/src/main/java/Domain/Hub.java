@@ -21,9 +21,7 @@ public class Hub {
         this.hubId = hubId;
         this.coordinates = coordinates;
     }
-
     /**
-     /**
      * Constructs a new `Hub` instance with the specified hubId.
      *
      * @param hubId The unique identifier of the hub.
