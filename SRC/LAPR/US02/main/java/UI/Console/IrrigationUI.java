@@ -1,7 +1,7 @@
 package UI.Console;
 
-import domain.ResultEntry;
-import readers.ReadInstructionsFromFile;
+import Domain.ResultEntry;
+import Readers.ReadInstructionsFromFile;
 
 import java.io.File;
 import java.io.IOException;
