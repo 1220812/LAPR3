@@ -1,4 +1,4 @@
-package readers;
+package Readers;
 
 import domain.Partition;
 import domain.ResultEntry;

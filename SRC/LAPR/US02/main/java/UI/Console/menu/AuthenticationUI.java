@@ -1,4 +1,4 @@
-package ui.console.menu;
+package UI.Console.menu;
 
 import ui.console.Utils.Utils;
 

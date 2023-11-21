@@ -1,4 +1,4 @@
-package ui.console;
+package UI.Console;
 import ui.console.menu.MainMenuUI;
 
 /**

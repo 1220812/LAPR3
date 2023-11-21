@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Reader {
+public class ReaderFiles {
     /**
      * Imports route data from a CSV file and adds routes to the network.
      *
