@@ -1,49 +1,59 @@
 .section .data
+.global vec
+.global num
 
 .section .text
-    .global sort_array # sort_array is the name of the function
+.global sort_array              # void sort_array(int* vec, int num);
 
 sort_array:
-    movl $0, %r9d # set r9d to 0
+    movl $0, %r8d               # start a counter at 0
 
-first_loop:
-    cmpl $0, %esi # compare esi to 0
-    je end # if esi is 0, jump to end
-    subl $1, %esi # subtract 1 from esi
-    movl %esi, %r9d # move esi into r9d
-    jmp second_loop # jump to second_loop
+firstLoop:
+    cmp $0, %esi                # if the number of elements is 0
+    je end                      # jump to end
 
-second_loop:
-    cmpl $0, %r9d # compare r9d to 0
-    je end_second_loop # if r9d is 0, jump to end_second_loop
-    movl (%rdi), %ecx # load the value at rdi into ecx
-    movl %ecx, %r10d # move ecx into r10d
-    addq $4, %rdi # add 4 to rdi
-    movl (%rdi), %ecx # load the value at rdi into ecx
-    movl %ecx, %r11d # move ecx into r11d
-    cmpl %r10d, %r11d # compare r10d to r11d
-    jg change # if r10d is greater than r11d, jump to change
-    decl %r9d # subtract 1 from r9d
-    jmp second_loop # jump to second_loop
+    decl %esi                   # num--
+    movl %esi, %r8d             # move esi to the counter
+    jmp secondLoop              # jump to secondLoop
 
-change:
-    subq $4, %rdi # subtract 4 from rdi
-    movl %r11d, (%rdi) # move r11d into the value at rdi
-    addq $4, %rdi # add 4 to rdi
-    movl %r10d, (%rdi) # move r10d into the value at rdi
-    decl %r9d # subtract 1 from r9d
-    jmp second_loop # jump to second_loop
+secondLoop:
+    cmp $0, %r8d                # compare r8d to 0
+    je altEnd                   # if r8d is 0, jump to altEnd
 
-end_second_loop:
-    movl %esi, %r9d # move esi into r9d
-    jmp reset # jump to reset
+    movl (%rdi), %ecx           # move the value at rdi to ecx
+    movl %ecx, %r9d             # move ecx to r9d
+
+    addq $4, %rdi               # add 4 to rdi
+    movl (%rdi), %ecx           # move the value at rdi to ecx
+    movl %ecx, %r10d            # move ecx to r10d
+
+    cmp %r9d, %r10d             # compare r9d to r10d
+    jl swap                     # if r9d > r10d, jump to swap
+
+    decl %r8d                   # r8d--
+    jmp secondLoop              # jump to secondLoop
+
+swap:
+    subq $4, %rdi               # subtract 4 to rdi
+    movl %r10d, (%rdi)          # move r10d to the value at rdi
+
+    addq $4, %rdi               # add 4 to rdi
+    movl %r9d, (%rdi)           # move r9d to the value at rdi
+
+    decl %r8d                   # r9d--
+    jmp secondLoop              # jump to secondLoop
 
 reset:
-    cmpl $0, %r9d # compare r9d to 0
-    je first_loop # if r9d is 0, jump to first_loop
-    subq $4, %rdi # subtract 4 from rdi
-    decl %r9d # subtract 1 from r9d
-    jmp reset # jump to reset
+    cmp $0, %r8d                # compare r8d to 0
+    je firstLoop                # if r8d is 0, jump to firstLoop
+
+    subq $4, %rdi               # subtract 4 from rdi
+    decl %r8d                   # r8d--
+    jmp reset                   # jump to reset loop
+
+altEnd:
+    movl %esi, %r8d             # move esi to the counter
+    jmp reset                   # jump to reset
 
 end:
-    ret # return
+	ret
