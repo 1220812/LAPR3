@@ -1,18 +1,20 @@
 #include <stdio.h>
 #include "asm.h"
 
-int array[] = {1,1,1,1,2};
-
 int num = 5;
-int *ptr = array;
+int vec1[] = {3, 7, 22, -2, 5};
 
-int main(){
+int* vec = vec1;
 
-    sort_array(ptr, num);
+int main(void) {
 
-    for(int i = 0; i < num; i++){
-        printf("%d ", array[i]);
+    sort_array(vec, num);
+
+    printf("Sorted Array: ");
+    for (int i = 0; i < num; i++) {
+        printf("%d ", vec[i]);
     }
+
     printf("\n");
 
     return 0;
