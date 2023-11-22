@@ -40,9 +40,14 @@ public class MinimumRoute {
     }
 
     public double distance() {
-        return start.getCoordinates().distance(destination.getCoordinates());
+        if (start.getCoordinates() != null && destination.getCoordinates() != null) {
+            return start.getCoordinates().distance(destination.getCoordinates());
+        } else {
+            // Lide com a situação em que as coordenadas são nulas
+            return 0.0; // Ou outro valor padrão
+        }
     }
-
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("===============TRIP MANIFESTO===============").append("\n");
