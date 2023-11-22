@@ -8,4 +8,7 @@ int *vec = vec1;
 
 int main(void){
 
+	int mediana1 = mediana(vec, num);
+	printf("A mediana do array é: %d", mediana1);
+
 }
