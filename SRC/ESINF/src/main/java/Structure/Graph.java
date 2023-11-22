@@ -2,6 +2,8 @@ package Structure;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -159,4 +161,12 @@ public interface Graph<V, E> extends Cloneable {
      * @return a deep copy of graph
      */
     Graph<V, E> clone();
+
+    default V[] allkeyVerts(){
+        List<V> v = new LinkedList<>();
+        for (V ver : vertices()) {
+            v.add(ver);
+        }
+        return (V[]) v.toArray(new Object[]{});
+    }
 }

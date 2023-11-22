@@ -3,6 +3,8 @@ package Domain;
 import java.util.Objects;
 
 public class Coordinates {
+
+    private static final double R = 6371e3;
     /**
      * The latitude value of the coordinates.
      */
@@ -64,5 +66,16 @@ public class Coordinates {
     @Override
     public int hashCode() {
         return Objects.hash(latitude, longitude);
+    }
+    public double distance(Coordinates other) {
+        double phi1 = latitude * Math.PI / 180;
+        double phi2 = other.latitude * Math.PI / 180;
+        double deltaPhi = (other.latitude - latitude) * Math.PI / 180;
+        double deltaLambda = (other.longitude - longitude) * Math.PI / 180;
+        double a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+                Math.cos(phi1) * Math.cos(phi2) *
+                        Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
     }
 }

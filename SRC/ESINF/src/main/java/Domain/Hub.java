@@ -73,5 +73,7 @@ public class Hub {
     public int hashCode() {
         return Objects.hash(hubId, coordinates);
     }
+
+
 }
 
