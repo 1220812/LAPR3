@@ -23,7 +23,7 @@ public class Main {
 
         NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
 
-        //MinimumRoute minimumRoute = new Algorithms().findTripManifestoForMostDistantVertex(networkBuilder.getDistribution(), 300e3);
+        MinimumRoute minimumRoute = new Algorithms().findTripManifestoForMostDistantVertex(networkBuilder.getDistribution(), 300e3);
 
         System.out.println("Hello World!");
 
