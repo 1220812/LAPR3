@@ -14,7 +14,6 @@ DROP TABLE CropType CASCADE CONSTRAINTS;
 DROP TABLE Datasheet CASCADE CONSTRAINTS;
 DROP TABLE DispersionTypes CASCADE CONSTRAINTS;
 DROP TABLE Fertilization CASCADE CONSTRAINTS;
-DROP TABLE Fertilization_Product CASCADE CONSTRAINTS;
 DROP TABLE FormulationType CASCADE CONSTRAINTS;
 DROP TABLE Garage CASCADE CONSTRAINTS;
 DROP TABLE Harvest CASCADE CONSTRAINTS;
@@ -100,10 +99,8 @@ CREATE TABLE DispersionTypes (
                                  designation  varchar2(40),
                                  PRIMARY KEY (dispersionID));
 CREATE TABLE Fertilization (
-    OperationoperationID number(10) NOT NULL);
-CREATE TABLE Fertilization_Product (
-                                       ProductproductID number(20) NOT NULL,
-                                       PRIMARY KEY (ProductproductID));
+                               OperationoperationID number(10) NOT NULL,
+                               ProductproductID     number(20) NOT NULL);
 CREATE TABLE FormulationType (
                                  formulationTypeID   number(20) NOT NULL,
                                  formulationTypeName varchar2(40),
@@ -183,8 +180,9 @@ CREATE TABLE WateringSystem (
 CREATE TABLE Weed (
     OperationoperationID number(10) NOT NULL);
 
--- Alter Tables
+-- Alter tables
 
+ALTER TABLE Fertilization ADD CONSTRAINT FKFertilizat113648 FOREIGN KEY (ProductproductID) REFERENCES Product (productID);
 ALTER TABLE AgriculturalParcel_Plantation_IrrigationSector ADD CONSTRAINT FKAgricultur614971 FOREIGN KEY (IrrigationSectorsetorID) REFERENCES IrrigationSector (setorID);
 ALTER TABLE AgriculturalParcel_Plantation_IrrigationSector ADD CONSTRAINT FKAgricultur375536 FOREIGN KEY (AgriculturalParcel_PlantationAgriculturalParcelparcelID, AgriculturalParcel_PlantationPlantationplantationID) REFERENCES AgriculturalParcel_Plantation (AgriculturalParcelparcelID, PlantationplantationID);
 ALTER TABLE AgriculturalParcel_Plantation ADD CONSTRAINT FKAgricultur721728 FOREIGN KEY (PlantationplantationID) REFERENCES Plantation (plantationID);
@@ -198,8 +196,6 @@ ALTER TABLE Sowing ADD CONSTRAINT FKSowing700290 FOREIGN KEY (Operationoperation
 ALTER TABLE Harvest ADD CONSTRAINT FKHarvest399609 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
 ALTER TABLE ToPlant ADD CONSTRAINT FKToPlant152700 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
 ALTER TABLE Weed ADD CONSTRAINT FKWeed581018 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
-ALTER TABLE Fertilization_Product ADD CONSTRAINT FKFertilizat597876 FOREIGN KEY (ProductproductID) REFERENCES Product (productID);
-ALTER TABLE Fertilization_Product ADD CONSTRAINT FKFertilizat799043 FOREIGN KEY () REFERENCES Fertilization ();
 ALTER TABLE Fertilization ADD CONSTRAINT FKFertilizat455252 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
 ALTER TABLE WateringSystem ADD CONSTRAINT FKWateringSy862631 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID);
 ALTER TABLE Garage ADD CONSTRAINT FKGarage923230 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID);
