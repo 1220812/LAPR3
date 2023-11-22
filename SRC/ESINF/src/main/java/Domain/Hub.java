@@ -73,6 +73,10 @@ public class Hub {
     public int hashCode() {
         return Objects.hash(hubId, coordinates);
     }
+    @Override
+    public String toString() {
+        return String.format("Hub in Location '%s', Coordenadas = %s", hubId, coordinates);
+    }
 
 
 }
