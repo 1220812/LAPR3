@@ -101,6 +101,7 @@ CREATE TABLE DispersionTypes (
 CREATE TABLE Fertilization (
                                OperationoperationID number(10) NOT NULL,
                                ProductproductID     number(20) NOT NULL);
+                               "Mode"               varchar2(20));
 CREATE TABLE FormulationType (
                                  formulationTypeID   number(20) NOT NULL,
                                  formulationTypeName varchar2(40),
@@ -175,6 +176,7 @@ CREATE TABLE Watering (
                           OperationoperationID    number(10) NOT NULL,
                           IrrigationSectorsetorID number(10) NOT NULL);
 CREATE TABLE WateringSystem (
+                                capacity                  number(20) NOT NULL,
                                 BuildingbuildingID        number(20) NOT NULL,
                                 UnityOfMeasurementunityID number(10) NOT NULL);
 CREATE TABLE Weed (
