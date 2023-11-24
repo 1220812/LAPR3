@@ -1,5 +1,3 @@
--- Drop Tables
-
 DROP TABLE AgriculturalParcel CASCADE CONSTRAINTS;
 DROP TABLE AgriculturalParcel_Plantation CASCADE CONSTRAINTS;
 DROP TABLE AgriculturalParcel_Plantation_IrrigationSector CASCADE CONSTRAINTS;
@@ -33,8 +31,6 @@ DROP TABLE UnityOfMeasurement CASCADE CONSTRAINTS;
 DROP TABLE Watering CASCADE CONSTRAINTS;
 DROP TABLE WateringSystem CASCADE CONSTRAINTS;
 DROP TABLE Weed CASCADE CONSTRAINTS;
-
--- Create tables
 
 CREATE TABLE AgriculturalParcel (
                                     parcelID          number(20) NOT NULL,
@@ -101,9 +97,9 @@ CREATE TABLE DispersionTypes (
                                  designation  varchar2(40),
                                  PRIMARY KEY (dispersionID));
 CREATE TABLE Fertilization (
+                               OperationoperationID2 number(10),
                                ProductproductID      number(20) NOT NULL,
-                               "Mode"                varchar2(20),
-                               OperationoperationID2 number(10));
+                               "Mode"                varchar2(20));
 CREATE TABLE FormulationType (
                                  formulationTypeID   number(20) NOT NULL,
                                  formulationTypeName varchar2(40),
@@ -113,8 +109,8 @@ CREATE TABLE Garage (
                         BuildingbuildingID        number(20) NOT NULL,
                         UnityOfMeasurementunityID number(10) NOT NULL);
 CREATE TABLE Harvest (
-                         quantity              number(10),
-                         OperationoperationID2 number(10));
+                         OperationoperationID2 number(10),
+                         quantity              number(10));
 CREATE TABLE Incorporation (
     OperationoperationID2 number(10));
 CREATE TABLE IrrigationSector (
@@ -176,8 +172,8 @@ CREATE TABLE UnityOfMeasurement (
 CREATE TABLE Watering (
                           duration                number(10),
                           inicialHour             varchar2(10),
-                          IrrigationSectorsetorID number(10) NOT NULL,
-                          OperationoperationID2   number(10));
+                          OperationoperationID2   number(10),
+                          IrrigationSectorsetorID number(10) NOT NULL);
 CREATE TABLE WateringSystem (
                                 capacity                  number(20),
                                 BuildingbuildingID        number(20) NOT NULL,
