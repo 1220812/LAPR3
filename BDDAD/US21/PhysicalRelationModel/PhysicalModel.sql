@@ -47,6 +47,8 @@ CREATE TABLE AgriculturalParcel_Plantation (
                                                PRIMARY KEY (AgriculturalParcelparcelID,
                                                             PlantationplantationID));
 CREATE TABLE AgriculturalParcel_Plantation_IrrigationSector (
+                                                                startingPeriodDate                                      date,
+                                                                endingPerioddate                                        date,
                                                                 AgriculturalParcel_PlantationAgriculturalParcelparcelID number(20) NOT NULL,
                                                                 AgriculturalParcel_PlantationPlantationplantationID     number(10) NOT NULL,
                                                                 IrrigationSectorsetorID                                 number(10) NOT NULL,
@@ -99,9 +101,9 @@ CREATE TABLE DispersionTypes (
                                  designation  varchar2(40),
                                  PRIMARY KEY (dispersionID));
 CREATE TABLE Fertilization (
-                               OperationoperationID number(10) NOT NULL,
-                               ProductproductID     number(20) NOT NULL);
-                               "Mode"               varchar2(20));
+                               ProductproductID      number(20) NOT NULL,
+                               "Mode"                varchar2(20),
+                               OperationoperationID2 number(10));
 CREATE TABLE FormulationType (
                                  formulationTypeID   number(20) NOT NULL,
                                  formulationTypeName varchar2(40),
@@ -111,15 +113,16 @@ CREATE TABLE Garage (
                         BuildingbuildingID        number(20) NOT NULL,
                         UnityOfMeasurementunityID number(10) NOT NULL);
 CREATE TABLE Harvest (
-    OperationoperationID number(10) NOT NULL);
+                         quantity              number(10),
+                         OperationoperationID2 number(10));
 CREATE TABLE Incorporation (
-    OperationoperationID number(10) NOT NULL);
+    OperationoperationID2 number(10));
 CREATE TABLE IrrigationSector (
                                   setorID                     number(10) NOT NULL,
                                   startDate                   date,
                                   endDate                     date,
                                   maximumFlow                 number(10),
-                                  DispersionTypesdispersionID number(10) NOT NULL,
+                                  DispersionTypesdispersionID number(10),
                                   PRIMARY KEY (setorID));
 CREATE TABLE Manufacturer (
                               manufacturerID number(10) NOT NULL,
@@ -128,17 +131,15 @@ CREATE TABLE Manufacturer (
 CREATE TABLE Mill (
     BuildingbuildingID number(20) NOT NULL);
 CREATE TABLE Operation (
-                           operationID               number(10) NOT NULL,
-                           "date"                    date,
-                           quantity                  number(10),
-                           UnityOfMeasurementunityID number(10) NOT NULL,
-                           PlantationCyclecycleID    number(10) NOT NULL,
+                           operationID            number(10) NOT NULL,
+                           "date"                 date,
+                           PlantationplantationID number(10) NOT NULL,
                            PRIMARY KEY (operationID));
 CREATE TABLE Plantation (
                             plantationID              number(10) NOT NULL,
                             startDate                 date,
                             endDate                   date,
-                            quantity                  number(10),
+                            quantity                  varchar2(10),
                             UnityOfMeasurementunityID number(10) NOT NULL,
                             CropcropID                number(20) NOT NULL,
                             PRIMARY KEY (plantationID));
@@ -150,9 +151,9 @@ CREATE TABLE Product (
                          ManufacturermanufacturerID       number(10) NOT NULL,
                          PRIMARY KEY (productID));
 CREATE TABLE Pruning (
-    OperationoperationID number(10) NOT NULL);
+    OperationoperationID2 number(10));
 CREATE TABLE Sowing (
-    OperationoperationID number(10) NOT NULL);
+    OperationoperationID2 number(10));
 CREATE TABLE Species (
                          speciesID        number(10) NOT NULL,
                          speciesName      varchar2(40),
@@ -167,23 +168,23 @@ CREATE TABLE Storage (
                          BuildingbuildingID        number(20) NOT NULL,
                          UnityOfMeasurementunityID number(10) NOT NULL);
 CREATE TABLE ToPlant (
-    OperationoperationID number(10) NOT NULL);
+    OperationoperationID2 number(10));
 CREATE TABLE UnityOfMeasurement (
                                     unityID number(10) NOT NULL,
                                     name    varchar2(10) NOT NULL,
                                     PRIMARY KEY (unityID));
 CREATE TABLE Watering (
-                          OperationoperationID    number(10) NOT NULL,
-                          IrrigationSectorsetorID number(10) NOT NULL);
+                          duration                number(10),
+                          inicialHour             varchar2(10),
+                          IrrigationSectorsetorID number(10) NOT NULL,
+                          OperationoperationID2   number(10));
 CREATE TABLE WateringSystem (
-                                capacity                  number(20) NOT NULL,
+                                capacity                  number(20),
                                 BuildingbuildingID        number(20) NOT NULL,
                                 UnityOfMeasurementunityID number(10) NOT NULL);
 CREATE TABLE Weed (
-    OperationoperationID number(10) NOT NULL);
-
--- Alter tables
-
+    OperationoperationID2 number(10));
+ALTER TABLE Operation ADD CONSTRAINT FKOperation667309 FOREIGN KEY (PlantationplantationID) REFERENCES Plantation (plantationID);
 ALTER TABLE Fertilization ADD CONSTRAINT FKFertilizat113648 FOREIGN KEY (ProductproductID) REFERENCES Product (productID);
 ALTER TABLE AgriculturalParcel_Plantation_IrrigationSector ADD CONSTRAINT FKAgricultur614971 FOREIGN KEY (IrrigationSectorsetorID) REFERENCES IrrigationSector (setorID);
 ALTER TABLE AgriculturalParcel_Plantation_IrrigationSector ADD CONSTRAINT FKAgricultur375536 FOREIGN KEY (AgriculturalParcel_PlantationAgriculturalParcelparcelID, AgriculturalParcel_PlantationPlantationplantationID) REFERENCES AgriculturalParcel_Plantation (AgriculturalParcelparcelID, PlantationplantationID);
@@ -191,14 +192,14 @@ ALTER TABLE AgriculturalParcel_Plantation ADD CONSTRAINT FKAgricultur721728 FORE
 ALTER TABLE AgriculturalParcel_Plantation ADD CONSTRAINT FKAgricultur150794 FOREIGN KEY (AgriculturalParcelparcelID) REFERENCES AgriculturalParcel (parcelID);
 ALTER TABLE Watering ADD CONSTRAINT FKWatering432431 FOREIGN KEY (IrrigationSectorsetorID) REFERENCES IrrigationSector (setorID);
 ALTER TABLE IrrigationSector ADD CONSTRAINT FKIrrigation49049 FOREIGN KEY (DispersionTypesdispersionID) REFERENCES DispersionTypes (dispersionID);
-ALTER TABLE Incorporation ADD CONSTRAINT FKIncorporat224222 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
-ALTER TABLE Watering ADD CONSTRAINT FKWatering136717 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
-ALTER TABLE Pruning ADD CONSTRAINT FKPruning74276 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
-ALTER TABLE Sowing ADD CONSTRAINT FKSowing700290 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
-ALTER TABLE Harvest ADD CONSTRAINT FKHarvest399609 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
-ALTER TABLE ToPlant ADD CONSTRAINT FKToPlant152700 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
-ALTER TABLE Weed ADD CONSTRAINT FKWeed581018 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
-ALTER TABLE Fertilization ADD CONSTRAINT FKFertilizat455252 FOREIGN KEY (OperationoperationID) REFERENCES Operation (operationID);
+ALTER TABLE Incorporation ADD CONSTRAINT FKIncorporat871608 FOREIGN KEY (OperationoperationID2) REFERENCES Operation (operationID);
+ALTER TABLE Watering ADD CONSTRAINT FKWatering260957 FOREIGN KEY (OperationoperationID2) REFERENCES Operation (operationID);
+ALTER TABLE Pruning ADD CONSTRAINT FKPruning801483 FOREIGN KEY (OperationoperationID2) REFERENCES Operation (operationID);
+ALTER TABLE Sowing ADD CONSTRAINT FKSowing175469 FOREIGN KEY (OperationoperationID2) REFERENCES Operation (operationID);
+ALTER TABLE Harvest ADD CONSTRAINT FKHarvest476150 FOREIGN KEY (OperationoperationID2) REFERENCES Operation (operationID);
+ALTER TABLE ToPlant ADD CONSTRAINT FKToPlant276940 FOREIGN KEY (OperationoperationID2) REFERENCES Operation (operationID);
+ALTER TABLE Weed ADD CONSTRAINT FKWeed514812 FOREIGN KEY (OperationoperationID2) REFERENCES Operation (operationID);
+ALTER TABLE Fertilization ADD CONSTRAINT FKFertilizat420507 FOREIGN KEY (OperationoperationID2) REFERENCES Operation (operationID);
 ALTER TABLE WateringSystem ADD CONSTRAINT FKWateringSy862631 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID);
 ALTER TABLE Garage ADD CONSTRAINT FKGarage923230 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID);
 ALTER TABLE Storage ADD CONSTRAINT FKStorage681298 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID);
@@ -209,8 +210,6 @@ ALTER TABLE Storage ADD CONSTRAINT FKStorage834469 FOREIGN KEY (Buildingbuilding
 ALTER TABLE Plantation ADD CONSTRAINT FKPlantation239203 FOREIGN KEY (CropcropID) REFERENCES Crop (cropID);
 ALTER TABLE ApplicationType_Product ADD CONSTRAINT FKApplicatio15336 FOREIGN KEY (ProductproductID) REFERENCES Product (productID);
 ALTER TABLE ApplicationType_Product ADD CONSTRAINT FKApplicatio354257 FOREIGN KEY (ApplicationTypeapplicationID) REFERENCES ApplicationType (applicationID);
-ALTER TABLE Operation ADD CONSTRAINT FKOperation92443 FOREIGN KEY (PlantationCyclecycleID) REFERENCES Plantation (plantationID);
-ALTER TABLE Operation ADD CONSTRAINT FKOperation5286 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID);
 ALTER TABLE Plantation ADD CONSTRAINT FKPlantation272550 FOREIGN KEY (UnityOfMeasurementunityID) REFERENCES UnityOfMeasurement (unityID);
 ALTER TABLE Crop ADD CONSTRAINT FKCrop394614 FOREIGN KEY (SpeciesspeciesID) REFERENCES Species (speciesID);
 ALTER TABLE Component_Datasheet ADD CONSTRAINT FKComponent_576098 FOREIGN KEY (DatasheetcompositionID) REFERENCES Datasheet (compositionID);
