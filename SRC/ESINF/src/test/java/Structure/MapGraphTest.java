@@ -508,4 +508,6 @@ public class MapGraphTest {
             assertEquals(cw.get(i), ecu.getWeight());
         }
     }
+
+
 }
