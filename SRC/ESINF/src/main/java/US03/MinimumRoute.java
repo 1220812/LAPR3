@@ -55,6 +55,7 @@ public class MinimumRoute {
         int counter = 1;
         for (Hub hub : route) {
             sb.append("\t").append(counter + " - " + hub.getHubId());
+            sb.append("Coordinates: ").append(hub.getLatitude()).append(", ").append(hub.getLongitude()).append("\n");
             if (charged.contains(hub)) {
                 sb.append("*");
             }
