@@ -4,10 +4,8 @@
  */
 package Structure;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
+import java.util.function.BinaryOperator;
 
 /**
  * @author DEI-ESINF
@@ -260,5 +258,53 @@ public class GraphAlgorithms {
             pathrev.push(pathcopy.pop());
 
         return pathrev;
+    }
+    public static <V, E> MapGraph<V, E> minimumSpanningTree(MapGraph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum, E zero) {
+        // Create a set to keep track of visited vertices
+        Set<V> visitedVertices = new HashSet<>();
+
+        // Create a priority queue to store edges based on their weights
+        PriorityQueue<Edge<V, E>> edgeQueue = new PriorityQueue<>(Comparator.comparing(e -> e.getWeight(), ce));
+
+        // Create a graph to represent the minimum spanning tree
+        MapGraph<V, E> minimumSpanningTree = new MapGraph<>(true);
+
+        // Add an arbitrary vertex to start the process
+        V startVertex = g.vertices().iterator().next();
+        visitedVertices.add(startVertex);
+
+        // Add all edges connected to the start vertex to the priority queue
+        for (Edge<V, E> edge : g.outgoingEdges(startVertex)) {
+            edgeQueue.add(edge);
+        }
+
+        // Continue adding edges until all vertices are visited
+        while (visitedVertices.size() < g.numVertices()) {
+            // Obtenha a aresta de peso mínimo da fila de prioridade
+            Edge<V, E> minEdge = edgeQueue.poll();
+            // Check if the priority queue is empty
+            if (minEdge == null) {
+                // The graph is not connected
+                break;
+            }
+
+            // Obtenha o vértice de destino da aresta de peso mínimo
+            V destVertex = minEdge.getVDest();
+
+            // Verifique se adicionar esta aresta cria um ciclo
+            if (!visitedVertices.contains(destVertex)) {
+                // Adicione o vértice de destino ao conjunto de vértices visitados
+                visitedVertices.add(destVertex);
+
+                // Adicione a aresta à árvore de abrangência mínima
+                minimumSpanningTree.addEdge(minEdge.getVOrig(), destVertex, minEdge.getWeight());
+
+                // Adicione todas as arestas conectadas ao vértice de destino à fila de prioridade
+                for (Edge<V, E> edge : g.outgoingEdges(destVertex)) {
+                    edgeQueue.add(edge);
+                }
+            }
+        }
+        return minimumSpanningTree;
     }
 }

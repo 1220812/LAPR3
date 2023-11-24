@@ -1,9 +1,11 @@
 import Algorithm.Algorithms;
 import Domain.Hub;
 import FileReader.ReaderFiles;
+import Structure.Edge;
 import Structure.MapGraph;
 import US01.NetworkBuilder;
 import US03.MinimumRoute;
+import US04.MinSpanningTreeResult;
 
 import java.io.IOException;
 
@@ -13,9 +15,9 @@ public class Main {
 
         ReaderFiles importer = new ReaderFiles();
 
-        importer.importLocalData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\ESINF\\src\\main\\resources\\locais_small.csv");
+        importer.importLocalData("C:\\Users\\leono\\IdeaProjects\\sem3pi2023\\sem3pi2023\\sem3pi2023_24_g081\\SRC\\ESINF\\src\\main\\resources\\locais_small.csv");
 
-        importer.importDistanceData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\ESINF\\src\\main\\resources\\distancias_small.csv");
+        importer.importDistanceData("C:\\Users\\leono\\IdeaProjects\\sem3pi2023\\sem3pi2023\\sem3pi2023_24_g081\\SRC\\ESINF\\src\\main\\resources\\distancias_small.csv");
 
 
         NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
@@ -33,4 +35,5 @@ public class Main {
         System.out.println("Hello World!");
 
     }
+
 }
