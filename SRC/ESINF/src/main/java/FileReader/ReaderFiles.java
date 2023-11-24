@@ -24,7 +24,7 @@ public class ReaderFiles {
 
         while ((currentLine = reader.readLine()) != null){
             data = currentLine.split(",");
-            network.addRoute(new Hub(data[0]), new Hub(data[1]), Double.parseDouble(data[2]));
+            network.addRoute(new Hub(data[0]), new Hub(data[1]), Integer.parseInt(data[2]));
         }
     }
     /**

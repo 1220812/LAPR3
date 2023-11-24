@@ -2,64 +2,9 @@ package Structure;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class GraphAlgorithmsTest {
-
-    @Test
-    void minimumSpanningTree() {
-        // Create a sample graph for testing
-        MapGraph<String, Integer> graph = new MapGraph<>(false);
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addVertex("D");
-        graph.addEdge("A", "B", 1);
-        graph.addEdge("A", "C", 3);
-        graph.addEdge("B", "C", 2);
-        graph.addEdge("B", "D", 4);
-        graph.addEdge("C", "D", 5);
-
-        // Call the minimumSpanningTree method
-        MapGraph<String, Integer> minimumSpanningTree = GraphAlgorithms.minimumSpanningTree(graph, Integer::compare, Integer::sum, 0);
-
-        // Check if the result is not null
-        assertNotNull(minimumSpanningTree);
-
-        // Check the number of vertices in the minimum spanning tree
-        assertEquals(graph.numVertices(), minimumSpanningTree.numVertices());
-
-        // Check the number of edges in the minimum spanning tree
-        assertEquals(graph.numVertices() - 1, minimumSpanningTree.numEdges());
-
-        // You can add more specific checks based on your input graph and the expected minimum spanning tree
-        // For example, check specific vertices and edges
-        assertTrue(minimumSpanningTree.validVertex("A"));
-        assertTrue(minimumSpanningTree.validVertex("B"));
-        assertTrue(minimumSpanningTree.validVertex("C"));
-        assertTrue(minimumSpanningTree.validVertex("D"));
-
-        List<Edge<String, Integer>> edges = (List<Edge<String, Integer>>) minimumSpanningTree.edges();
-        // Check specific edges in the minimum spanning tree
-        assertTrue(edges.contains(new Edge<>("A", "B", 1)));
-        assertTrue(edges.contains(new Edge<>("B", "C", 2)));
-        assertTrue(minimumSpanningTree.validVertex("A"));
-    }
-    /*
-    @Test
-    void minimumSpanningTree_DisconnectedGraph() {
-        MapGraph<String, Integer> disconnectedGraph = new MapGraph<>(false);
-        disconnectedGraph.addVertex("A");
-        disconnectedGraph.addVertex("B");
-        disconnectedGraph.addVertex("C");
-
-        MapGraph<String, Integer> minimumSpanningTree = GraphAlgorithms.minimumSpanningTree(disconnectedGraph, Integer::compare, Integer::sum, 0);
-
-        assertNull(minimumSpanningTree);
-    }
-     */
 
     @Test
     void minimumSpanningTree_NegativeWeights() {

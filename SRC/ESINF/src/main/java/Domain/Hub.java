@@ -12,6 +12,15 @@ public class Hub {
      */
     private Coordinates coordinates;
     /**
+     * The geographical longitude of the hub.
+     */
+    private double longitude;
+    /**
+     * The geographical latitude of the hub.
+     */
+    private double latitude;
+
+    /**
      * Constructs a new `Hub` instance with the specified hubId and coordinates.
      *
      * @param hubId The unique identifier of the hub.
@@ -20,6 +29,18 @@ public class Hub {
     public Hub(String hubId, Coordinates coordinates){
         this.hubId = hubId;
         this.coordinates = coordinates;
+    }
+    /**
+     * Constructs a new `Hub` instance with the specified hubId and coordinates.
+     *
+     * @param hubId The unique identifier of the hub.
+     * @param latitude The geographical latitude of the hub.
+     * @param longitude The geographical longitude of the hub.
+     */
+    public Hub(String hubId, double latitude, double longitude){
+        this.hubId = hubId;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
     /**
      * Constructs a new `Hub` instance with the specified hubId.
@@ -37,6 +58,14 @@ public class Hub {
         return coordinates;
     }
 
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
     public String getHubId() {
         return hubId;
     }
@@ -48,6 +77,12 @@ public class Hub {
         this.coordinates = coordinates;
     }
 
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
     public void setHubId(String hubId) {
         this.hubId = hubId;
     }
@@ -78,6 +113,9 @@ public class Hub {
         return String.format("Hub in Location '%s', Coordenadas = %s", hubId, coordinates);
     }
 
-
+    @Override
+    public String toString (){
+        return hubId;
+    }
 }
 

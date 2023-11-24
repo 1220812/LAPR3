@@ -1,6 +1,7 @@
 package US03;
 
 
+import Domain.Coordinates;
 import Domain.Hub;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -40,14 +41,10 @@ public class MinimumRoute {
     }
 
     public double distance() {
-        if (start.getCoordinates() != null && destination.getCoordinates() != null) {
-            return start.getCoordinates().distance(destination.getCoordinates());
-        } else {
-            // Lide com a situação em que as coordenadas são nulas
-            return 0.0; // Ou outro valor padrão
-        }
+        Coordinates coordinates = new Coordinates(start.getLatitude(), start.getLongitude());
+        return coordinates.distance(destination.getLatitude(), destination.getLongitude());
     }
-    @Override
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("===============TRIP MANIFESTO===============").append("\n");
@@ -58,6 +55,7 @@ public class MinimumRoute {
         int counter = 1;
         for (Hub hub : route) {
             sb.append("\t").append(counter + " - " + hub.getHubId());
+            sb.append("Coordinates: ").append(hub.getLatitude()).append(", ").append(hub.getLongitude()).append("\n");
             if (charged.contains(hub)) {
                 sb.append("*");
             }

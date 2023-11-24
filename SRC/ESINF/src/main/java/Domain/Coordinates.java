@@ -67,11 +67,11 @@ public class Coordinates {
     public int hashCode() {
         return Objects.hash(latitude, longitude);
     }
-    public double distance(Coordinates other) {
+    public double distance(double longitude1, double latitude1) {
         double phi1 = latitude * Math.PI / 180;
-        double phi2 = other.latitude * Math.PI / 180;
-        double deltaPhi = (other.latitude - latitude) * Math.PI / 180;
-        double deltaLambda = (other.longitude - longitude) * Math.PI / 180;
+        double phi2 = latitude * Math.PI / 180;
+        double deltaPhi = (latitude1 - latitude) * Math.PI / 180;
+        double deltaLambda = (longitude1 - longitude) * Math.PI / 180;
         double a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
                 Math.cos(phi1) * Math.cos(phi2) *
                         Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);

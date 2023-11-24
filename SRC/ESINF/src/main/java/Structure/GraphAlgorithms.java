@@ -259,8 +259,6 @@ public class GraphAlgorithms {
 
         return pathrev;
     }
-
-    //USEI04
     public static <V, E> MapGraph<V, E> minimumSpanningTree(MapGraph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum, E zero) {
         // Create a set to keep track of visited vertices
         Set<V> visitedVertices = new HashSet<>();

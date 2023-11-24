@@ -358,4 +358,14 @@ public class MapGraph<V, E> extends CommonGraph<V, E> {
         }
         return s;
     }
+
+    public void printGraph() {
+        for (V vertex : mapVertices.keySet()) {
+            System.out.print(vertex + " -> ");
+            for (Edge<V, E> edge : mapVertices.get(vertex).getAllOutEdges()) {
+                System.out.print("(" + edge.getVDest() + ", " + edge.getWeight() + ") ");
+            }
+            System.out.println();
+        }
+    }
 }

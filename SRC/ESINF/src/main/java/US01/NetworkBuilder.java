@@ -15,7 +15,7 @@ public class NetworkBuilder {
     /**
      * The underlying graph representing the distribution network.
      */
-    final private MapGraph<Hub, Double> distribution;
+    final private MapGraph<Hub, Integer> distribution;
     /**
      * Constructs a new `NetworkBuilder` instance with an initially empty distribution graph.
      * The graph is directed and weighted.
@@ -27,7 +27,7 @@ public class NetworkBuilder {
     /**
      * Gets
      */
-    public MapGraph<Hub, Double> getDistribution() {
+    public MapGraph<Hub, Integer> getDistribution() {
         return distribution;
     }
 
@@ -43,7 +43,7 @@ public class NetworkBuilder {
      * @return `true` if the hub is successfully added; `false` otherwise.
      */
     public boolean addHub(String hubId, Double latitude, Double longitude){
-        Hub vert = new Hub(hubId, new Coordinates(latitude, longitude));
+        Hub vert = new Hub(hubId,latitude, longitude);
         return distribution.addVertex(vert);
     }
     /**
@@ -55,7 +55,7 @@ public class NetworkBuilder {
      * @param distance The distance between the origin and destination hubs.
      * @return `true` if the route is successfully added; `false` otherwise.
      */
-    public boolean addRoute(Hub orig, Hub dest, Double distance){
+    public boolean addRoute(Hub orig, Hub dest, int distance){
         return distribution.addEdge(orig, dest, distance);
     }
     /**

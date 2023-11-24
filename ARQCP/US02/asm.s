@@ -15,27 +15,43 @@ enqueue_value:
     pushq %rbp             
     movq %rsp, %rbp        
 
-    movl (%rcx), %r9d     # Copies the value in rcx and places it in r9 (write)
-    cmp %esi, %r9d        # Compares length(esi) with write(r9)
-    jl write_value       # If write < length, continue with writing
+    movl (%rcx), %r10d     # Copies the value in rcx and places it in r10d (write)
+    imull $4, %r10d        # get the offset of r10d
 
-    xor %r9d, %r9d         # Reset write to 0, in order to overwrite the 1st position of the array
+    movslq %r10d, %r10  # extend the signal from r10d to r10
+    addq %r10, %rdi # add offset to array (expands the array)
+    movl %r8d, (%rdi) # place the value in the array
 
-write_value:
-    mov %r9d, %eax         # Copies the value of %r9 to %rax (for subsequent calculations) - write
+    addl $1, (%rcx) # increments the *write by one
 
-    leaq (%rdi, %rax, 4), %r10 # Calculate the memory address to write the value
-    mov %r10d, (%rdx)      # Write the value to the array
+    pushq %rdx # stores the value of *read in the stack
+    movl (%rcx), %eax             # place *write in eax
+    cltd                          # sign extend the value in eax
+    idivl %esi                    # divide by the value in eax(*write) by the length of the array
+    movl %edx, (%rcx)             # store the remainder of the division in *write
 
-    inc %r9d               # Increment the write pointer
-    cmp %r9d, %esi         # Compare with the length of the array
-    jne update_write      # If write < length, continue with writing
+    pop %rdx                      # restore the initial value of *read
 
-    xor %r9d, %r9d         # Reset write to 0 if it reaches the end of the buffer
+    movl (%rdx), %r10d             # copies *read to r9d
+    cmp (%rcx), %r10d              # compares *read to *write
+    je empty              # if the condition is matched, jumps to 'empty'
 
-update_write:
-    mov %r9d, (%rcx)       # Update the value of the write pointer in memory
-    jmp end               # Jump to the end of the function
+    jmp end                       # jumps inconditionally to end
+
+empty:
+
+    addl $1, (%rdx)               # increment *read in order to point to the next value in the array
+
+    pushq %rdx                    # save the value of *read in the stack
+
+    movl (%rdx), %r9d             # place *read into r9d
+    cltd                          # sign extend the value in eax
+    idivl %esi                    # divides the value in eax by length
+    movl %edx, %r9d               # store the remainder value in r9d
+
+    popq %rdx                     # restore *read initial value
+
+    movl %r9d, (%rdx)             # copies the value in r9d to rdx (remainder)
 
 end:
 	
@@ -43,5 +59,4 @@ end:
     mov %rbp, %rsp        
     pop %rbp     
              
-    ret     
-       
+    ret
