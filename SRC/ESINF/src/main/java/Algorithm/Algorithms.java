@@ -2,11 +2,10 @@ package Algorithm;
 
 import Domain.Hub;
 import Structure.Auxiliary.Path;
-import Structure.Graph;
+import Structure.MapGraph;
 import Structure.MoreGraphAlgorithms;
 import US03.MinimumRoute;
 
-import javax.swing.text.Segment;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.Set;
 
 public class Algorithms {
 
-    public MinimumRoute findTripManifestoForMostDistantVertex(Graph<Hub, Double> graph, double vehicleAutonomy) {
+    public MinimumRoute findTripManifestoForMostDistantVertex(MapGraph<Hub, Integer> graph, double vehicleAutonomy) {
         Path<Hub> path = MoreGraphAlgorithms.mostDistantVertexOnGraph(graph);
         double autonomyLeft = vehicleAutonomy;
         double distance = 0;

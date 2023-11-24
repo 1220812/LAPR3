@@ -1,6 +1,7 @@
 package US03;
 
 
+import Domain.Coordinates;
 import Domain.Hub;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -40,7 +41,8 @@ public class MinimumRoute {
     }
 
     public double distance() {
-        return start.getCoordinates().distance(destination.getCoordinates());
+        Coordinates coordinates = new Coordinates(start.getLatitude(), start.getLongitude());
+        return coordinates.distance(destination.getLatitude(), destination.getLongitude());
     }
 
     public String toString() {

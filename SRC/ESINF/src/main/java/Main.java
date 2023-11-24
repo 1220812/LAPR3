@@ -1,5 +1,7 @@
 import Algorithm.Algorithms;
+import Domain.Hub;
 import FileReader.ReaderFiles;
+import Structure.MapGraph;
 import US01.NetworkBuilder;
 import US03.MinimumRoute;
 
@@ -11,21 +13,24 @@ public class Main {
 
         ReaderFiles importer = new ReaderFiles();
 
-        importer.importLocalData("C:\\Users\\Utilizador\\Desktop\\Sem3pi202324_g081\\ESINF\\src\\main\\resources\\locais_big.csv");
-        importer.importLocalData("C:\\Users\\Utilizador\\Desktop\\Sem3pi202324_g081\\ESINF\\src\\main\\resources\\locais_small.csv");
+        importer.importLocalData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\ESINF\\src\\main\\resources\\locais_small.csv");
 
-        importer.importDistanceData("C:\\Users\\Utilizador\\Desktop\\Sem3pi202324_g081\\ESINF\\src\\main\\resources\\distancias_big.csv");
-        importer.importDistanceData("C:\\Users\\Utilizador\\Desktop\\Sem3pi202324_g081\\ESINF\\src\\main\\resources\\distancias_small.csv");
+        importer.importDistanceData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\ESINF\\src\\main\\resources\\distancias_small.csv");
 
 
         NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
 
-        MinimumRoute minimumRoute = new Algorithms().findTripManifestoForMostDistantVertex(networkBuilder.getDistribution(), 300e3);
+        MapGraph<Hub, Integer> mapGraph = networkBuilder.getDistribution();
+
+        mapGraph.printGraph();
+
+        MinimumRoute minimumRoute = new Algorithms().findTripManifestoForMostDistantVertex(networkBuilder.getDistribution(), 0);
 
         System.out.println("Hello World!");
 
         System.out.println(minimumRoute);
 
         System.out.println("Hello World!");
+
     }
 }

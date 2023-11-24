@@ -106,7 +106,7 @@ public class MoreGraphAlgorithms extends GraphAlgorithms {
                     start = v;
                     continue;
                 }
-                segments.add(new Structure.Auxiliary.Segment<>(start, v, (Double) graph.edge(start, v).getWeight()));
+                segments.add(new Structure.Auxiliary.Segment<>(start, v, (Integer) graph.edge(start, v).getWeight()));
                 start = v;
             }
         }
