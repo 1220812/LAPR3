@@ -1,4 +1,3 @@
-
 SELECT
     AgriculturalParcel.parcelID,
     Species.speciesName || ' , ' || Species.commonname as PLANT,

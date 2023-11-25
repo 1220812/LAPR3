@@ -1,31 +1,29 @@
--- Criar ou substituir a procedimento armazenado
-CREATE OR REPLACE PROCEDURE register_harvest_operation(
-    p_operation_id      IN NUMBER,
-    p_quantity           IN NUMBER,
-    p_harvest_date       IN DATE
-)
-AS
+CREATE OR REPLACE FUNCTION RegisterHarvestOperation(
+       p_plantationID IN OPERATION.PlantationplantationID%type,
+       p_date IN OPERATION."date"%type
+) RETURN NUMBER IS
+       v_OperationID OPERATION.operationID%type;
 BEGIN
-    -- Inserir uma nova operação de colheita
-    INSERT INTO Harvest (OperationoperationID2, quantity)
-    VALUES (p_operation_id, p_quantity);
 
-    -- Atualizar a data de colheita na tabela Operation
-    UPDATE Operation
-    SET "date" = p_harvest_date
-    WHERE operationID = p_operation_id;
+SELECT OperationID + 1 INTO v_OperationID FROM OPERATION ORDER BY 1 DESC FETCH FIRST ROW ONLY;
 
-    -- Commit para confirmar a transação
-    COMMIT;
+INSERT INTO Operation(operationID, "date", PlantationplantationID)
+VALUES (v_OperationID, p_date, p_plantationID);
 
-    -- Exibir mensagem de sucesso
-    DBMS_OUTPUT.PUT_LINE('Operação de colheita registrada com sucesso.');
+INSERT INTO Harvest(OperationoperationID2, quantity)
+VALUES (v_OperationID, NULL);
+
+COMMIT;
+
+DBMS_OUTPUT.PUT_LINE('Harvest operation registered successfully!');
+
+RETURN 1;
 
 EXCEPTION
     WHEN OTHERS THEN
-        -- Exibir mensagem de erro se ocorrer uma exceção
-        DBMS_OUTPUT.PUT_LINE('Erro ao registrar operação de colheita: ' || SQLERRM);
-        -- Rollback em caso de erro
-        ROLLBACK;
-END register_harvest_operation;
+
+        DBMS_OUTPUT.PUT_LINE('ERROR: ' || SQLCODE || ' - ' || SQLERRM);
+ROLLBACK;
+RETURN -1;
+END RegisterHarvestOperation;
 /
