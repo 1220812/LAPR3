@@ -1,24 +1,22 @@
 SELECT
-    p.comercialName AS product_name,
-    c.componentName,
-    cd.quantity,
-    o.date
+    AP.parcelID,
+    C.componentName,
+    CD.quantity,
+    O."date"
 FROM
-    Product p
+    AgriculturalParcel AP
         JOIN
-    Product_Operation po ON p.productID = po.ProductproductID
+    AgriculturalParcel_Plantation APP ON AP.parcelID = APP.AgriculturalParcelparcelID
         JOIN
-    Operation o ON po.OperationoperationID = o.operationID
+    AgriculturalParcel_Plantation_IrrigationSector APS ON APP.AgriculturalParcelparcelID = APS.AgriculturalParcel_PlantationAgriculturalParcelparcelID
+        AND APP.PlantationplantationID = APS.AgriculturalParcel_PlantationPlantationplantationID
         JOIN
-    Component_Datasheet cd ON o.operationID = cd.OperationoperationID
+    Operation O ON APP.PlantationplantationID = O.PlantationplantationID
         JOIN
-    Component c ON cd.ComponentcomponentID = c.componentID
+    Fertilization F ON O.operationID = F.OperationoperationID2
         JOIN
-    UnityOfMeasurement u ON cd.UnityOfMeasurementunityID = u.unityID
+    Component_Datasheet CD ON F.ProductproductID = CD.DatasheetcompositionID
+        JOIN
+    Component C ON CD.ComponentcomponentID = C.componentID
 WHERE
-    o.date BETWEEN :start_date AND :end_date
-  AND o.PlantationCyclecycleID IN (
-    SELECT cycleID
-    FROM Plantation
-    WHERE AgriculturalParcelparcelID = :parcel_id
-);
+    O."date" BETWEEN TO_DATE('2023-01-01', 'yyyy-mm-dd') AND TO_DATE('2023-12-31', 'yyyy-mm-dd');
