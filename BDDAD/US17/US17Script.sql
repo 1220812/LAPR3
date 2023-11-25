@@ -1,22 +1,24 @@
+
 SELECT
-    AP.parcelID,
-    C.componentName,
-    CD.quantity,
-    O."date"
+    p.comercialName AS Product_Name,
+    c.componentName AS Component_Name,
+    cd.quantity AS Quantity
 FROM
-    AgriculturalParcel AP
+    ApplicationType ap
         JOIN
-    AgriculturalParcel_Plantation APP ON AP.parcelID = APP.AgriculturalParcelparcelID
+    ApplicationType_Product ap_p ON ap.applicationID = ap_p.ApplicationTypeapplicationID
         JOIN
-    AgriculturalParcel_Plantation_IrrigationSector APS ON APP.AgriculturalParcelparcelID = APS.AgriculturalParcel_PlantationAgriculturalParcelparcelID
-        AND APP.PlantationplantationID = APS.AgriculturalParcel_PlantationPlantationplantationID
+    Product p ON ap_p.ProductproductID = p.productID
         JOIN
-    Operation O ON APP.PlantationplantationID = O.PlantationplantationID
+    Fertilization f ON p.productID = f.ProductproductID
         JOIN
-    Fertilization F ON O.operationID = F.OperationoperationID2
+    Operation o ON f.OperationoperationID2 = o.operationID
         JOIN
-    Component_Datasheet CD ON F.ProductproductID = CD.DatasheetcompositionID
+    Component_Datasheet cd ON p.productID = cd.DatasheetcompositionID
         JOIN
-    Component C ON CD.ComponentcomponentID = C.componentID
+    Component c ON cd.ComponentcomponentID = c.componentID
+        JOIN
+    AgriculturalParcel_Plantation_IrrigationSector ap_p_is ON o.PlantationplantationID = ap_p_is.AgriculturalParcel_PlantationPlantationplantationID
 WHERE
-    O."date" BETWEEN TO_DATE('2023-01-01', 'yyyy-mm-dd') AND TO_DATE('2023-12-31', 'yyyy-mm-dd');
+        ap_p_is.AgriculturalParcel_PlantationAgriculturalParcelparcelID = :parcelID
+        AND o.date BETWEEN :startDate AND :endDate;

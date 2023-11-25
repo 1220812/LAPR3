@@ -1,18 +1,22 @@
 SELECT
-    TO_DATE(O."date", 'YYYY-MM') AS month_year,
+    TO_CHAR(O."date", 'YYYY-MM') AS month,
     AP.parcelID,
-    SUM(O.quantity) AS total_irrigation
+    SUM(W.duration) AS totalWatering
 FROM
-    Operation O
-        JOIN
-    Plantation P ON O.PlantationCyclecycleID = P.cycleID
-        JOIN
-    AgriculturalParcel AP ON P.AgriculturalParcelparcelID = AP.parcelID
+    Watering W
+    JOIN
+    Operation O ON W.OperationoperationID2 = O.operationID
+    JOIN
+    IrrigationSector ISec ON W.IrrigationSectorsetorID = ISec.setorID
+    JOIN
+    AgriculturalParcel_Plantation APP ON O.PlantationplantationID = APP.PlantationplantationID
+    JOIN
+    AgriculturalParcel AP ON APP.AgriculturalParcelparcelID = AP.parcelID
 WHERE
-    O."date" BETWEEN TO_DATE('2023-01-01', 'YYYY-MM-DD') AND TO_DATE('2023-12-31', 'YYYY-MM-DD')
+    O."date" BETWEEN TO_DATE('2000/01/01', 'yyyy-mm-dd') AND TO_DATE('2023/11/25', 'yyyy-mm-dd')
 GROUP BY
-    TO_DATE(O."date", 'YYYY-MM'),
+    TO_CHAR(O."date", 'YYYY-MM'),
     AP.parcelID
 ORDER BY
-    TO_DATE(O."date", 'YYYY-MM'),
+    month,
     AP.parcelID;
