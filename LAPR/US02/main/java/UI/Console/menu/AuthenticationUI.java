@@ -1,6 +1,6 @@
-package UI.Console.menu;
+package java.UI.Console.menu;
 
-import UI.Console.Utils.Utils;
+import java.UI.Console.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

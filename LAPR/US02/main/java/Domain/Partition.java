@@ -1,4 +1,4 @@
-package Domain;
+package java.Domain;
 
 public class Partition {
     private String designation;

@@ -1,4 +1,4 @@
-package Domain;
+package java.Domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;

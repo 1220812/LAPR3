@@ -1,7 +1,7 @@
-package UI.Console;
+package java.UI.Console;
 
-import Domain.ResultEntry;
-import Readers.ReadInstructionsFromFile;
+import java.Domain.ResultEntry;
+import java.Readers.ReadInstructionsFromFile;
 
 import java.io.File;
 import java.io.IOException;

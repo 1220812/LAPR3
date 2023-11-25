@@ -38,7 +38,7 @@ class ReaderFilesTest {
     @Test
     void importDistanceBigData() {
         try {
-            ReaderFiles.importDistanceData("src/main/resources/distancias_big.csv");
+            ReaderFiles.importDistanceData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\ESINF\\src\\main\\resources\\distancias_big.csv");
 
             networkBuilder = NetworkBuilder.getInstance();
 

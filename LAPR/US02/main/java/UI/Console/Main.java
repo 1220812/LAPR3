@@ -1,5 +1,5 @@
-package UI.Console;
-import UI.Console.menu.MainMenuUI;
+package java.UI.Console;
+import java.UI.Console.menu.MainMenuUI;
 
 /**
  * The type Main.
