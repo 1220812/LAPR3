@@ -1,38 +1,31 @@
+-- Criar ou substituir a procedimento armazenado
 CREATE OR REPLACE PROCEDURE register_harvest_operation(
-    p_date IN OPERATION."date"%type,
-    p_quantity IN OPERATION.QUANTITY%type,
-    p_unity_id IN OPERATION.UNITYOFMEASUREMENTUNITYID%type,
-    p_operation_type_id IN OPERATION.OPERATIONTYPEOPERATIONTYPEID%type,
-    p_cycle_id IN OPERATION.PLANTATIONCYCLECYCLEID%type
+    p_operation_id      IN NUMBER,
+    p_quantity           IN NUMBER,
+    p_harvest_date       IN DATE
 )
 AS
-
-    v_opertionId Operation.operationid%type;
-
-
 BEGIN
+    -- Inserir uma nova operação de colheita
+    INSERT INTO Harvest (OperationoperationID2, quantity)
+    VALUES (p_operation_id, p_quantity);
 
-    SELECT OPERATIONID + 1 into v_opertionId FROM OPERATION ORDER BY 1 DESC FETCH FIRST ROW ONLY;
+    -- Atualizar a data de colheita na tabela Operation
+    UPDATE Operation
+    SET "date" = p_harvest_date
+    WHERE operationID = p_operation_id;
 
-    INSERT INTO Operation (operationID,
-                           "date",
-                           quantity,
-                           UnityOfMeasurementunityID,
-                           OperationTypeoperationTypeID,
-                           PlantationCyclecycleID)
-    VALUES (v_opertionId,
-            p_date,
-            p_quantity,
-            p_unity_id,
-            p_operation_type_id,
-            p_cycle_id);
-
+    -- Commit para confirmar a transação
     COMMIT;
 
-    DBMS_OUTPUT.PUT_LINE('Harvest operation registered successfully.');
+    -- Exibir mensagem de sucesso
+    DBMS_OUTPUT.PUT_LINE('Operação de colheita registrada com sucesso.');
+
 EXCEPTION
     WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        -- Exibir mensagem de erro se ocorrer uma exceção
+        DBMS_OUTPUT.PUT_LINE('Erro ao registrar operação de colheita: ' || SQLERRM);
+        -- Rollback em caso de erro
         ROLLBACK;
 END register_harvest_operation;
-
+/
