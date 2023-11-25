@@ -113,9 +113,5 @@ public class Hub {
         return String.format("Hub in Location '%s', Coordenadas = %s", hubId, coordinates);
     }
 
-    @Override
-    public String toString (){
-        return hubId;
-    }
 }
 
