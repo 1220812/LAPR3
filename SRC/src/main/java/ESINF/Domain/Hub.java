@@ -2,8 +2,6 @@ package ESINF.Domain;
 
 import java.util.Objects;
 
-import static US03.MinimumRoute.M_TO_KM_CONVERSION;
-
 /**
  * The type Hub.
  */
