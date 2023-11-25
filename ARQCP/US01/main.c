@@ -11,7 +11,7 @@ int main(){
 	
 	extract_token(input, token, &output);
 	
-	printf("Extracted value: %d.%02d\n", output/100, output%100);
+	printf("Extracted value: %02d.%02d\n", (output/100)%100, output%100);
 	
 	return 0;
 }
