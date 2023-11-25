@@ -5,6 +5,7 @@ import LAPR.US02.main.java.Domain.Partition;
 import LAPR.US02.main.java.Domain.ResultEntry;
 import LAPR.US02.main.java.Domain.SprinklingSystem;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
