@@ -2,7 +2,14 @@ package Domain;
 
 import java.util.Objects;
 
+import static US03.MinimumRoute.M_TO_KM_CONVERSION;
+
+/**
+ * The type Hub.
+ */
 public class Hub {
+    private static final int R = 6371;
+
     /**
      * The unique identifier of the hub.
      */
@@ -104,6 +111,11 @@ public class Hub {
      *
      * @return A hash code value for this object.
      */
+
+    public double distanceTo(Hub otherHub) {
+        Coordinates thisCoordinates = new Coordinates(this.getLongitude(), this.getLatitude());
+        return thisCoordinates.distance(otherHub.getLongitude(), otherHub.getLatitude()) ;
+    }
     @Override
     public int hashCode() {
         return Objects.hash(hubId, coordinates);
@@ -112,6 +124,7 @@ public class Hub {
     public String toString() {
         return String.format("Hub in Location '%s', Coordenadas = %s", hubId, coordinates);
     }
+
 
 }
 

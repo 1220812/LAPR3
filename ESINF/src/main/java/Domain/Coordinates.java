@@ -69,7 +69,7 @@ public class Coordinates {
     }
     public double distance(double longitude1, double latitude1) {
         double phi1 = latitude * Math.PI / 180;
-        double phi2 = latitude * Math.PI / 180;
+        double phi2 = latitude1 * Math.PI / 180; // Corrigindo para latitude1
         double deltaPhi = (latitude1 - latitude) * Math.PI / 180;
         double deltaLambda = (longitude1 - longitude) * Math.PI / 180;
         double a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
@@ -79,8 +79,10 @@ public class Coordinates {
         return R * c;
     }
 
+
     @Override
     public String toString() {
         return String.format("(Latitude: %.2f; Longitude: %.2f)", latitude, longitude);
     }
+
 }
