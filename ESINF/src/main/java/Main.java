@@ -13,9 +13,9 @@ public class Main {
 
         ReaderFiles importer = new ReaderFiles();
 
-        importer.importLocalData("C:\\Users\\Utilizador\\Desktop\\sem3pi2023_24_g081_novo\\SRC\\ESINF\\src\\main\\resources\\locais_small.csv");
+        importer.importLocalData("C:\\Users\\Utilizador\\Desktop\\sem3pi2023_24_g081_novo\\ESINF\\src\\main\\resources\\locais_small.csv");
 
-        importer.importDistanceData("C:\\Users\\Utilizador\\Desktop\\sem3pi2023_24_g081_novo\\SRC\\ESINF\\src\\main\\resources\\distancias_small.csv");
+        importer.importDistanceData("C:\\Users\\Utilizador\\Desktop\\sem3pi2023_24_g081_novo\\ESINF\\src\\main\\resources\\distancias_small.csv");
 
 
         NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
