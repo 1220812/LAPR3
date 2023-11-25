@@ -1,0 +1,227 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam line type polyline
+
+title Domain Model
+hide circle
+hide methods
+
+class AgriculturalParcel {
+parcelID
+parcelDesignation
+area
+}
+
+class Plantation {
+plantationID
+startDate
+endDate
+quantity
+UnityOfMeasurementunityID
+CropcropID
+}
+
+class Operation {
+operationID
+date
+PlantationplantationID
+}
+
+class Building {
+buildingID
+designation
+}
+
+class UnityOfMeasurement {
+unityID
+name
+}
+
+class Crop {
+cropID
+variety
+Crop TypeCropTypeID
+SpeciesspeciesID
+}
+
+class Species {
+speciesID
+speciesName
+commonName
+plantationPeriod
+pruningPeriod
+floweringPeriod
+harvestPeriod
+}
+
+class CropType {
+cropTypeID
+typeName
+}
+
+class Manufacturer {
+manufacturerID
+name
+}
+
+class FormulationType {
+formulationTypeID
+formulationTypeName
+}
+
+class Classification {
+classificationID
+classificationName
+}
+
+class ApplicationType {
+applicationID
+name
+}
+
+class Product {
+productID
+commercialName
+ClassificationclassificationID
+FormulationTypeformultationTypeID
+ManufacturermanufacturerID
+}
+
+class Datasheet{
+compositionID
+ProductpriductID2
+}
+
+class Component{
+componentID
+componentName
+}
+
+class Fertilization{
+OperationoperationID2
+ProductproductID
+Mode
+}
+
+class Weed{
+OperationoperationID2
+}
+
+class ToPlant{
+OperationoperationID2
+}
+
+class Harvest{
+OperationoperationID2
+quantity
+}
+
+class Sowing{
+OperationoperationID2
+}
+
+class Pruning{
+OperationoperationID2
+}
+
+class Incorporation{
+OperationoperationID2
+}
+
+class Watering{
+duration
+inicialHour
+OperationoperationID2
+IrrigationSectorsetorID
+}
+
+class DispersionTypes{
+dispersionID
+designation
+}
+
+class IrrigationSector{
+setorID
+startDate
+endDate
+maximumFlow
+DispersionTypesdispersionID
+}
+
+
+class Storage{
+area
+BuildingbuildingID
+UnityOfMeasurementunityID
+}
+
+class WateringSystem{
+capacity
+BuildingbuildingID
+UnityOfMeasurementunityID
+}
+
+class Mill{
+BuildingbuildingID
+}
+
+class Garage{
+area
+BuildingbuildingID
+UnityOfMeasurementunityID
+}
+
+class Storage{
+area
+BuildingbuildingID
+UnityOfMeasurementunityID
+}
+
+AgriculturalParcel "*" -- "*" Plantation: has >
+
+Plantation "*" -- "1" UnityOfMeasurement: has an >
+Plantation "1" --- "*" Operation: has >
+Plantation "*" -- "1" Crop: is in <
+
+IrrigationSector "*" -- "*" Plantation : water >
+IrrigationSector "*" -- "1" DispersionTypes : has >
+
+IrrigationSector "1" -- "*" Watering : procedures >
+
+Watering "*" -- "1" Operation : is an >
+Pruning "*" -- "1" Operation : is an >
+Sowing "*" -- "1" Operation : is an >
+Harvest "*" -- "1" Operation : is an >
+Weed "*" --- "1" Operation : is an >
+Fertilization "*" --- "1" Operation : is an >
+Incorporation "*" -- "1" Operation : is an >
+ToPlant "*" -- "1" Operation : is an >
+
+Building "1" -- "1" Garage: can be >
+Building "1" -- "1" Storage: can be >
+Building "1" -- "1" Mill: can be >
+Building "1" -- "1" Garage: can be >
+Building "1" -- "1" WateringSystem: can be >
+
+Garage "*" -- "1" UnityOfMeasurement : has
+
+WateringSystem "*" -- "1" UnityOfMeasurement : has
+
+Storage "*" -- "1" UnityOfMeasurement : has
+
+Crop "*" -- "1" Species : has a >
+Crop "*" -- "1" CropType: has a >
+
+Product "*" -- "1" Manufacturer : has a >
+Product "*" -- "1" FormulationType : has a >
+Product "*" -- "1" Classification : has a >
+Product "*" -- "*" ApplicationType : has >
+Product "1" -- "1" Datasheet : has a >
+Product "*" -- "*" Fertilization : are used in >
+
+Datasheet "*" -- "*" Component : has >
+
+
+@enduml
