@@ -14,6 +14,19 @@ public class MapGraph<V, E> extends CommonGraph<V, E> {
 
     final private Map<V, MapVertex<V, E>> mapVertices;  // all the Vertices of the graph
 
+    //TODO: REMOVER METODO DE TESTE
+
+    //USEI04
+    public void printGraph() {
+        for (V vertex : mapVertices.keySet()) {
+            System.out.print(vertex + " -> ");
+            for (Edge<V, E> edge : mapVertices.get(vertex).getAllOutEdges()) {
+                System.out.print("(" + edge.getVDest() + ", " + edge.getWeight() + ") ");
+            }
+            System.out.println();
+        }
+    }
+
 
     /**
      * Constructs an empty graph (either undirected or directed).

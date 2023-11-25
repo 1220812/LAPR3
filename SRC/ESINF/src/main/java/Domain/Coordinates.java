@@ -78,4 +78,9 @@ public class Coordinates {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
     }
+
+    @Override
+    public String toString() {
+        return String.format("(Latitude: %.2f; Longitude: %.2f)", latitude, longitude);
+    }
 }
