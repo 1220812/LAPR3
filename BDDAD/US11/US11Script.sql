@@ -1,4 +1,4 @@
-CREATE OR REPLACE PROCEDURE RegisterPruningOperation(
+CREATE OR REPLACE PROCEDURE RegisterSowingOperation(
        p_plantationID IN OPERATION.PlantationplantationID%type,
        p_date IN OPERATION."date"%type
 ) AS
@@ -9,15 +9,15 @@ SELECT OperationID + 1 INTO v_OperationID FROM OPERATION ORDER BY 1 DESC FETCH F
 INSERT INTO Operation(operationID, "date", PlantationplantationID)
 VALUES (v_OperationID, p_date, p_plantationID);
 
-INSERT INTO Pruning (OperationoperationID2)
+INSERT INTO Sowing (OperationoperationID2)
 VALUES (v_OperationID);
 
 COMMIT;
 
-DBMS_OUTPUT.PUT_LINE('Pruning operation registered successfully!');
+DBMS_OUTPUT.PUT_LINE('Sowing operation registered successfully!');
 EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('ERROR: ' || SQLCODE || ' - ' || SQLERRM);
 ROLLBACK;
-END RegisterPruningOperation;
+END RegisterSowingOperation;
 /
