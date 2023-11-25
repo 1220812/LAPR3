@@ -1,0 +1,3 @@
+INSERT INTO Operation VALUES (500, TO_DATE('2023-11-24', 'YYYY-MM-DD'), 123);
+
+INSERT INTO Fertilization VALUES (500, 456, 'Solo');
