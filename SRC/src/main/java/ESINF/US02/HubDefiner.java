@@ -1,4 +1,4 @@
-package US02;
+package ESINF.US02;
 
 import ESINF.Domain.Hub;
 import ESINF.Structure.Edge;
@@ -57,20 +57,7 @@ public class HubDefiner {
 
     // Método para calcular e armazenar a centralidade de cada hub no mapa
     private void setCentrality() {
-        // Calcula a centralidade de intermediação usando o algoritmo de Brandes
-        VertexScoringAlgorithm.CentralityScoringResult<Hub, Double> centralityResult = calculateBetweennessCentrality(graphCentrality);
 
-        // Preenche o mapa com os resultados da centralidade
-        for (Hub vertex : graphCentrality.vertices()) {
-            double centrality = centralityResult.getVertexScore(vertex);
-            sortedHubsCentrality.put(vertex, centrality);
-        }
-    }
-
-    // Método para calcular a centralidade de intermediação usando o algoritmo de Brandes
-    private static VertexScoringAlgorithm.CentralityScoringResult<Hub, Double> calculateBetweennessCentrality(Graph<Hub, DefaultWeightedEdge> graph) {
-        BrandesCentrality<Hub, DefaultWeightedEdge> brandes = new BrandesCentrality<>(graph);
-        return brandes.getScores();
     }
 
 
