@@ -1,4 +1,4 @@
-package LAPR.US02.main.java.UI.Console.Utils;
+package LAPR.US02_US03.UI.Console.Utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

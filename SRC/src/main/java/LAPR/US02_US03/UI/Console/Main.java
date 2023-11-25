@@ -1,5 +1,5 @@
-package LAPR.US02.main.java.UI.Console;
-import LAPR.US02.main.java.UI.Console.menu.MainMenuUI;
+package LAPR.US02_US03.UI.Console;
+import LAPR.US02_US03.UI.Console.menu.MainMenuUI;
 
 /**
  * The type Main.

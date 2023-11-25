@@ -1,11 +1,10 @@
-package LAPR.US02.main.java.UI.Console;
+package LAPR.US02_US03.UI.Console;
 
 
 
-import LAPR.US02.main.java.Domain.ResultEntry;
-import LAPR.US02.main.java.Readers.ReadInstructionsFromFile;
+import LAPR.US02_US03.Domain.ResultEntry;
+import LAPR.US02_US03.Readers.ReadInstructionsFromFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;

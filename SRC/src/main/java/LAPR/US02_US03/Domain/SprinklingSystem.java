@@ -1,4 +1,4 @@
-package LAPR.US02.main.java.Domain;
+package LAPR.US02_US03.Domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;

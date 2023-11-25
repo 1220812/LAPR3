@@ -1,8 +1,9 @@
-package LAPR.US02.main.java.UI.Console.menu;
+package LAPR.US02_US03.UI.Console.menu;
 
 
-import LAPR.US02.main.java.UI.Console.IrrigationUI;
-import LAPR.US02.main.java.UI.Console.Utils.Utils;
+import LAPR.US02_US03.UI.Console.ConsumeUI;
+import LAPR.US02_US03.UI.Console.IrrigationUI;
+import LAPR.US02_US03.UI.Console.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,8 @@ public class ProductOwnerUI implements Runnable {
     public void run() {
         List<MenuItem> options = new ArrayList<>();
         options.add(new MenuItem("Simulate irrigation system", new IrrigationUI()));
+        options.add(new MenuItem("Consume irrigation plan", new ConsumeUI()));
+
 
 
         int option = 0;

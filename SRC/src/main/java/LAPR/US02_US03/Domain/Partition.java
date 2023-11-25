@@ -1,4 +1,4 @@
-package LAPR.US02.main.java.Domain;
+package LAPR.US02_US03.Domain;
 
 public class Partition {
     private String designation;

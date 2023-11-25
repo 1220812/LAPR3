@@ -1,9 +1,9 @@
-package LAPR.US02.main.java.Readers;
+package LAPR.US02_US03.Readers;
 
 
-import LAPR.US02.main.java.Domain.Partition;
-import LAPR.US02.main.java.Domain.ResultEntry;
-import LAPR.US02.main.java.Domain.SprinklingSystem;
+import LAPR.US02_US03.Domain.ResultEntry;
+import LAPR.US02_US03.Domain.SprinklingSystem;
+import LAPR.US02_US03.Domain.Partition;
 
 import java.io.File;
 import java.io.IOException;
