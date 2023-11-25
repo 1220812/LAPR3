@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GraphAlgorithmsTest {
-//USEI04
+
+    //USEI04
     @Test
     void minimumSpanningTree_NegativeWeights() {
         MapGraph<String, Integer> graphWithNegativeWeights = new MapGraph<>(false);
