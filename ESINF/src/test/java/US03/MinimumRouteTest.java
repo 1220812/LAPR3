@@ -1,6 +1,7 @@
 package US03;
 
 import Algorithm.Algorithms;
+import Domain.Coordinates;
 import Domain.Hub;
 import Structure.Auxiliary.Path;
 import Structure.MapGraph;
@@ -74,5 +75,53 @@ public class MinimumRouteTest {
 
         // Assertions
         assertNull(result);
- }
+    }
+    @Test
+    void testGetNumberOfStops() {
+        // Criar uma instância de MinimumRoute para teste
+        MinimumRoute minimumRoute = new MinimumRoute();
+
+        // Inicializar a lista de estações carregadas
+        minimumRoute.getCharged().add(new Hub("CT1", 0, 0));
+        minimumRoute.getCharged().add(new Hub("CT2", 1, 1));
+        minimumRoute.getCharged().add(new Hub("CT3", 2, 2));
+
+        // Verificar se o número de estações carregadas corresponde ao esperado
+        assertEquals(3, minimumRoute.getNumberOfStops());
+    }
+
+    @Test
+    void testDistanceEquals() {
+        // Caso de teste 1: Distância entre coordenadas iguais deve ser zero
+        Coordinates route1 = new Coordinates(12, 12);
+        assertEquals(0, route1.distance(12, 12), 0.001);
+
+        // Caso de teste 2: Distância entre coordenadas diferentes
+        Coordinates route2 = new Coordinates(0, 0);
+        assertEquals(157255.36937855952, route2.distance(1, 1), 0.001);
+
+        // Caso de teste 3: Distância entre coordenadas com latitudes e longitudes negativas
+        Coordinates route3 = new Coordinates(-10, -10);
+        assertEquals(156065.3500008355, route3.distance(-9, -9), 0.001);
+
+    }
+
+    @Test
+    void testDistanceNotEquals() {
+        // Caso de teste 1: Distância entre coordenadas iguais deve ser zero
+        Coordinates route1 = new Coordinates(12, 12);
+        assertNotEquals(157255.36937855952, route1.distance(12, 12), 0.001);
+
+        // Caso de teste 2: Distância entre coordenadas diferentes
+        Coordinates route2 = new Coordinates(0, 0);
+        assertNotEquals(0, route2.distance(1, 1), 0.001);
+
+        // Caso de teste 3: Distância entre coordenadas com latitudes e longitudes negativas
+        Coordinates route3 = new Coordinates(-10, -10);
+        assertNotEquals(-156065.3500008355, route3.distance(-9, -9), 0.001);
+
+
+
+    }
+
 }

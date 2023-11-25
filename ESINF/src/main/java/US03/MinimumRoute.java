@@ -7,10 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @AllArgsConstructor
@@ -33,8 +30,9 @@ public class MinimumRoute {
     private Set<Hub> charged;
     private double totalDistance;
 
-    public MinimumRoute() {
 
+    public MinimumRoute() {
+        this.charged = new HashSet<>();
     }
 
 
@@ -53,6 +51,7 @@ public class MinimumRoute {
         sb.append("Start: ").append(destination.getHubId()).append("\n");
         sb.append("Destination: ").append(start.getHubId()).append("\n");
         sb.append(String.format("Distance Traveled: %.3fkm", totalDistance / M_TO_KM_CONVERSION)).append("\n");
+        sb.append(String.format("Distance Traveled in total: %.3fkm", distance() / M_TO_KM_CONVERSION)).append("\n");
         sb.append("Route:").append("\n");
 
         // Inverte a lista route
@@ -85,8 +84,6 @@ public class MinimumRoute {
         sb.append("============================================").append("\n");
         return sb.toString();
     }
-
-
 
 
 
