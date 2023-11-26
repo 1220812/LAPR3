@@ -11,8 +11,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Algorithms.
+ */
 public class Algorithms {
 
+    /**
+     * Find trip manifesto for most distant vertex minimum route.
+     *
+     * @param graph           the graph
+     * @param vehicleAutonomy the vehicle autonomy
+     * @return the minimum route
+     */
     public MinimumRoute findTripManifestoForMostDistantVertex(MapGraph<Hub, Integer> graph, double vehicleAutonomy) {
         Path<Hub> path = MoreGraphAlgorithms.mostDistantVertexOnGraph(graph);
         double autonomyLeft = vehicleAutonomy;

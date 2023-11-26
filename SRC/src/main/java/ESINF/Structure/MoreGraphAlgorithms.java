@@ -11,8 +11,14 @@ import lombok.Getter;
 import javax.swing.text.Segment;
 import java.util.*;
 
+/**
+ * The type More graph algorithms.
+ */
 public class MoreGraphAlgorithms extends GraphAlgorithms {
 
+    /**
+     * The constant THREAD_LIMIT.
+     */
     public static final int THREAD_LIMIT = 8;
 
 
@@ -38,6 +44,14 @@ public class MoreGraphAlgorithms extends GraphAlgorithms {
     }
 
 
+    /**
+     * Calculate centrality of all vertex map.
+     *
+     * @param <V>   the type parameter
+     * @param <E>   the type parameter
+     * @param graph the graph
+     * @return the map
+     */
     public static <V, E> Map<V, Counters> calculateCentralityOfAllVertex(Graph<V, E> graph) {
         Map<V, Counters> result = new HashMap<>();
         Map<V, Set<V>> hitMap = new HashMap<>();
@@ -67,6 +81,14 @@ public class MoreGraphAlgorithms extends GraphAlgorithms {
     }
 
 
+    /**
+     * Most distant vertex on graph path.
+     *
+     * @param <V>   the type parameter
+     * @param <E>   the type parameter
+     * @param graph the graph
+     * @return the path
+     */
     public static <V, E> Path<V> mostDistantVertexOnGraph(Graph<V, E> graph) {
         double distance = Double.MIN_VALUE;
         Pair<V, V> pair = null;
@@ -117,6 +139,14 @@ public class MoreGraphAlgorithms extends GraphAlgorithms {
         }
     }
 
+    /**
+     * Minimal spanning tree graph .
+     *
+     * @param <V>   the type parameter
+     * @param <E>   the type parameter
+     * @param graph the graph
+     * @return the graph
+     */
     public static <V, E > Graph < V, E > minimalSpanningTree(Graph < V, E > graph) {
         Graph<V, E> result = new MyGraph<>(graph.isDirected());
         Set<Edge<V, E>> edges = new TreeSet<>();
@@ -143,6 +173,15 @@ public class MoreGraphAlgorithms extends GraphAlgorithms {
         return result;
     }
 
+    /**
+     * Hierarchical clustering set .
+     *
+     * @param <V>              the type parameter
+     * @param <E>              the type parameter
+     * @param graph            the graph
+     * @param numberOfClusters the number of clusters
+     * @return the set
+     */
     public static <V, E > Set < Cluster < V >> hierarchicalClustering(Graph < V, E > graph, int numberOfClusters){
         Set<Cluster<V>> clusters = new HashSet<>();
 
@@ -171,19 +210,43 @@ public class MoreGraphAlgorithms extends GraphAlgorithms {
         private Map<V, Set<V>> bundle = new HashMap<>();
         private int target;
 
+        /**
+         * Instantiates a new Bundle.
+         *
+         * @param target the target
+         */
         public Bundle(int target) {
             this.target = target;
         }
 
+        /**
+         * Are on same bundle boolean.
+         *
+         * @param v1 the v 1
+         * @param v2 the v 2
+         * @return the boolean
+         */
         public boolean areOnSameBundle(V v1, V v2) {
             if (!bundle.containsKey(v1) || !bundle.containsKey(v2)) return false;
             return bundle.get(v1).contains(v2);
         }
 
+        /**
+         * Is complete boolean.
+         *
+         * @return the boolean
+         */
         public boolean isComplete() {
             return largestBundle != null && largestBundle.size() >= target;
         }
 
+        /**
+         * Add to bundle boolean.
+         *
+         * @param v1 the v 1
+         * @param v2 the v 2
+         * @return the boolean
+         */
         public boolean addToBundle(V v1, V v2) {
             if (areOnSameBundle(v1, v2)) return false;
             if (!bundle.containsKey(v1)) {
@@ -205,6 +268,13 @@ public class MoreGraphAlgorithms extends GraphAlgorithms {
         }
 
 
+        /**
+         * Merge set.
+         *
+         * @param v1 the v 1
+         * @param v2 the v 2
+         * @return the set
+         */
         public Set<V> merge(V v1, V v2) {
             Set<V> bundle1 = bundle.get(v1);
             Set<V> bundle2 = bundle.get(v2);
@@ -219,11 +289,22 @@ public class MoreGraphAlgorithms extends GraphAlgorithms {
 
     }
 
+    /**
+     * The type Cluster.
+     *
+     * @param <V> the type parameter
+     */
     @Getter
     public static class Cluster<V> {
         private Set<V> nodes = new HashSet<>();
 
 
+        /**
+         * Contains boolean.
+         *
+         * @param element the element
+         * @return the boolean
+         */
         public boolean contains(V element) {
             return nodes.contains(element);
         }

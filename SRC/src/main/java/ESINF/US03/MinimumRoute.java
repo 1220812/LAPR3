@@ -10,6 +10,9 @@ import lombok.Getter;
 import java.util.*;
 
 
+/**
+ * The type Minimum route.
+ */
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -17,9 +20,9 @@ import java.util.*;
 public class MinimumRoute {
 
 
-
-
-
+    /**
+     * The constant M_TO_KM_CONVERSION.
+     */
     public static final int M_TO_KM_CONVERSION = 1000;
     @EqualsAndHashCode.Include
     private Hub start;
@@ -31,15 +34,28 @@ public class MinimumRoute {
     private double totalDistance;
 
 
+    /**
+     * Instantiates a new Minimum route.
+     */
     public MinimumRoute() {
         this.charged = new HashSet<>();
     }
 
 
+    /**
+     * Gets number of stops.
+     *
+     * @return the number of stops
+     */
     public int getNumberOfStops() {
         return charged.size();
     }
 
+    /**
+     * Distance double.
+     *
+     * @return the double
+     */
     public double distance() {
         Coordinates coordinates = new Coordinates(start.getLatitude(), start.getLongitude());
         return coordinates.distance(destination.getLatitude(), destination.getLongitude());

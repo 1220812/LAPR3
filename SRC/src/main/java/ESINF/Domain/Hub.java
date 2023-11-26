@@ -3,7 +3,6 @@ package ESINF.Domain;
 import java.util.Objects;
 
 
-
 /**
  * The type Hub.
  */
@@ -30,18 +29,19 @@ public class Hub {
     /**
      * Constructs a new `Hub` instance with the specified hubId and coordinates.
      *
-     * @param hubId The unique identifier of the hub.
+     * @param hubId       The unique identifier of the hub.
      * @param coordinates The geographical coordinates of the hub.
      */
     public Hub(String hubId, Coordinates coordinates){
         this.hubId = hubId;
         this.coordinates = coordinates;
     }
+
     /**
      * Constructs a new `Hub` instance with the specified hubId and coordinates.
      *
-     * @param hubId The unique identifier of the hub.
-     * @param latitude The geographical latitude of the hub.
+     * @param hubId     The unique identifier of the hub.
+     * @param latitude  The geographical latitude of the hub.
      * @param longitude The geographical longitude of the hub.
      */
     public Hub(String hubId, double latitude, double longitude){
@@ -49,6 +49,7 @@ public class Hub {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
     /**
      * Constructs a new `Hub` instance with the specified hubId.
      *
@@ -60,36 +61,72 @@ public class Hub {
 
     /**
      * Gets
+     *
+     * @return the coordinates
      */
     public Coordinates getCoordinates() {
         return coordinates;
     }
 
+    /**
+     * Gets longitude.
+     *
+     * @return the longitude
+     */
     public double getLongitude() {
         return longitude;
     }
 
+    /**
+     * Gets latitude.
+     *
+     * @return the latitude
+     */
     public double getLatitude() {
         return latitude;
     }
 
+    /**
+     * Gets hub id.
+     *
+     * @return the hub id
+     */
     public String getHubId() {
         return hubId;
     }
 
     /**
      * Sets
+     *
+     * @param coordinates the coordinates
      */
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
 
+    /**
+     * Sets longitude.
+     *
+     * @param longitude the longitude
+     */
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+    /**
+     * Sets latitude.
+     *
+     * @param latitude the latitude
+     */
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
+    /**
+     * Sets hub id.
+     *
+     * @param hubId the hub id
+     */
     public void setHubId(String hubId) {
         this.hubId = hubId;
     }
@@ -106,12 +143,13 @@ public class Hub {
         Hub hub = (Hub) o;
         return Objects.equals(hubId, hub.hubId) && Objects.equals(coordinates, hub.coordinates);
     }
+
     /**
      * Returns a hash code value for the object.
      *
+     * @param otherHub the other hub
      * @return A hash code value for this object.
      */
-
     public double distanceTo(Hub otherHub) {
         Coordinates thisCoordinates = new Coordinates(this.getLongitude(), this.getLatitude());
         return thisCoordinates.distance(otherHub.getLongitude(), otherHub.getLatitude()) ;
