@@ -85,7 +85,7 @@ public class HubDefiner {
         for (Hub vertice : sortedHubsInfluence.keySet()) {
             if (i < n) {
                 sb.append(String.format("|%7s |", vertice.getHubId()));
-                sb.append(String.format("%25s |", sortedHubsInfluence.get(vertice)));
+                sb.append(String.format("%15s |", sortedHubsInfluence.get(vertice)));
                 sb.append("\n");
             }
             i++;
@@ -139,7 +139,7 @@ public class HubDefiner {
         for (Hub vertex : sortedHubsProximity.keySet()) {
             if (i < n) {
                 sb.append(String.format("|%7s |", vertex.getHubId()));
-                sb.append(String.format("%25s |", sortedHubsProximity.get(vertex)));
+                sb.append(String.format("%15s |", sortedHubsProximity.get(vertex)));
                 sb.append("\n");
             }
             i++;
@@ -174,8 +174,8 @@ public class HubDefiner {
 
             // Itera sobre todas as arestas de entrada para o vértice atual
             for (Edge edge : graphProximity.incomingEdges(vertex)) {
-                // Obtém o peso da aresta (presumindo que o peso seja um número real, como double)
-                double edgeWeight = (double) edge.getWeight();
+                // Obtém o peso da aresta (presumindo que o peso seja um número real, como int)
+                int edgeWeight = (int) edge.getWeight();
 
                 // Adiciona o peso da aresta à soma das distâncias
                 distance += edgeWeight;
