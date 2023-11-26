@@ -17,7 +17,6 @@ public class IrrigationUI implements Runnable {
         ReadInstructionsFromFile r = new ReadInstructionsFromFile();
         try {
             List<ResultEntry> result = r.readInformation("instructions.txt");
-            //new File("output.txt").createNewFile();
             PrintWriter pw = new PrintWriter("output.txt");
             pw.printf("%10s %10s %10s %10s %10s\n", "Dia", "Sector", "Duração", "Inicio", "Final");
             System.out.printf("%10s %10s %10s %10s %10s\n", "Dia", "Sector", "Duração", "Inicio", "Final");
