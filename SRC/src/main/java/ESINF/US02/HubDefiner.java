@@ -32,7 +32,7 @@ public class HubDefiner {
         for (Hub vertex : sortedHubsCentrality.keySet()) {
             if (i < n) {
                 sb.append(String.format("|%7s |", vertex.getHubId()));
-                sb.append(String.format("%15s |", sortedHubsCentrality.get(vertex)));
+                sb.append(String.format("%25s |", sortedHubsCentrality.get(vertex)));
                 sb.append("\n");
             }
             i++;
@@ -85,7 +85,7 @@ public class HubDefiner {
         for (Hub vertice : sortedHubsInfluence.keySet()) {
             if (i < n) {
                 sb.append(String.format("|%7s |", vertice.getHubId()));
-                sb.append(String.format("%15s |", sortedHubsInfluence.get(vertice)));
+                sb.append(String.format("%25s |", sortedHubsInfluence.get(vertice)));
                 sb.append("\n");
             }
             i++;
@@ -139,7 +139,7 @@ public class HubDefiner {
         for (Hub vertex : sortedHubsProximity.keySet()) {
             if (i < n) {
                 sb.append(String.format("|%7s |", vertex.getHubId()));
-                sb.append(String.format("%15s |", sortedHubsProximity.get(vertex)));
+                sb.append(String.format("%25s |", sortedHubsProximity.get(vertex)));
                 sb.append("\n");
             }
             i++;
