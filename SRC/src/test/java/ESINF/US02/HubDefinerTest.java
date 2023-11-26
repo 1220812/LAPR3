@@ -19,7 +19,12 @@ class HubDefinerTest {
 
         String influenceResult = hubDefiner.hubsByInfluence(3);
         System.out.println(influenceResult);
-
+        String expectedInfuence =   "| Local  |        Influencia        |\n"+
+                                    "|--------|--------------------------|\n"+
+                                    "|    CT5 |                        5 |\n"+
+                                    "|   CT10 |                        5 |\n"+
+                                    "|   CT16 |                        5 |\n";
+        assertEquals(influenceResult, expectedInfuence);
 
     }
 
@@ -28,6 +33,12 @@ class HubDefinerTest {
 
         String proximityResult = hubDefiner.hubsByProximity(3);
         System.out.println(proximityResult);
+        String expectedProximity =      "| Local  |        Influencia        |\n"+
+                                        "|--------|--------------------------|\n"+
+                                        "|    CT8 |                   166331 |\n"+
+                                        "|    CT4 |                   143294 |\n"+
+                                        "|   CT14 |                   127060 |\n";
+        assertEquals(proximityResult, expectedProximity);
 
     }
 }
