@@ -4,7 +4,9 @@ import ESINF.Algorithm.Algorithms;
 import ESINF.Domain.Coordinates;
 import ESINF.Domain.Hub;
 import ESINF.Structure.Auxiliary.Path;
+import ESINF.Structure.Graph;
 import ESINF.Structure.MapGraph;
+import ESINF.Structure.MoreGraphAlgorithms;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -82,6 +84,40 @@ public class MinimumRouteTest {
         // Assertions
         assertNull(result);
     }
+
+    /**
+     * Test most distant vertex on graph.
+     */
+    @Test
+    void testMostDistantVertexOnGraph() {
+        // Crie um grafo de teste
+        MapGraph<String, Integer> graph = new MapGraph<>(false);
+
+        // Adicione vértices ao grafo
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addVertex("D");
+
+        // Adicione arestas ponderadas ao grafo
+        graph.addEdge("A", "B", 5);
+        graph.addEdge("A", "C", 8);
+        graph.addEdge("B", "D", 10);
+        graph.addEdge("C", "D", 6);
+
+        // Chame o método mostDistantVertexOnGraph
+        Path<String> result = MoreGraphAlgorithms.mostDistantVertexOnGraph(graph);
+
+        // Faça asserções para verificar se o resultado é o esperado
+        assertNotNull(result); // O resultado não deve ser nulo se o grafo não estiver vazio
+
+        // Adicione mais asserções conforme necessário com base na lógica do método
+        assertEquals("A", result.getOrigin()); // Verifique se o ponto de origem está correto
+        assertEquals("D", result.getDestination()); // Verifique se o ponto de destino está correto
+        // Adicione mais asserções com base na lógica específica do seu método
+
+    }
+
 
     /**
      * Test distance equals.
