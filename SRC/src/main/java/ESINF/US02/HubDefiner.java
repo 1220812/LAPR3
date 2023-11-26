@@ -132,8 +132,8 @@ public class HubDefiner {
         StringBuilder sb = new StringBuilder();
 
         // Adiciona cabeçalhos à representação formatada
-        sb.append("| Local  |    Proximidade     |\n");
-        sb.append("|--------|--------------------|\n");
+        sb.append("| Local  |    Proximidade           |\n");
+        sb.append("|--------|--------------------------|\n");
 
         // Adiciona os hubs mais próximos à representação formatada
         for (Hub vertex : sortedHubsProximity.keySet()) {

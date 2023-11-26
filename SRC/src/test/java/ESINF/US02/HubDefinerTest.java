@@ -13,12 +13,11 @@ class HubDefinerTest {
     NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
     MapGraph<Hub, Integer> mapGraph = networkBuilder.getDistribution();
     HubDefiner hubDefiner = new HubDefiner();
-
+    String influenceResult = hubDefiner.hubsByInfluence(3);
+    String proximityResult = hubDefiner.hubsByProximity(3);
     @Test
     void hubsByInfluence() {
 
-        String influenceResult = hubDefiner.hubsByInfluence(3);
-        System.out.println(influenceResult);
         String expectedInfuence =   "| Local  |        Influencia        |\n"+
                                     "|--------|--------------------------|\n"+
                                     "|    CT5 |                        5 |\n"+
@@ -31,9 +30,7 @@ class HubDefinerTest {
     @Test
     void hubsByProximity() {
 
-        String proximityResult = hubDefiner.hubsByProximity(3);
-        System.out.println(proximityResult);
-        String expectedProximity =      "| Local  |        Influencia        |\n"+
+        String expectedProximity =      "| Local  |    Proximidade           |\n"+
                                         "|--------|--------------------------|\n"+
                                         "|    CT8 |                   166331 |\n"+
                                         "|    CT4 |                   143294 |\n"+
