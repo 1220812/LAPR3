@@ -32,7 +32,7 @@ public class HubDefiner {
         for (Hub vertex : sortedHubsCentrality.keySet()) {
             if (i < n) {
                 sb.append(String.format("|%7s |", vertex.getHubId()));
-                sb.append(String.format("%25s |", sortedHubsCentrality.get(vertex)));
+                sb.append(String.format("%15s |", sortedHubsCentrality.get(vertex)));
                 sb.append("\n");
             }
             i++;
@@ -43,20 +43,18 @@ public class HubDefiner {
     // Método para ordenar o mapa de centralidade em ordem decrescente
     private void orderCentralityMap() {
         List<Map.Entry<Hub, Integer>> entries = new ArrayList<>(sortedHubsCentrality.entrySet());
-
-        // Ordena a lista de entradas do mapa com base nos valores (centralidade) em ordem decrescente
         entries.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
-
-        // Cria um novo mapa ordenado
         sortedHubsCentrality = new LinkedHashMap<>();
         for (Map.Entry<Hub, Integer> entry : entries) {
-            // Preenche o novo mapa com os valores ordenados
             sortedHubsCentrality.put(entry.getKey(), entry.getValue());
         }
     }
 
-    // Método para calcular e armazenar a centralidade de cada hub no mapa
     private void setCentrality() {
+        MapGraph<Hub, Integer> mapGraph = NetworkBuilder.getInstance().getDistribution();
+        for (Hub vertex : mapGraph.vertices()){
+            sortedHubsCentrality.put(vertex,0);
+        }
 
     }
 

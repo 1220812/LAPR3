@@ -1,4 +1,4 @@
-package java.ESINF.US02;
+package ESINF.US02;
 
 import ESINF.Domain.Hub;
 import ESINF.Structure.MapGraph;
@@ -20,9 +20,14 @@ class HubDefinerTest {
         String influenceResult = hubDefiner.hubsByInfluence(3);
         System.out.println(influenceResult);
 
+
     }
 
     @Test
     void hubsByProximity() {
+
+        String proximityResult = hubDefiner.hubsByProximity(3);
+        System.out.println(proximityResult);
+
     }
 }
