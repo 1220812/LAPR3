@@ -19,10 +19,10 @@ class HubDefinerTest {
     void hubsByInfluence() {
 
         String expectedInfuence =   "| Local  |        Influencia        |\n"+
-                                    "|--------|--------------------------|\n"+
-                                    "|    CT5 |                        5 |\n"+
-                                    "|   CT10 |                        5 |\n"+
-                                    "|   CT16 |                        5 |\n";
+                "|--------|--------------------------|\n"+
+                "|    CT5 |                        5 |\n"+
+                "|   CT10 |                        5 |\n"+
+                "|   CT16 |                        5 |\n";
         assertEquals(influenceResult, expectedInfuence);
 
     }
@@ -31,10 +31,10 @@ class HubDefinerTest {
     void hubsByProximity() {
 
         String expectedProximity =      "| Local  |    Proximidade           |\n"+
-                                        "|--------|--------------------------|\n"+
-                                        "|    CT8 |                   166331 |\n"+
-                                        "|    CT4 |                   143294 |\n"+
-                                        "|   CT14 |                   127060 |\n";
+                "|--------|--------------------------|\n"+
+                "|    CT8 |                   166331 |\n"+
+                "|    CT4 |                   143294 |\n"+
+                "|   CT14 |                   127060 |\n";
         assertEquals(proximityResult, expectedProximity);
 
     }
