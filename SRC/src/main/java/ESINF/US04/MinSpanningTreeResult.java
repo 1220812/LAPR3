@@ -1,6 +1,7 @@
 package ESINF.US04;
 
 import ESINF.Domain.Hub;
+import ESINF.Structure.Edge;
 import ESINF.Structure.MapGraph;
 import ESINF.US01.NetworkBuilder;
 
@@ -21,7 +22,6 @@ public class MinSpanningTreeResult<T, E> {
             return minimumSpanningTree(graph, Integer::compare, Integer::sum, 0);
         }
     }
-    /*
     public static void printMinimumSpanningTree(MapGraph<Hub, Integer> minimumSpanning) {
         if (minimumSpanning == null) {
             System.out.println("The minimum spanning tree is null. Make sure you initialize it correctly.");
@@ -40,7 +40,21 @@ public class MinSpanningTreeResult<T, E> {
             }
 
         }
+
     }
+
+    public static int calculateTotalDistance(MapGraph<Hub, Integer> minimumSpanning) {
+        int totalDistance = 0;
+
+        if (minimumSpanning != null) {
+            for (Edge<Hub, Integer> edge : minimumSpanning.edges()) {
+                totalDistance += edge.getWeight();
+            }
+        }
+
+        return totalDistance;
+    }
+    /*
     MapGraph<Hub, Integer> testGraph = networkBuilder.getInstance().getDistribution();
 
     MapGraph<Hub, Integer> minSpanning = MinSpanningTreeResult.getMinimumSpanningTree(testGraph);

@@ -1,64 +1,73 @@
 .section .data
 
 .section .text
-
-    .global move_num_vec
-    # Arguments:
-    # rdi -> int* array
-    # rsi -> int length
-    # rdx -> int* read
-    # rcx -> int* write
-    # r8  -> int num
-    # r9  -> int* vec
+.global move_num_vec
 
 move_num_vec:
 
-    pushq %rbx
-    pushq %rbp
-    movq %rsp, %rbp
-
-    cmpq %r8, %rbx            # Compare with the requested number to move
-    jl not_enough_elements    # Jump if not enough elements
-
-    movq %r9, %r11           # Store the destination address in %r11
-
-    movq $0, %rax            # use %rax as a counter start it at 0
-
-can_copy:
-     movslq (%rdx, %rax, 4), %r9   # Move the 32-bit value to the destination
-
-     cmpq $0, %r9               # Compare whats in %r9 with 0
-     je reset_reader            # If equal jump to reset_reader
-
-     movl $0, (%rdx, %rax, 4)   # Move 0 to the position in the first array to "delete" it
-     movq %r9, (%r11)           # Move whats in %r9 to (%R11) to the new array
-
-     addq $1, %rax             # add 1 to the counter
-     addq $4, %r11             # adds 4 bits to the vec to pass to the next positon
-
-     decq %r8                  # decrement num
-     jz enough_elements        # if num = 0 jumps to enough_elements
+    # prologue
+	pushq %rbp
+	movq %rsp, %rbp
 
 
-     jmp can_copy              # jump to the loop again
+    movl (%rdx), %eax             # eax = *read
+    cmp %eax, (%rcx)              # if (*read == *write)
+    je return_0                   # if equal, jump to return 0
 
-reset_reader:
-    subq $1, %rax              # Subtract 1 from %rax
-    subl $1, %esi              # subtract 1 from %esi the length
-    cmpl $0, %esi              # compare if length is 0
-    je can_copy                # if it equals 0 jump to can_copy
-    jmp reset_reader           # Jump again to reser_reader
+    cmpl $0, %r8d                 # if (num == 0)
+    je return_0                   # if equal, jump to return 0
 
+copyLoop:
+    cmp $0, %r8d                  # if (num == 0)
+    je return_1                   # if equal, jump to return 1
 
-enough_elements:
-    movq $1, %rax                 # Set return value to 1
-    jmp done                      # Jump to done
+    movl (%rdx), %eax             # eax = *read
+    cmp %eax, (%rcx)              # if (*read == *write)
+    je return_0                   # if equal, jump to return 0
 
-not_enough_elements:
-    movq $0, %rax                 # Set return value to 0
+    movl (%rdx), %r11d            # r11d = *read
+    imull $4, %r11d               # r11d = *read * 4
+    addq %r11, %rdi               # rdi = array + *read * 4
 
-done:
-    popq %rbp                     # Restore registers
-    popq %rbx                     # Restore old value %rdx
+    movl (%rdi), %r10d            # r10d = array[*read]
+    movl %r10d, (%r9)             # *vec = array[*read]
 
-    ret                           # Return value
+    subq %r11, %rdi               # rdi = array
+    addl $1, (%rdx)               # *read += 1
+    movl (%rdx), %r10d            # move *read to r10d
+
+    pushq %rdx                    # push rdx to stack
+
+    movl %r10d, %eax              # move r10d to eax
+    cltd                          # sign extend eax to edx
+    idivl %esi                    # edx = eax % length
+    movl %edx, %r10d              # move rest of division to r10d
+
+    popq %rdx                     # pop rdx from stack
+
+    movl %r10d, (%rdx)            # move r10d to *read
+    addq $4, %r9                  # increment vec
+    decl %r8d                     # decrement num
+
+    jmp copyLoop                  # jump to copyLoop
+
+return_1:
+
+    # epilogue
+	movq %rbp, %rsp
+	popq %rbp
+
+    movl $1, %eax                 # eax = 1
+    jmp end                       # jump to end
+
+return_0:
+
+    # epilogue
+	movq %rbp, %rsp
+	popq %rbp
+
+    movl $0, %eax                 # eax = 0
+    jmp end                       # jump to end
+
+end:
+    ret
