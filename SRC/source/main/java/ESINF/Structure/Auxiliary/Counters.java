@@ -1,8 +1,6 @@
 package ESINF.Structure.Auxiliary;
 
 
-
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
