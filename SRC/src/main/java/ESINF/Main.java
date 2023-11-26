@@ -10,7 +10,7 @@ import ESINF.US03.MinimumRoute;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
 
 
         ReaderFiles importer = new ReaderFiles();
@@ -31,7 +31,6 @@ public class Main {
 
 
         System.out.println(minimumRoute);
-
 
 
     }
