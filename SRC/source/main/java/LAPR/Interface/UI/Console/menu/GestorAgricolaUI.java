@@ -47,60 +47,71 @@ public class GestorAgricolaUI implements Runnable {
 
         switch (selectedOption) {
             case 1:
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                System.out.println("Please insert date of the operation: (DD-MM-YYYY)");
-                String input = scanner.nextLine();
-                dateFormat.setLenient(false);
-                try {
-                    dateFormat.parse(input);
-
-                    System.out.println("Wrong date!");
-                } catch (ParseException e) {
-                    System.out.println("Inválid date, please insert a valid date in the format specified");
+                SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+                java.util.Date utilDate = null;
+                while (utilDate == null) {
+                    System.out.println("Please insert date of the operation: (DD-MM-YYYY)");
+                    String inputDate = scanner.next();
+                    try {
+                        utilDate = inputFormat.parse(inputDate);
+                    } catch (ParseException e) {
+                        System.out.println("Inválid date, please insert a valid date in the format specified");
+                    }
                 }
+
+                java.sql.Date dateSql = new java.sql.Date(utilDate.getTime());
+
                 System.out.println("Please insert the id of the plantation where the operation was done");
 
                 int entry = scanner.nextInt();
 
                 try {
-                    controller.registerSowingOperation( entry, Date.valueOf(input));
+                    controller.registerSowingOperation( entry, dateSql);
+                    System.out.println("Operation registered successfully");
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                break;
             case 2:
-                SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd-MM-yyyy");
-                System.out.println("Please insert date of the operation: (DD-MM-YYYY)");
-                String input1 = scanner.nextLine();
-                dateFormat1.setLenient(false);
-                try {
-                    dateFormat1.parse(input1);
-
-                    System.out.println("Wrong date!");
-                } catch (ParseException e) {
-                    System.out.println("Inválid date, please insert a valid date in the format specified");
+                SimpleDateFormat inputFormat1 = new SimpleDateFormat("dd-MM-yyyy");
+                java.util.Date utilDate1 = null;
+                while (utilDate1 == null) {
+                    System.out.println("Please insert date of the operation: (DD-MM-YYYY)");
+                    String inputDate = scanner.next();
+                    try {
+                        utilDate1 = inputFormat1.parse(inputDate);
+                    } catch (ParseException e) {
+                        System.out.println("Inválid date, please insert a valid date in the format specified");
+                    }
                 }
+
+                java.sql.Date dateSql1 = new java.sql.Date(utilDate1.getTime());
                 System.out.println("Please insert the id of the plantation where the operation was done");
 
                 int entry1 = scanner.nextInt();
 
                 try {
-                    controller.registerWeedOperation(entry1, Date.valueOf(input1));
+                    controller.registerWeedOperation(entry1, dateSql1);
+                    System.out.println("Operation registered successfully");
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                break;
             case 3:
-                SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd-MM-yyyy");
-                System.out.println("Please insert date of the operation: (DD-MM-YYYY)");
-                String input2 = scanner.nextLine();
-                dateFormat2.setLenient(false);
-                try {
-                    dateFormat2.parse(input2);
-
-                    System.out.println("Wrong date!");
-                } catch (ParseException e) {
-                    System.out.println("Inválida date, please insert a valid date in the format specified");
+                SimpleDateFormat inputFormat2 = new SimpleDateFormat("dd-MM-yyyy");
+                java.util.Date utilDate2 = null;
+                while (utilDate2 == null) {
+                    System.out.println("Please insert date of the operation: (DD-MM-YYYY)");
+                    String inputDate = scanner.next();
+                    try {
+                        utilDate2 = inputFormat2.parse(inputDate);
+                    } catch (ParseException e) {
+                        System.out.println("Inválid date, please insert a valid date in the format specified");
+                    }
                 }
+
+                java.sql.Date dateSql2 = new java.sql.Date(utilDate2.getTime());
+
                 System.out.println("Please insert the id of the plantation where the operation was done");
 
                 int entry2 = scanner.nextInt();
@@ -110,22 +121,27 @@ public class GestorAgricolaUI implements Runnable {
                 int quantity = scanner.nextInt();
 
                 try {
-                    controller.registerHarvestOperation( Date.valueOf(input2), entry2, quantity);
+                    controller.registerHarvestOperation( dateSql2, entry2, quantity);
+                    System.out.println("Operation registered successfully");
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                break;
             case 4:
-                SimpleDateFormat dateFormat3 = new SimpleDateFormat("dd-MM-yyyy");
-                System.out.println("Please insert date of the operation: (DD-MM-YYYY)");
-                String input3 = scanner.nextLine();
-                dateFormat3.setLenient(false);
-                try {
-                    dateFormat3.parse(input3);
-
-                    System.out.println("Wrong date!");
-                } catch (ParseException e) {
-                    System.out.println("Inválid date, please insert a valid date in the format specified");
+                SimpleDateFormat inputFormat3 = new SimpleDateFormat("dd-MM-yyyy");
+                java.util.Date utilDate3 = null;
+                while (utilDate3 == null) {
+                    System.out.println("Please insert date of the operation: (DD-MM-YYYY)");
+                    String inputDate = scanner.next();
+                    try {
+                        utilDate3 = inputFormat3.parse(inputDate);
+                    } catch (ParseException e) {
+                        System.out.println("Inválid date, please insert a valid date in the format specified");
+                    }
                 }
+
+                java.sql.Date dateSql3 = new java.sql.Date(utilDate3.getTime());
+
                 System.out.println("Please insert the id of the plantation where the operation was done");
 
                 int entry3 = scanner.nextInt();
@@ -139,31 +155,39 @@ public class GestorAgricolaUI implements Runnable {
                 String mode = scanner.nextLine();
 
                 try {
-                    controller.registerFertilizationOperation( Date.valueOf(input3), entry3, id, mode);
+                    controller.registerFertilizationOperation( dateSql3, entry3, id, mode);
+                    System.out.println("Operation registered successfully");
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                break;
             case 5:
-                SimpleDateFormat dateFormat4 = new SimpleDateFormat("dd-MM-yyyy");
-                System.out.println("Please insert date of the operation: (DD-MM-YYYY)");
-                String input4 = scanner.nextLine();
-                dateFormat4.setLenient(false);
-                try {
-                    dateFormat4.parse(input4);
-
-                    System.out.println("Wrong date!");
-                } catch (ParseException e) {
-                    System.out.println("Inválid date, please insert a valid date in the format specified");
+                SimpleDateFormat inputFormat4 = new SimpleDateFormat("dd-MM-yyyy");
+                java.util.Date utilDate4 = null;
+                while (utilDate4 == null) {
+                    System.out.println("Please insert date of the operation: (DD-MM-YYYY)");
+                    String inputDate = scanner.next();
+                    try {
+                        utilDate4 = inputFormat4.parse(inputDate);
+                    } catch (ParseException e) {
+                        System.out.println("Inválid date, please insert a valid date in the format specified");
+                    }
                 }
+
+                java.sql.Date dateSql4 = new java.sql.Date(utilDate4.getTime());
+
                 System.out.println("Please insert the id of the plantation where the operation was done");
 
                 int entry4 = scanner.nextInt();
 
                 try {
-                    controller.registerPruningOperation( Date.valueOf(input4), entry4);
+                    controller.registerPruningOperation(dateSql4, entry4);
+                    System.out.println("Operation registered successfully");
+
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                break;
         }
     }
 }
