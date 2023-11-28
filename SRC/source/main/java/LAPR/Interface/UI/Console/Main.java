@@ -5,7 +5,9 @@ import LAPR.Interface.dataAccess.DatabaseConnection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -18,12 +20,12 @@ public class Main {
      *
      * @param args the input arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
 
         try {
             loadProperties();
 
-            String ipAddress = System.getProperty("");
+            String ipAddress = System.getProperty("database.inet");
             InetAddress inet = InetAddress.getByName(ipAddress);
 
             MainMenuUI menu = new MainMenuUI();
@@ -31,17 +33,21 @@ public class Main {
             DatabaseConnection.getInstance().closeConnection();
         } catch (UnknownHostException e) {
             System.out.println("\nDatabase Server not reachable");
-        } catch (Exception e) {
-            System.out.println("App properties not loaded!");
+        }catch (SQLException e){
+            throw new RuntimeException(e);
         }
     }
     private static void loadProperties() throws IOException{
         Properties properties = new Properties(System.getProperties());
 
-        InputStream inputStream = new Main().getClass().getResourceAsStream("application.properties");
-        properties.load(inputStream);
-        inputStream.close();
+        InputStream inputStream = new Main().getClass().getClassLoader().getResource("SRC/source/main/resources/application.properties").openStream();
 
-        System.setProperties(properties);
+        if(inputStream != null){
+            properties.load(inputStream);
+            inputStream.close();
+            System.setProperties(properties);
+        }else{
+            System.out.println("File not founded!");
+        }
     }
 }
