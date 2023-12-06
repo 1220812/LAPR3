@@ -1,3 +1,10 @@
+CREATE OR REPLACE PROCEDURE GetApplicationDetails(
+    IN product_id INT,
+    IN start_date DATE,
+    IN end_date DATE
+)
+AS
+BEGIN
 SELECT
     A.applicationID,
     P.comercialName AS productName,
@@ -25,4 +32,5 @@ FROM
 WHERE
         P.productID = 4
   AND O."date" BETWEEN TO_DATE('2000/01/01', 'yyyy-mm-dd') AND TO_DATE('2023/11/25', 'yyyy-mm-dd');
-
+END;
+/

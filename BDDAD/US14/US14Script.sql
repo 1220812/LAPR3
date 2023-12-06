@@ -29,7 +29,6 @@ CREATE OR REPLACE prcRegisterFertilizationOperation(
 )
        AS
        BEGIN
-SELECT OperationID + 1 INTO p_operationID FROM OPERATION ORDER BY 1 DESC FETCH FIRST ROW ONLY;
        INSERT INTO Fertilization(OperationoperationID2, ProductproductID, Mode)
        VALUES(p_operationID, p_productID, p_mode);
         END;
