@@ -1,3 +1,6 @@
+CREATE OR REPLACE PROCEDURE GetHarvestDetails(IN parcel_id INT, IN start_date DATE, IN end_date DATE)
+AS
+BEGIN
 SELECT
     AgriculturalParcel.parcelID,
     Species.speciesName || ' , ' || Species.commonname as PLANT,
@@ -21,6 +24,5 @@ WHERE
     AND Operation."date" BETWEEN TO_DATE('2000-01-07', 'YYYY-MM-DD') AND TO_DATE('2030-01-07', 'YYYY-MM-DD')
 GROUP BY
     AgriculturalParcel.parcelID, Species.speciesName, Species.commonname, Operation."date";
-
-
-
+END;
+/

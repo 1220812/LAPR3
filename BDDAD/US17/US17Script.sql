@@ -1,4 +1,6 @@
-
+CREATE OR REPLACE PROCEDURE GetFertilizationComponents(IN parcel_id INT, IN start_date DATE, IN end_date DATE)
+AS
+BEGIN
 SELECT
     p.comercialName AS Product_Name,
     c.componentName AS Component_Name,
@@ -22,3 +24,5 @@ FROM
 WHERE
         ap_p_is.AgriculturalParcel_PlantationAgriculturalParcelparcelID = :parcelID
         AND o.date BETWEEN :startDate AND :endDate;
+END;
+/

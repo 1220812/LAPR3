@@ -1,3 +1,9 @@
+CREATE OR REPLACE PROCEDURE GetWateringDetails(
+    IN start_date DATE,
+    IN end_date DATE
+)
+AS
+BEGIN
 SELECT
     TO_CHAR(O."date", 'YYYY-MM') AS month,
     AP.parcelID,
@@ -20,3 +26,5 @@ GROUP BY
 ORDER BY
     month,
     AP.parcelID;
+END;
+/

@@ -28,7 +28,6 @@ CREATE OR REPLACE prcRegisterHarvestOperation(
 )
        AS
        BEGIN
-SELECT OperationID + 1 INTO p_operationID FROM OPERATION ORDER BY 1 DESC FETCH FIRST ROW ONLY;
        INSERT INTO Harvest (OperationoperationID2, quantity)
        VALUES(p_operationID, quantity);
         END;

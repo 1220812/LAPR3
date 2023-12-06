@@ -27,7 +27,6 @@ CREATE OR REPLACE prcRegisterSowingOperation(
 )
        AS
        BEGIN
-SELECT OperationID + 1 INTO p_operationID FROM OPERATION ORDER BY 1 DESC FETCH FIRST ROW ONLY;
        INSERT INTO Sowing (OperationoperationID2)
        VALUES(p_operationID);
         END;
