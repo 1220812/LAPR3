@@ -1,199 +1,191 @@
 package ESINF.US02;
 
-import ESINF.Domain.Hub;
-import ESINF.Structure.Edge;
+import ESINF.Domain.Locality;
+import ESINF.Structure.GraphAlgorithms;
 import ESINF.Structure.MapGraph;
-import ESINF.US01.NetworkBuilder;
 
 import java.util.*;
+
+/**
+ * The {@code HubDefiner} class provides methods to analyze a graph of localities
+ * and calculate various metrics such as influence, proximity, and centrality.
+ * It also includes methods to identify and retrieve the top N hubs based on different criteria.
+ */
 public class HubDefiner {
 
-    //-------------------------------------------Centrality-------------------------------------------------------
-    // Mapa que armazenará os resultados da centralidade para cada vértice
-    private static Map<Hub, Integer> sortedHubsCentrality = new HashMap<>();
+    /**
+     * Calculates and returns the influence of each locality in the given graph (vertex with more out degree, meaning, more edges to other vertexs)
+     *
+     * @param graph The graph representing localities and connections.
+     * @return A map with localities as keys and their influence values as values.
+     */
+    public Map<Locality, Integer> calculateInfluence(MapGraph<Locality, Integer> graph) {
+        Map<Locality, Integer> networkByInfluence = new HashMap<>();
+        for (Locality vertex : graph.vertices()) {
+            networkByInfluence.put(vertex, graph.outDegree(vertex));
+        }
+        return networkByInfluence;
+    }
 
-    // Grafo utilizado para calcular a centralidade
-    private MapGraph<Hub, Integer> graphCentrality = NetworkBuilder.getInstance().getDistribution();
+    /**
+     * Calculates and returns the proximity of each locality in the given graph.
+     *
+     * @param graph The graph representing localities and connections.
+     * @return A map with localities as keys and their proximity values as values.
+     */
 
-    // Método principal que retorna uma representação formatada dos hubs mais centrais
-    public String hubsByCentrality(int n) {
-        // Calcula e ordena a centralidade dos hubs
-        setCentrality();
-        orderCentralityMap();
+    public Map<Locality, Integer> calculateProximity(MapGraph<Locality, Integer> graph) {
+        Map<Locality, Integer> networkByProximity = new HashMap<>();
+        for (Locality vertex : graph.vertices()) {
+            Integer proximityValue = calculateVertexProximity(graph, vertex);
+            networkByProximity.put(vertex, proximityValue);
+        }
+        return networkByProximity;
+    }
 
-        int i = 0;
-        StringBuilder sb = new StringBuilder();
+    /**
+     * Calculates the proximity of a specific locality in the given graph.
+     *
+     * @param graph  The graph representing localities and connections.
+     * @param vertex The locality for which proximity is calculated.
+     * @return The proximity value for the specified locality.
+     */
+    private Integer calculateVertexProximity(MapGraph<Locality, Integer> graph, Locality vertex) {
+        ArrayList<Integer> distances = new ArrayList<>();
+        GraphAlgorithms.shortestsPaths(graph, vertex, Comparator.naturalOrder(), Integer::sum, 0 , new ArrayList<>(),distances);
 
-        // Adiciona cabeçalhos à representação formatada
-        sb.append("| Local  |       Centralidade       |\n");
-        sb.append("|--------|--------------------------|\n");
-
-        // Adiciona os hubs mais centrais à representação formatada
-        for (Hub vertex : sortedHubsCentrality.keySet()) {
-            if (i < n) {
-                sb.append(String.format("|%7s |", vertex.getHubId()));
-                sb.append(String.format("%25s |", sortedHubsCentrality.get(vertex)));
-                sb.append("\n");
+        int proximitySum = 0;
+        for (Integer distance : distances) {
+            if (distance != null) {
+                proximitySum += distance;
             }
-            i++;
         }
-        return sb.toString();
+        return proximitySum;
     }
 
-    // Método para ordenar o mapa de centralidade em ordem decrescente
-    private void orderCentralityMap() {
-        List<Map.Entry<Hub, Integer>> entries = new ArrayList<>(sortedHubsCentrality.entrySet());
+    /**
+     * Calculates and returns the centrality of each locality in the given graph.
+     *
+     * @param graph The graph representing localities and connections.
+     * @return A map with localities as keys and their centrality values as values.
+     */
+    public Map<Locality, Integer> calculateCentrality(MapGraph<Locality, Integer> graph) {
+        Map<Locality, Integer> centrality = GraphAlgorithms.betweennessCentrality(graph);
+        return centrality;
+    }
 
-        // Ordena a lista de entradas do mapa com base nos valores (centralidade) em ordem decrescente
-        entries.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+    /**
+     * Retrieves the top N hubs based on a given map of localities and values.
+     * The sorting order can be specified with the isProximity parameter.
+     *
+     * @param map         The map of localities and their values.
+     * @param n           The number of top hubs to retrieve.
+     * @param isProximity A boolean indicating whether to sort by proximity (true) or influence (false).
+     * @return A map with the top N hubs based on the specified criteria.
+     */
+    public Map<Locality, Integer> getTopNHubsSeparate(Map<Locality, Integer> map, Integer n, boolean isProximity) {
+        Map<Locality, Integer> topNHubs = new LinkedHashMap<>();
+        List<Map.Entry<Locality, Integer>> sortedEntries = new ArrayList<>(map.entrySet());
 
-        // Cria um novo mapa ordenado
-        sortedHubsCentrality = new LinkedHashMap<>();
-        for (Map.Entry<Hub, Integer> entry : entries) {
-            // Preenche o novo mapa com os valores ordenados
-            sortedHubsCentrality.put(entry.getKey(), entry.getValue());
+        if (isProximity) {
+            sortedEntries.sort(Map.Entry.comparingByValue());
+        } else {
+            sortedEntries.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
         }
-    }
 
-    // Método para calcular e armazenar a centralidade de cada hub no mapa
-    private void setCentrality() {
-
-    }
-
-
-    //--------------------------------------------Influence------------------------------------------------------
-
-    // Mapa para armazenar a influência de cada hub
-    private static Map<Hub, Integer> sortedHubsInfluence = new HashMap<>();
-
-    // Grafo utilizado para calcular a influência
-    private MapGraph<Hub, Integer> graphInfluence = NetworkBuilder.getInstance().getDistribution();
-
-    // Método principal que retorna uma representação formatada dos hubs mais influentes
-    public String hubsByInfluence(int n) {
-
-        // Calcula e ordena a influência dos hubs
-        setInfluence();
-        orderInfluenceMap();
-
-        int i = 0;
-        StringBuilder sb = new StringBuilder();
-
-        // Adiciona cabeçalhos à representação formatada
-        sb.append("| Local  |        Influencia        |\n");
-        sb.append("|--------|--------------------------|\n");
-
-        // Adiciona os hubs mais influentes à representação formatada
-        for (Hub vertice : sortedHubsInfluence.keySet()) {
-            if (i < n) {
-                sb.append(String.format("|%7s |", vertice.getHubId()));
-                sb.append(String.format("%25s |", sortedHubsInfluence.get(vertice)));
-                sb.append("\n");
-            }
-            i++;
-        }
-        return sb.toString();
-    }
-
-    // Método para ordenar o mapa de influência em ordem decrescente
-    private void orderInfluenceMap() {
-        List<Map.Entry<Hub, Integer>> entries = new ArrayList<>(sortedHubsInfluence.entrySet());
-        entries.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
-
-        // Cria um novo mapa ordenado
-        sortedHubsInfluence = new LinkedHashMap<>();
-        for (Map.Entry<Hub, Integer> entry : entries) {
-            sortedHubsInfluence.put(entry.getKey(), entry.getValue());
-        }
-    }
-
-    // Método para calcular e armazenar a influência de cada hub no mapa
-    private void setInfluence() {
-        sortedHubsInfluence = new HashMap<>();
-        for (Hub vertice : graphInfluence.vertices()) {
-            // Armazena a influência de cada hub no mapa
-            sortedHubsInfluence.put(vertice, graphInfluence.inDegree(vertice));
-        }
-    }
-
-    //-------------------------------------------Proximity------------------------------------------------------
-
-    // Mapa que armazenará os resultados da proximidade para cada vértice
-    private static Map<Hub, Integer> sortedHubsProximity = new HashMap<>();
-
-    // Grafo utilizado para calcular a proximidade
-    private MapGraph<Hub, Integer> graphProximity = NetworkBuilder.getInstance().getDistribution();
-
-    // Método principal que retorna uma representação formatada dos hubs mais próximos
-    public String hubsByProximity(int n) {
-        // Calcula e ordena a proximidade dos hubs
-        setProximity();
-        orderProximityMap();
-
-        int i = 0;
-        StringBuilder sb = new StringBuilder();
-
-        // Adiciona cabeçalhos à representação formatada
-        sb.append("| Local  |    Proximidade     |\n");
-        sb.append("|--------|--------------------|\n");
-
-        // Adiciona os hubs mais próximos à representação formatada
-        for (Hub vertex : sortedHubsProximity.keySet()) {
-            if (i < n) {
-                sb.append(String.format("|%7s |", vertex.getHubId()));
-                sb.append(String.format("%25s |", sortedHubsProximity.get(vertex)));
-                sb.append("\n");
-            }
-            i++;
-        }
-        return sb.toString();
-    }
-
-    // Método para ordenar o mapa de proximidade em ordem decrescente
-    private void orderProximityMap() {
-        List<Map.Entry<Hub, Integer>> entries = new ArrayList<>(sortedHubsProximity.entrySet());
-
-        // Ordena a lista de entradas do mapa com base nos valores (proximidade) em ordem decrescente
-        entries.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
-
-        // Cria um novo mapa ordenado
-        sortedHubsProximity = new LinkedHashMap<>();
-        for (Map.Entry<Hub, Integer> entry : entries) {
-            // Preenche o novo mapa com os valores ordenados
-            sortedHubsProximity.put(entry.getKey(), entry.getValue());
-        }
-    }
-
-
-    private void setProximity() {
-        // Inicializa o mapa que armazenará os resultados da proximidade para cada vértice
-        sortedHubsProximity = new HashMap<>();
-
-        // Itera sobre todos os vértices no grafo de proximidade
-        for (Hub vertex : graphProximity.vertices()) {
-            int distance = 0; // Inicializa a soma das distâncias
-            int count = 0;    // Inicializa a contagem de arestas de entrada
-
-            // Itera sobre todas as arestas de entrada para o vértice atual
-            for (Edge edge : graphProximity.incomingEdges(vertex)) {
-                // Obtém o peso da aresta (presumindo que o peso seja um número real, como double)
-                double edgeWeight = (double) edge.getWeight();
-
-                // Adiciona o peso da aresta à soma das distâncias
-                distance += edgeWeight;
-
-                // Incrementa a contagem de arestas de entrada
+        int count = 0;
+        for (Map.Entry<Locality, Integer> entry : sortedEntries) {
+            if (count < n) {
+                topNHubs.put(entry.getKey(), entry.getValue());
                 count++;
+            } else {
+                break;
             }
-
-            // Calcula a média ponderada da proximidade para o vértice atual
-            // Se a contagem for zero, define a média como zero para evitar divisão por zero
-            int avg = (count == 0) ? 0 : (distance / count);
-
-            // Armazena o resultado no mapa, associando o vértice à média de proximidade
-            sortedHubsProximity.put(vertex, avg);
         }
+        return topNHubs;
     }
 
+    /**
+     * Retrieves the top N hubs based on a map of localities and lists of values.
+     * The sorting order is based on centrality, influence, and a third criterion.
+     *
+     * @param map The map of localities and lists of values.
+     * @param n   The number of top hubs to retrieve.
+     * @return A map with the top N hubs based on multiple criteria.
+     */
+    public Map<Locality, List<Integer>> getTopNMap(Map<Locality, List<Integer>> map, Integer n) {
+        List<Map.Entry<Locality, List<Integer>>> entries = new ArrayList<>(map.entrySet());
+        entries.sort((entry1, entry2) -> {
+            List<Integer> values1 = entry1.getValue();
+            List<Integer> values2 = entry2.getValue();
 
+            int compareCentrality = Integer.compare(values2.get(0), values1.get(0));
+            if (compareCentrality != 0) {
+                return compareCentrality;
+            }
+
+            int compareInfluence = Integer.compare(values2.get(1), values1.get(1));
+            if (compareInfluence != 0) {
+                return compareInfluence;
+            }
+
+            return Integer.compare(values1.get(2), values2.get(2));
+        });
+
+        Map<Locality, List<Integer>> sortedFinalMap = new LinkedHashMap<>();
+        for (Map.Entry<Locality, List<Integer>> entry : entries) {
+            sortedFinalMap.put(entry.getKey(), entry.getValue());
+        }
+
+        return getTopNHubs(sortedFinalMap, n);
+    }
+
+    /**
+     * Retrieves the top N hubs based on a map of localities and lists of values.
+     *
+     * @param map The map of localities and lists of values.
+     * @param n   The number of top hubs to retrieve.
+     * @return A map with the top N hubs based on the specified criteria.
+     */
+    public static Map<Locality, List<Integer>> getTopNHubs(Map<Locality, List<Integer>> map, Integer n) {
+        Map<Locality, List<Integer>> topNHubsMap = new LinkedHashMap<>();
+
+        int count = 0;
+        for (Map.Entry<Locality, List<Integer>> entry : map.entrySet()) {
+            if (count < n) {
+                topNHubsMap.put(entry.getKey(), entry.getValue());
+                count++;
+            } else {
+                break;
+            }
+        }
+
+        return topNHubsMap;
+    }
+
+    public MapGraph<Locality, Integer> defineHubs(MapGraph<Locality, Integer> graph, Integer n) {
+        Map<Locality, List<Integer>> map = new HashMap<>();
+        for (Locality vertex : graph.vertices()) {
+            List<Integer> values = Arrays.asList(graph.outDegree(vertex), calculateVertexProximity(graph, vertex), 0);
+            map.put(vertex, values);
+        }
+
+        Map<Locality, List<Integer>> maps = getTopNHubs(map, n);
+
+        for (Locality locality : graph.vertices()) {
+            if(maps.containsKey(locality)){
+                graph.vertex(p->p.equals(locality)).setHub(true);
+            }
+        }
+        return graph;
+    }
+
+    public static Locality findLocalityByID (Map<Locality, List<Integer>> map , String ID){
+        for (Locality locality : map.keySet()) {
+            if(locality.getName().equals(ID)){
+                return locality;
+            }
+        }
+        return null;
+    }
 }

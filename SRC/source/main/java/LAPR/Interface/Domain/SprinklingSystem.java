@@ -44,7 +44,11 @@ public class SprinklingSystem {
                 }
                 Calendar c = Calendar.getInstance();
                 c.add(Calendar.DAY_OF_MONTH, dayCounter);
-                result.add(new ResultEntry(c.getTime(), partition.getDesignation(), partition.getTime(), formattHour(startHour, startMinute), formattHour(endHour, endMinute)));
+                if(partition.getMixDesignation() != null){
+                    result.add(new ResultEntry(c.getTime(), partition.getDesignation(), partition.getTime(), formattHour(startHour, startMinute), formattHour(endHour, endMinute), partition.getMixDesignation(), partition.getRecurrenceFormule()));
+                }else{
+                    result.add(new ResultEntry(c.getTime(), partition.getDesignation(), partition.getTime(), formattHour(startHour, startMinute), formattHour(endHour, endMinute)));
+                }
                 time = formattHour(endHour,endMinute);
             }
             dayCounter++;

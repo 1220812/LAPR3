@@ -1,40 +1,31 @@
 package ESINF.US03;
 
-
 import ESINF.Domain.Coordinates;
-import ESINF.Domain.Hub;
+import ESINF.Domain.Locality;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.*;
 
-
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 public class MinimumRoute {
-
-
-
-
-
     public static final int M_TO_KM_CONVERSION = 1000;
     @EqualsAndHashCode.Include
-    private Hub start;
+    private Locality start;
     @EqualsAndHashCode.Include
-    private Hub destination;
+    private Locality destination;
     private double vehicleAutonomy;
-    private List<Hub> route;
-    private Set<Hub> charged;
+    private List<Locality> route;
+    private Set<Locality> charged;
     private double totalDistance;
-
 
     public MinimumRoute() {
         this.charged = new HashSet<>();
     }
-
 
     public int getNumberOfStops() {
         return charged.size();
@@ -45,15 +36,11 @@ public class MinimumRoute {
         return coordinates.distance(destination.getLatitude(), destination.getLongitude());
     }
 
-
-
-
-
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("===============ROUTE DETAILS===============").append("\n");
-        sb.append("Start: ").append(destination.getHubId()).append("\n");
-        sb.append("Destination: ").append(start.getHubId()).append("\n");
+        sb.append("Start: ").append(destination.getName()).append("\n");
+        sb.append("Destination: ").append(start.getName()).append("\n");
         sb.append(String.format("Distance Traveled: %.3fkm", totalDistance / M_TO_KM_CONVERSION)).append("\n");
 
         sb.append("Route:").append("\n");
@@ -61,33 +48,29 @@ public class MinimumRoute {
         double totalRouteDistance = 0;
 
         // Inverte a lista route
-        List<Hub> reversedRoute = new ArrayList<>(route);
+        List<Locality> reversedRoute = new ArrayList<>(route);
         Collections.reverse(reversedRoute);
 
         for (int i = 0; i < reversedRoute.size() - 1; i++) {
-            Hub currentHub = reversedRoute.get(i);
-            Hub nextHub = reversedRoute.get(i + 1);
+            Locality currentLocality = reversedRoute.get(i);
+            Locality nextLocality = reversedRoute.get(i + 1);
 
-            double distanceBetweenHubs = currentHub.distanceTo(nextHub);
+            double distanceBetweenHubs = currentLocality.distanceTo(nextLocality);
 
             totalRouteDistance += distanceBetweenHubs;
 
-            sb.append("\t").append(currentHub.getHubId()).append(" -> ").append(nextHub.getHubId());
-            if (charged.contains(nextHub)) {
+            sb.append("\t").append(currentLocality.getName()).append(" -> ").append(nextLocality.getName());
+            if (charged.contains(nextLocality)) {
                 sb.append("*");
             }
             sb.append(" (Distance: ").append(String.format("%.3fkm", distanceBetweenHubs / M_TO_KM_CONVERSION)).append(")\n");
         }
 
         // Adiciona o último elemento (destino) apenas se não for a mesma estação que a de início
-        Hub lastHub = reversedRoute.get(reversedRoute.size() - 1);
-        if (!lastHub.equals(start)) {
-
-            double distanceBetweenHubs = lastHub.distanceTo(start);
-
-
-
-            sb.append("\t").append(lastHub.getHubId()).append(" -> ").append(start.getHubId());
+        Locality lastLocality = reversedRoute.get(reversedRoute.size() - 1);
+        if (!lastLocality.equals(start)) {
+            double distanceBetweenHubs = lastLocality.distanceTo(start);
+            sb.append("\t").append(lastLocality.getName()).append(" -> ").append(start.getName());
             if (charged.contains(start)) {
                 sb.append("*");
             }
@@ -99,8 +82,4 @@ public class MinimumRoute {
         sb.append("============================================").append("\n");
         return sb.toString();
     }
-
-
-
 }
-

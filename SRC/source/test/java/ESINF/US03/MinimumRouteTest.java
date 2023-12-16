@@ -2,7 +2,7 @@ package ESINF.US03;
 
 import ESINF.Algorithm.Algorithms;
 import ESINF.Domain.Coordinates;
-import ESINF.Domain.Hub;
+import ESINF.Domain.Locality;
 import ESINF.Structure.Auxiliary.Path;
 import ESINF.Structure.MapGraph;
 import org.junit.jupiter.api.Test;
@@ -28,10 +28,10 @@ public class MinimumRouteTest {
         Algorithms algorithms = new Algorithms();
 
         // Create a sample graph
-        MapGraph<Hub, Integer> graph = new MapGraph<>(false);
-        Hub origin = new Hub("CT1");
-        Hub intermediate1 = new Hub("CT2");
-        Hub destination = new Hub("CT3");
+        MapGraph<Locality, Integer> graph = new MapGraph<>(false);
+        Locality origin = new Locality("CT1");
+        Locality intermediate1 = new Locality("CT2");
+        Locality destination = new Locality("CT3");
         graph.addVertex(origin);
         graph.addVertex(intermediate1);
         graph.addVertex(destination);
@@ -39,11 +39,11 @@ public class MinimumRouteTest {
         graph.addEdge(intermediate1, destination, 20);
 
         // Set up a valid path in the graph
-        List<ESINF.Structure.Auxiliary.Segment<Hub>> pathSegments = new LinkedList<>();
+        List<ESINF.Structure.Auxiliary.Segment<Locality>> pathSegments = new LinkedList<>();
         pathSegments.add(new ESINF.Structure.Auxiliary.Segment<>(origin, intermediate1, 20));
         pathSegments.add(new ESINF.Structure.Auxiliary.Segment<>(intermediate1, destination, 20));
 
-        Path<Hub> path = new Path<>(origin, destination, pathSegments);
+        Path<Locality> path = new Path<>(origin, destination, pathSegments);
 
         // Set vehicle autonomy
         double vehicleAutonomy = 100.0;
@@ -58,7 +58,7 @@ public class MinimumRouteTest {
         assertEquals(Arrays.asList(origin, intermediate1, destination), result.getRoute());
 
         // Compare elements in the set, not the sets themselves
-        Set<Hub> expectedStops = new HashSet<>(Arrays.asList(intermediate1));
+        Set<Locality> expectedStops = new HashSet<>(Arrays.asList(intermediate1));
 
 
     }
@@ -71,7 +71,7 @@ public class MinimumRouteTest {
         Algorithms algorithms = new Algorithms();
 
         // Create a sample graph with no edges
-        MapGraph<Hub, Integer> graph = new MapGraph<>(false);
+        MapGraph<Locality, Integer> graph = new MapGraph<>(false);
 
         // Set vehicle autonomy
         double vehicleAutonomy = 100.0;
