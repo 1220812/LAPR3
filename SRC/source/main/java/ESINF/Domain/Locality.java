@@ -23,7 +23,7 @@ public class Locality {
      * Flag that defines if a given locality is a Hub or not
      */
     private boolean isHub = false;
-    public Schedules schedules;
+    public Schedule schedule;
     /**
      * Constructs a new `Hub` instance with the specified hubId and coordinates.
      *
@@ -53,12 +53,12 @@ public class Locality {
      * @param longitude The geographical longitude of the hub.
      * @param isHub Flag that defines if a given locality is a Hub or not
      */
-    public Locality(String name, double latitude, double longitude, boolean isHub, Schedules schedules){
+    public Locality(String name, double latitude, double longitude, boolean isHub, Schedule schedule){
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.isHub = isHub;
-        this.schedules = schedules;
+        this.schedule = schedule;
     }
 
     /**
@@ -79,8 +79,8 @@ public class Locality {
         return isHub;
     }
 
-    public Schedules getSchedules() {
-        return schedules;
+    public Schedule getSchedules() {
+        return schedule;
     }
 
     /**
@@ -101,8 +101,8 @@ public class Locality {
         isHub = hub;
     }
 
-    public void setSchedules(Schedules schedules) {
-        this.schedules = schedules;
+    public void setSchedules(Schedule schedules) {
+        this.schedule = schedules;
     }
 
     /**
@@ -145,7 +145,7 @@ public class Locality {
                 ", longitude = " + longitude +
                 ", latitude = " + latitude +
                 ", is a Hub = " + isHub +
-                ", schedules = " + schedules.toString();
+                ", schedules = " + schedule;
     }
 }
 

@@ -4,20 +4,14 @@ import java.time.LocalTime;
 /**
  * Enumeration representing different schedules with opening and closing times.
  */
-public enum Schedules {
+public class Schedule {
     /**
-     * Schedule 1 with opening time at 9:00 AM and closing time at 2:00 PM.
+     * The opening time in "HH:MM" format
      */
-    SCHEDULE1(LocalTime.of(9, 0), LocalTime.of(14,0)),
-    /**
-     * Schedule 2 with opening time at 11:00 AM and closing time at 4:00 PM.
-     */
-    SCHEDULE2(LocalTime.of(11,0), LocalTime.of(16,0)),
-    /**
-     * Schedule 3 with opening time at 12:00 PM and closing time at 5:00 PM.
-     */
-    SCHEDULE3(LocalTime.of(12,0), LocalTime.of(17,0));
     private final LocalTime opening;
+    /**
+     * The closing time in "HH:MM" format
+     */
     private final LocalTime closing;
 
     /**
@@ -26,7 +20,7 @@ public enum Schedules {
      * @param opening The opening time.
      * @param closing The closing time.
      */
-    Schedules(LocalTime opening, LocalTime closing){
+    public Schedule(LocalTime opening, LocalTime closing){
         this.opening = opening;
         this.closing = closing;
     }

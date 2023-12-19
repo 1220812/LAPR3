@@ -61,12 +61,8 @@ public class ResultEntry {
         return mixDesignation;
     }
 
-    @Override
-    public String toString() {
-        return String.format("%10s %10s %10d %10s %10s",new SimpleDateFormat("dd/MM/yyyy").format(date),designation,duration,startTime, endTime);
-    }
-    public String toString2(){
-        return String.format("%10s, %10s, %10d, %10s, %10s, %10s, %10d", new SimpleDateFormat("dd/MM/yyyy").format(date), designation, duration,startTime, endTime, mixDesignation, recurrenceFormule);
+    public String toString(){
+        return String.format("%10s %10s %10d %10s %10s %10s %10d", new SimpleDateFormat("dd/MM/yyyy").format(date), designation, duration,startTime, endTime, mixDesignation, recurrenceFormule);
     }
 }
 

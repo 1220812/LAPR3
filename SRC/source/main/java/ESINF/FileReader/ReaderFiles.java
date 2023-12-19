@@ -1,15 +1,14 @@
 package ESINF.FileReader;
 
 import ESINF.Domain.Locality;
-import ESINF.Domain.Schedules;
+import ESINF.Domain.Schedule;
 import ESINF.US01.NetworkBuilder;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalTime;
+import java.util.*;
 
 public class ReaderFiles {
     /**
@@ -54,21 +53,28 @@ public class ReaderFiles {
             data = currentLine.split(",");
             int id = Integer.parseInt(data[0].substring(2));
             if(id <= 105){
-                Locality locality = new Locality(data[0], Double.parseDouble(data[1]), Double.parseDouble(data[2]), false, Schedules.SCHEDULE1);
+                Locality locality = new Locality(data[0], Double.parseDouble(data[1]), Double.parseDouble(data[2]), false, new Schedule(LocalTime.of(9,0), LocalTime.of(14,0)));
                 network.addLocality(locality);
                 localities.add(locality);
             } else if (id <= 215) {
-                Locality locality = new Locality(data[0], Double.parseDouble(data[1]), Double.parseDouble(data[2]), false, Schedules.SCHEDULE2);
+                Locality locality = new Locality(data[0], Double.parseDouble(data[1]), Double.parseDouble(data[2]), false, new Schedule(LocalTime.of(11,0), LocalTime.of(16,0)));
                 network.addLocality(locality);
                 localities.add(locality);
             }else{
-                Locality locality = new Locality(data[0], Double.parseDouble(data[1]), Double.parseDouble(data[2]), false, Schedules.SCHEDULE3);
+                Locality locality = new Locality(data[0], Double.parseDouble(data[1]), Double.parseDouble(data[2]), false, new Schedule(LocalTime.of(12,0), LocalTime.of(17,0)));
                 network.addLocality(locality);
                 localities.add(locality);
             }
         }
         return localities;
     }
+    /**
+     * Finds a locality in a list by its name (ID).
+     *
+     * @param localities A list of localities to search through.
+     * @param ID       The ID of the locality to find.
+     * @return The locality with the specified name, or null if not found.
+     */
     public static Locality findLocalityByID (List<Locality> localities, String ID){
         for (Locality locality : localities) {
             if(locality.getName().equals(ID)){
@@ -76,6 +82,43 @@ public class ReaderFiles {
             }
         }
         return null;
+    }
+    /**
+     * Imports new schedules from a file and associates them with respective localities in a map.
+     *
+     * @param fileName The name of the file containing schedule information.
+     * @return A map where keys are localities and values are corresponding schedules.
+     * @throws IOException If an I/O error occurs while reading the file.
+     */
+    public static Map<Locality, Schedule> importNewSchedules (String fileName) throws IOException {
+        Map<Locality, Schedule> map = new HashMap<>();
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        String currentLine;
+        reader.readLine();
+        String[] data;
+
+        while ((currentLine = reader.readLine()) != null){
+            data = currentLine.split(",");
+            int[] open = extraction(data[1]);
+            int[] close = extraction(data[2]);
+            Schedule schedule = new Schedule(LocalTime.of(open[0],open[1]), LocalTime.of(close[0], close[1]));
+            map.put(new Locality(data[0]), schedule);
+        }
+        return map;
+    }
+    /**
+     * Extracts hour and minute values from a schedule string in "HH:MM" format.
+     *
+     * @param schedule The schedule string in "HH:MM" format.
+     * @return An array containing hour and minute values.
+     */
+    private static int[] extraction(String schedule){
+        String[] data = schedule.split(":");
+
+        int hour = Integer.parseInt(data[0]);
+        int min = Integer.parseInt(data[1]);
+
+        return new int[]{hour, min};
     }
 }
 

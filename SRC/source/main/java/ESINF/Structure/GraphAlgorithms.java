@@ -467,4 +467,95 @@ public class GraphAlgorithms {
             }
         }
     }
+
+    public static <V, E> double fordFulkerson(Graph<V,E> graph, V source, V sink){
+        Graph<V, Integer> residualGraph = createResidualGraph(graph);
+        int maxFlow = 0;
+        List<V> path = findAugmentingPath(residualGraph, source, sink);
+        while(path != null){
+            int minCapacity = findMinCapacity(residualGraph, path);
+            updateResidualGraph(residualGraph, path, minCapacity);
+            maxFlow += minCapacity;
+            path = findAugmentingPath(residualGraph, source, sink);
+        }
+        return maxFlow;
+    }
+    private static <V,E> Graph<V, Integer> createResidualGraph(Graph<V,E> g){
+        Graph<V, Integer> residualGraph = new MapGraph<>(true);
+        for (V vertex : g.vertices()) {
+            residualGraph.addVertex(vertex);
+        }
+
+        for (Edge<V,E> edge : g.edges()) {
+            V vOrig = edge.getVOrig();
+            V vDest = edge.getVDest();
+
+            int capacity = ((Number) edge.getWeight()).intValue();
+
+            residualGraph.addEdge(vOrig, vDest, capacity);
+
+            residualGraph.addEdge(vDest, vOrig, 0);
+        }
+        return residualGraph;
+    }
+    private static <V, E> List<V> findAugmentingPath(Graph<V, Integer> residualGraph, V source, V sink) {
+        Queue<V> queue = new LinkedList<>();
+        Map<V, V> parentMap = new HashMap<>();
+        Set<V> visited = new HashSet<>();
+
+        queue.add(source);
+        visited.add(source);
+
+        while (!queue.isEmpty()) {
+            V current = queue.poll();
+
+            for (V neighbor : residualGraph.adjVertices(current)) {
+                if (!visited.contains(neighbor) && residualGraph.edge(current, neighbor).getWeight() > 0) {
+                    queue.add(neighbor);
+                    visited.add(neighbor);
+                    parentMap.put(neighbor, current);
+                }
+            }
+        }
+        List<V> path = new LinkedList<>();
+        V current = sink;
+
+        while (current != null) {
+            path.add(current);
+            current = parentMap.get(current);
+        }
+
+        Collections.reverse(path);
+
+        if (path.size() > 1 && path.get(0).equals(source) && path.get(path.size() - 1).equals(sink)) {
+            return path;
+        } else {
+            return null;
+        }
+    }private static <V, E> int findMinCapacity(Graph<V, Integer> residualGraph, List<V> path) {
+        int minCapacity = Integer.MAX_VALUE;
+
+        for (int i = 0; i < path.size() - 1; i++) {
+            V vOrig = path.get(i);
+            V vDest = path.get(i + 1);
+
+            int capacity = residualGraph.edge(vOrig, vDest).getWeight();
+            minCapacity = Math.min(minCapacity, capacity);
+        }
+
+        return minCapacity;
+    }
+    private static <V, E> void updateResidualGraph(Graph<V, Integer> residualGraph, List<V> path, int minCapacity) {
+        for (int i = 0; i < path.size() - 1; i++) {
+            V vOrig = path.get(i);
+            V vDest = path.get(i + 1);
+
+            // Update forward edge
+            residualGraph.edge(vOrig, vDest).setWeight(residualGraph.edge(vOrig, vDest).getWeight() - minCapacity);
+
+            // Update backward edge
+            residualGraph.edge(vDest, vOrig).setWeight(residualGraph.edge(vDest, vOrig).getWeight() + minCapacity);
+        }
+    }
+
 }

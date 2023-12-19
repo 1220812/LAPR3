@@ -1,7 +1,7 @@
 package ESINF.US01;
 
 import ESINF.Domain.Locality;
-import ESINF.Domain.Schedules;
+import ESINF.Domain.Schedule;
 import ESINF.Structure.MapGraph;
 /**
  * The `NetworkBuilder` class is a singleton builder for constructing and managing a network of hubs

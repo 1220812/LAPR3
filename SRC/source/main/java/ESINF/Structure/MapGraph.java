@@ -20,8 +20,10 @@ public class MapGraph<V, E> extends CommonGraph<V, E> {
     public void printGraph() {
         for (V vertex : mapVertices.keySet()) {
             System.out.print(vertex + " -> ");
+            System.out.println();
             for (Edge<V, E> edge : mapVertices.get(vertex).getAllOutEdges()) {
                 System.out.print("(" + edge.getVDest() + ", " + edge.getWeight() + ") ");
+                System.out.println();
             }
             System.out.println();
         }
