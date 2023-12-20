@@ -1,0 +1,5 @@
+Na data "16/12/2023" na parcela "A" e com uma duração de "14" minutos, a rega esteve ativa das "8:30" às "8:44"
+Na data "16/12/2023" na parcela "B" e com uma duração de "8" minutos, a rega esteve ativa das "8:44" às "8:52"
+Na data "16/12/2023" na parcela "C" e com uma duração de "25" minutos, a rega esteve ativa das "8:52" às "9:17"
+Na data "16/12/2023" na parcela "E" e com uma duração de "7" minutos, a rega esteve ativa das "9:17" às "9:24"
+Na data "16/12/2023" na parcela "F" e com uma duração de "10" minutos, a rega esteve ativa das "9:24" às "9:34"

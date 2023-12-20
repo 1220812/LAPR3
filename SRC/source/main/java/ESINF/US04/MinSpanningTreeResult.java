@@ -1,6 +1,6 @@
 package ESINF.US04;
 
-import ESINF.Domain.Hub;
+import ESINF.Domain.Locality;
 import ESINF.Structure.Edge;
 import ESINF.Structure.MapGraph;
 import ESINF.US01.NetworkBuilder;
@@ -11,29 +11,29 @@ import static ESINF.Structure.GraphAlgorithms.minimumSpanningTree;
 public class MinSpanningTreeResult<T, E> {
     NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
 
-    public MapGraph<Hub, Integer> getGraph() {
+    public MapGraph<Locality, Integer> getGraph() {
         return networkBuilder.getDistribution();
     }
 
-    public static MapGraph<Hub, Integer> getMinimumSpanningTree(MapGraph<Hub, Integer> graph) {
+    public static MapGraph<Locality, Integer> getMinimumSpanningTree(MapGraph<Locality, Integer> graph) {
         if (graph == null) {
             return null;
         } else {
             return minimumSpanningTree(graph, Integer::compare, Integer::sum, 0);
         }
     }
-    public static void printMinimumSpanningTree(MapGraph<Hub, Integer> minimumSpanning) {
+    public static void printMinimumSpanningTree(MapGraph<Locality, Integer> minimumSpanning) {
         if (minimumSpanning == null) {
             System.out.println("The minimum spanning tree is null. Make sure you initialize it correctly.");
         } else {
             System.out.println("Minimum Spanning Tree:");
             System.out.printf("%-10s%-20s%s%n", "Origin", "--(Distance(m))--", "Destination");
 
-            for (Edge<Hub, Integer> edge : minimumSpanning.edges()) {
-                Hub vOrig = edge.getVOrig();
-                Hub vDest = edge.getVDest();
-                String hubOrigin = vOrig.getHubId();
-                String hubDestination = vDest.getHubId();
+            for (Edge<Locality, Integer> edge : minimumSpanning.edges()) {
+                Locality vOrig = edge.getVOrig();
+                Locality vDest = edge.getVDest();
+                String hubOrigin = vOrig.getName();
+                String hubDestination = vDest.getName();
                 Integer weight = edge.getWeight();
 
                 System.out.printf("%-10s%-20s%s%n", hubOrigin, "--(" + weight + ")--", hubDestination);
@@ -43,11 +43,11 @@ public class MinSpanningTreeResult<T, E> {
 
     }
 
-    public static int calculateTotalDistance(MapGraph<Hub, Integer> minimumSpanning) {
+    public static int calculateTotalDistance(MapGraph<Locality, Integer> minimumSpanning) {
         int totalDistance = 0;
 
         if (minimumSpanning != null) {
-            for (Edge<Hub, Integer> edge : minimumSpanning.edges()) {
+            for (Edge<Locality, Integer> edge : minimumSpanning.edges()) {
                 totalDistance += edge.getWeight();
             }
         }

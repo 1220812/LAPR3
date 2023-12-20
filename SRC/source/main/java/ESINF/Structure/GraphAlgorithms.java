@@ -293,4 +293,269 @@ public class GraphAlgorithms {
         }
         return minimumSpanningTree;
     }
+
+    public static <V,E> E shortestsPaths(Graph<V, E> g, V vOrig, V vDest, Comparator<E> ce, BinaryOperator<E> sum, E zero, LinkedList<V> shortPath) {
+        if(!g.validVertex(vOrig) || !g.validVertex(vDest)){
+            return null;
+        }
+
+        shortPath.clear();
+        int numVerts = g.numVertices();
+        boolean[] visited = new boolean[numVerts];
+        V[] pathKeys = (V[]) new Object [numVerts];
+        E[] dist = (E[]) new Object [numVerts];
+        initializePathDist(numVerts, pathKeys, dist);
+
+        shortestPathDijkstra(g, vOrig, ce, sum, zero, visited, pathKeys, dist);
+
+        E lengthPath = dist[g.key(vDest)];
+
+        if(lengthPath != null){
+            getPath(g, vOrig, vDest, pathKeys, shortPath);
+            return lengthPath;
+        }
+
+        return null;
+    }
+    public static <V, E> boolean shortestsPaths(Graph<V, E> g, V vOrig,
+                                               Comparator<E> ce, BinaryOperator<E> sum, E zero,
+                                               ArrayList<LinkedList<V>> paths, ArrayList<E> dists) {
+
+        if (!g.validVertex(vOrig)) {
+            return false;
+        }
+        paths.clear();
+        dists.clear();
+        int numVertices = g.numVertices();
+        boolean[] visited = new boolean[numVertices];
+        V[] pathKeys = (V[]) new Object[numVertices];
+        E[] dist = (E[]) new Object[numVertices];
+        initializePathDist(numVertices, pathKeys, dist);
+
+        shortestPathDijkstra(g, vOrig, ce, sum, zero, visited, pathKeys, dist);
+
+        dists.clear();
+        paths.clear();
+        for (int i = 0; i < numVertices; i++) {
+            paths.add(null);
+            dists.add(null);
+        }
+        for (V vDist:g.vertices()) {
+            int i = g.key(vDist);
+            if(dist[i] != null){
+                LinkedList<V> shortPath = new LinkedList<>();
+                getPath(g, vOrig, vDist, pathKeys, shortPath);
+                paths.set(i, shortPath);
+                dists.set(i, dist[i]);
+            }
+        }
+
+        return true;
+    }
+    private static <V, E> void getPath(Graph<V, E> g, V vOrig, V vDest,
+                                       V [] pathKeys, LinkedList<V> path) {
+
+        if (vOrig.equals(vDest))
+            path.push(vDest);
+        else {
+            path.push(vDest);
+            int keyVDest = g.key(vDest);
+            vDest = pathKeys[keyVDest];
+            getPath(g, vOrig, vDest, pathKeys, path);
+        }
+    }
+
+    public static <V, E> Map<V, Integer> betweennessCentrality(Graph<V, E> graph) {
+        Map<V, Integer> centrality = new HashMap<>();
+
+        for (V vertex : graph.vertices()) {
+            centrality.put(vertex, 0);
+        }
+
+        for (V source : graph.vertices()) {
+            LinkedList<V> queue = new LinkedList<>();
+            queue.add(source);
+
+            Map<V, Integer> numShortestPaths = new HashMap<>();
+            numShortestPaths.put(source, 1);
+
+            Map<V, Integer> dependency = new HashMap<>();
+            for (V vertex : graph.vertices()) {
+                dependency.put(vertex, 0);
+            }
+
+            Map<V, Integer> distance = new HashMap<>();
+            distance.put(source, 0);
+
+            while (!queue.isEmpty()) {
+                V currentVertex = queue.poll();
+
+                for (V neighbor : graph.adjVertices(currentVertex)) {
+                    if (!distance.containsKey(neighbor)) {
+                        distance.put(neighbor, distance.get(currentVertex) + 1);
+                        queue.add(neighbor);
+                    }
+
+                    if (distance.get(neighbor) == distance.get(currentVertex) + 1) {
+                        numShortestPaths.put(neighbor, numShortestPaths.getOrDefault(neighbor, 0) + numShortestPaths.get(currentVertex));
+                        dependency.put(neighbor, dependency.get(neighbor) + 1);
+                    }
+                }
+            }
+
+            for (V vertex : graph.vertices()) {
+                if (!vertex.equals(source)) {
+                    Integer currentCentrality = centrality.get(vertex);
+                    Integer currentDependency = dependency.get(vertex);
+                    Integer currentNumShortestPaths = numShortestPaths.get(vertex);
+
+                    if (currentCentrality == null) {
+                        currentCentrality = 0;
+                    }
+                    if (currentDependency == null) {
+                        currentDependency = 0;
+                    }
+                    if (currentNumShortestPaths == null) {
+                        currentNumShortestPaths = 1; // Avoid division by zero
+                    }
+
+                    centrality.put(vertex, currentCentrality + (currentDependency / currentNumShortestPaths));
+                }
+            }
+
+        }
+
+        return centrality;
+    }
+
+    public static <V, E> void initializePathDist(int numVerts, V[] pathKeys, E[] dist){
+        for (int i = 0; i < numVerts; i++) {
+            pathKeys[i]=null;
+            dist[i] = null;
+        }
+    }
+    public static <V, E> void shortestPathDijkstra(Graph<V, E> g, V vOrig,
+                                                   Comparator<E> ce, BinaryOperator<E> sum, E zero,
+                                                   boolean[] visited, V[] pathKeys, E[] dist) {
+
+        int vKey = g.key(vOrig);
+        dist[vKey] = zero;
+        pathKeys[vKey] = vOrig;
+
+        while (vOrig != null) {
+            vKey = g.key(vOrig);
+            visited[vKey] = true;
+            for (Edge<V, E> edge : g.outgoingEdges(vOrig)) {
+                int keyVAdj = g.key(edge.getVDest());
+                if (!visited[keyVAdj]) {
+                    E s = sum.apply(dist[vKey], edge.getWeight());
+                    if (dist[keyVAdj] == null || ce.compare(dist[keyVAdj], s) > 0) {
+                        dist[keyVAdj] = s;
+                        pathKeys[keyVAdj] = vOrig;
+                    }
+                }
+            }
+
+            E minDist = null;
+            vOrig = null;
+            for (V vertex : g.vertices()) {
+                int vertexKey = g.key(vertex);
+                if (!visited[vertexKey] && (dist[vertexKey] != null) && ((minDist == null) || ce.compare(dist[vertexKey], minDist) < 0)) {
+                    minDist = dist[vertexKey];
+                    vOrig = vertex;
+                }
+            }
+        }
+    }
+
+    public static <V, E> double fordFulkerson(Graph<V,E> graph, V source, V sink){
+        Graph<V, Integer> residualGraph = createResidualGraph(graph);
+        int maxFlow = 0;
+        List<V> path = findAugmentingPath(residualGraph, source, sink);
+        while(path != null){
+            int minCapacity = findMinCapacity(residualGraph, path);
+            updateResidualGraph(residualGraph, path, minCapacity);
+            maxFlow += minCapacity;
+            path = findAugmentingPath(residualGraph, source, sink);
+        }
+        return maxFlow;
+    }
+    private static <V,E> Graph<V, Integer> createResidualGraph(Graph<V,E> g){
+        Graph<V, Integer> residualGraph = new MapGraph<>(true);
+        for (V vertex : g.vertices()) {
+            residualGraph.addVertex(vertex);
+        }
+
+        for (Edge<V,E> edge : g.edges()) {
+            V vOrig = edge.getVOrig();
+            V vDest = edge.getVDest();
+
+            int capacity = ((Number) edge.getWeight()).intValue();
+
+            residualGraph.addEdge(vOrig, vDest, capacity);
+
+            residualGraph.addEdge(vDest, vOrig, 0);
+        }
+        return residualGraph;
+    }
+    private static <V, E> List<V> findAugmentingPath(Graph<V, Integer> residualGraph, V source, V sink) {
+        Queue<V> queue = new LinkedList<>();
+        Map<V, V> parentMap = new HashMap<>();
+        Set<V> visited = new HashSet<>();
+
+        queue.add(source);
+        visited.add(source);
+
+        while (!queue.isEmpty()) {
+            V current = queue.poll();
+
+            for (V neighbor : residualGraph.adjVertices(current)) {
+                if (!visited.contains(neighbor) && residualGraph.edge(current, neighbor).getWeight() > 0) {
+                    queue.add(neighbor);
+                    visited.add(neighbor);
+                    parentMap.put(neighbor, current);
+                }
+            }
+        }
+        List<V> path = new LinkedList<>();
+        V current = sink;
+
+        while (current != null) {
+            path.add(current);
+            current = parentMap.get(current);
+        }
+
+        Collections.reverse(path);
+
+        if (path.size() > 1 && path.get(0).equals(source) && path.get(path.size() - 1).equals(sink)) {
+            return path;
+        } else {
+            return null;
+        }
+    }private static <V, E> int findMinCapacity(Graph<V, Integer> residualGraph, List<V> path) {
+        int minCapacity = Integer.MAX_VALUE;
+
+        for (int i = 0; i < path.size() - 1; i++) {
+            V vOrig = path.get(i);
+            V vDest = path.get(i + 1);
+
+            int capacity = residualGraph.edge(vOrig, vDest).getWeight();
+            minCapacity = Math.min(minCapacity, capacity);
+        }
+
+        return minCapacity;
+    }
+    private static <V, E> void updateResidualGraph(Graph<V, Integer> residualGraph, List<V> path, int minCapacity) {
+        for (int i = 0; i < path.size() - 1; i++) {
+            V vOrig = path.get(i);
+            V vDest = path.get(i + 1);
+
+            // Update forward edge
+            residualGraph.edge(vOrig, vDest).setWeight(residualGraph.edge(vOrig, vDest).getWeight() - minCapacity);
+
+            // Update backward edge
+            residualGraph.edge(vDest, vOrig).setWeight(residualGraph.edge(vDest, vOrig).getWeight() + minCapacity);
+        }
+    }
+
 }

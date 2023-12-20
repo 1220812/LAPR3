@@ -1,7 +1,7 @@
 package ESINF.US01;
 
-import ESINF.Domain.Coordinates;
-import ESINF.Domain.Hub;
+import ESINF.Domain.Locality;
+import ESINF.Domain.Schedule;
 import ESINF.Structure.MapGraph;
 /**
  * The `NetworkBuilder` class is a singleton builder for constructing and managing a network of hubs
@@ -15,19 +15,19 @@ public class NetworkBuilder {
     /**
      * The underlying graph representing the distribution network.
      */
-    final private MapGraph<Hub, Integer> distribution;
+    final private MapGraph<Locality, Integer> distribution;
     /**
      * Constructs a new `NetworkBuilder` instance with an initially empty distribution graph.
      * The graph is directed and weighted.
      */
-    private NetworkBuilder(){
+    public NetworkBuilder(){
         this.distribution = new MapGraph<>(false);
     }
 
     /**
      * Gets
      */
-    public MapGraph<Hub, Integer> getDistribution() {
+    public MapGraph<Locality, Integer> getDistribution() {
         return distribution;
     }
 
@@ -35,15 +35,12 @@ public class NetworkBuilder {
         return instance;
     }
     /**
-     * Adds a hub to the distribution network with the specified hubId, latitude, and longitude.
+     * Adds a hub to the distribution network.
      *
-     * @param hubId The unique identifier of the hub.
-     * @param latitude The latitude of the hub's geographical coordinates.
-     * @param longitude The longitude of the hub's geographical coordinates.
+     * @param vert the vert to be added to the graph as a vertex
      * @return `true` if the hub is successfully added; `false` otherwise.
      */
-    public boolean addHub(String hubId, Double latitude, Double longitude){
-        Hub vert = new Hub(hubId,latitude, longitude);
+    public boolean addLocality(Locality vert){
         return distribution.addVertex(vert);
     }
     /**
@@ -55,7 +52,7 @@ public class NetworkBuilder {
      * @param distance The distance between the origin and destination hubs.
      * @return `true` if the route is successfully added; `false` otherwise.
      */
-    public boolean addRoute(Hub orig, Hub dest, int distance){
+    public boolean addRoute(Locality orig, Locality dest, int distance){
         return distribution.addEdge(orig, dest, distance);
     }
     /**
@@ -68,4 +65,5 @@ public class NetworkBuilder {
         return "NetworkBuilder :" +
                 "distribution = " + distribution;
     }
+
 }

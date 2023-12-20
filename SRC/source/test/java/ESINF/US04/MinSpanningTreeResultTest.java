@@ -1,6 +1,6 @@
 package ESINF.US04;
 
-import ESINF.Domain.Hub;
+import ESINF.Domain.Locality;
 import ESINF.Structure.MapGraph;
 import org.junit.jupiter.api.Test;
 
@@ -10,15 +10,15 @@ class MinSpanningTreeResultTest {
 
     @Test
     void printMinimumSpanningTree() {
-        MapGraph<Hub, Integer> minimumSpanning = new MapGraph<>(true);
-        Hub hubA = new Hub("A");
-        Hub hubB = new Hub("B");
-        Hub hubC = new Hub("C");
-        minimumSpanning.addVertex(hubA);
-        minimumSpanning.addVertex(hubB);
-        minimumSpanning.addVertex(hubC);
-        minimumSpanning.addEdge(hubA, hubB, 10);
-        minimumSpanning.addEdge(hubB, hubC, 15);
+        MapGraph<Locality, Integer> minimumSpanning = new MapGraph<>(true);
+        Locality localityA = new Locality("A");
+        Locality localityB = new Locality("B");
+        Locality localityC = new Locality("C");
+        minimumSpanning.addVertex(localityA);
+        minimumSpanning.addVertex(localityB);
+        minimumSpanning.addVertex(localityC);
+        minimumSpanning.addEdge(localityA, localityB, 10);
+        minimumSpanning.addEdge(localityB, localityC, 15);
 
         System.out.println("Print Minimum Spanning Tree:");
         MinSpanningTreeResult.printMinimumSpanningTree(minimumSpanning);
@@ -26,15 +26,15 @@ class MinSpanningTreeResultTest {
 
     @Test
     void calculateTotalDistance() {
-        MapGraph<Hub, Integer> minimumSpanning = new MapGraph<>(true);
-        Hub hubA = new Hub("A");
-        Hub hubB = new Hub("B");
-        Hub hubC = new Hub("C");
-        minimumSpanning.addVertex(hubA);
-        minimumSpanning.addVertex(hubB);
-        minimumSpanning.addVertex(hubC);
-        minimumSpanning.addEdge(hubA, hubB, 10);
-        minimumSpanning.addEdge(hubB, hubC, 15);
+        MapGraph<Locality, Integer> minimumSpanning = new MapGraph<>(true);
+        Locality localityA = new Locality("A");
+        Locality localityB = new Locality("B");
+        Locality localityC = new Locality("C");
+        minimumSpanning.addVertex(localityA);
+        minimumSpanning.addVertex(localityB);
+        minimumSpanning.addVertex(localityC);
+        minimumSpanning.addEdge(localityA, localityB, 10);
+        minimumSpanning.addEdge(localityB, localityC, 15);
 
         int totalDistance = MinSpanningTreeResult.calculateTotalDistance(minimumSpanning);
 

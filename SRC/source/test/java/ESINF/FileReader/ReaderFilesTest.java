@@ -1,16 +1,17 @@
 package ESINF.FileReader;
 
-import ESINF.Domain.Hub;
+import ESINF.Domain.Locality;
+import ESINF.Domain.Schedule;
 import ESINF.US01.NetworkBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReaderFilesTest {
-
     NetworkBuilder networkBuilder;
 
     /**
@@ -20,7 +21,7 @@ class ReaderFilesTest {
     @Test
     void importDistanceSmallData() {
         try {
-            ReaderFiles.importDistanceData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\src\\main\\resources\\ESINF\\distancias_small.csv");
+            ReaderFiles.importDistanceData("SRC/source/main/resources/ESINF/distancias_small.csv", "SRC/source/main/resources/ESINF/locais_big.csv");
 
             networkBuilder = NetworkBuilder.getInstance();
 
@@ -30,15 +31,15 @@ class ReaderFilesTest {
             e.printStackTrace();
         }
     }
-
     /**
      * Test method for importing distance data from a large CSV file.
      * @throws IOException If an I/O error occurs while reading the file.
      */
+
     @Test
     void importDistanceBigData() {
         try {
-            ReaderFiles.importDistanceData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\src\\main\\resources\\ESINF\\distancias_big.csv");
+            ReaderFiles.importDistanceData("SRC/source/main/resources/ESINF/distancias_big.csv", "SRC/source/main/resources/ESINF/locais_big.csv");
 
             networkBuilder = NetworkBuilder.getInstance();
 
@@ -47,15 +48,15 @@ class ReaderFilesTest {
             e.printStackTrace();
         }
     }
-
     /**
      * Test method for importing local data from a small CSV file.
      * @throws IOException If an I/O error occurs while reading the file.
      */
+
     @Test
     void importLocalSmallData() {
         try {
-            ReaderFiles.importLocalData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\src\\main\\resources\\ESINF\\locais_small.csv");
+            ReaderFiles.importLocalData("SRC/source/main/resources/ESINF/locais_small.csv");
 
             networkBuilder = NetworkBuilder.getInstance();
 
@@ -65,7 +66,6 @@ class ReaderFilesTest {
             e.printStackTrace();
         }
     }
-
     /**
      * Test method for importing local data from a large CSV file.
      * @throws IOException If an I/O error occurs while reading the file.
@@ -73,7 +73,7 @@ class ReaderFilesTest {
     @Test
     void importLocalBigData() {
         try {
-            ReaderFiles.importLocalData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\src\\main\\resources\\ESINF\\locais_big.csv");
+            ReaderFiles.importLocalData("SRC/source/main/resources/ESINF/locais_big.csv");
 
             networkBuilder = NetworkBuilder.getInstance();
 
@@ -85,12 +85,19 @@ class ReaderFilesTest {
     }
 
     /**
-     * Cleanup method to remove all hubs from the network after each test.
+     * Test method for importing data from a TXT file.
+     * @throws IOException If an I/O error occurs while reading the file.
      */
-    @AfterEach
-    public void clear(){
-        for (Hub hub: networkBuilder.getDistribution().vertices()) {
-            networkBuilder.getDistribution().removeVertex(hub);
+    @Test
+    void importNewSchedulesTest() {
+        try {
+            Map<Locality, Schedule> result = ReaderFiles.importNewSchedules("SRC/source/main/resources/ESINF/schedulesHub.txt");
+
+            assertNotNull(result);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
 }
