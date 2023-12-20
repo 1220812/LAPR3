@@ -116,7 +116,9 @@ public class Locality {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Locality locality = (Locality) o;
-        return Objects.equals(name, locality.name) && Objects.equals(latitude, locality.latitude) && Objects.equals(longitude, locality.longitude) && Objects.equals((isHub), locality.isHub);
+        return Objects.equals(name, locality.name)
+                && Objects.equals(latitude, locality.latitude) &&
+                Objects.equals(longitude, locality.longitude);
     }
     /**
      * Calculates the distance between this locality and another locality.
@@ -135,7 +137,7 @@ public class Locality {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name, latitude, longitude, isHub);
+        return Objects.hash(name, latitude, longitude);
     }
 
     @Override

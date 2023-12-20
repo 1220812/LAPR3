@@ -14,8 +14,6 @@ public class MapGraph<V, E> extends CommonGraph<V, E> {
 
     final private Map<V, MapVertex<V, E>> mapVertices;  // all the Vertices of the graph
 
-    //TODO: REMOVER METODO DE TESTE
-
     //USEI04
     public void printGraph() {
         for (V vertex : mapVertices.keySet()) {

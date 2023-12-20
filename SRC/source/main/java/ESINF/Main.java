@@ -14,8 +14,8 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        ReaderFiles.importLocalData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\source\\main\\resources\\ESINF\\locais_small.csv");
-        ReaderFiles.importDistanceData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\source\\main\\resources\\ESINF\\distancias_small.csv", "C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\source\\main\\resources\\ESINF\\locais_small.csv");
+        ReaderFiles.importLocalData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\source\\main\\resources\\ESINF\\locais_big.csv");
+        ReaderFiles.importDistanceData("C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\source\\main\\resources\\ESINF\\distancias_big.csv", "C:\\Users\\Utilizador\\OneDrive\\Ambiente de Trabalho\\Faculdade\\2º Ano\\1º Semestre\\LAPR3\\Project\\SRC\\source\\main\\resources\\ESINF\\locais_big.csv");
 
         NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
 
@@ -26,6 +26,7 @@ public class Main {
 
         int numberOfHubs = 5;
 
+        System.out.println("US 2");
         HubDefiner hubDefiner = new HubDefiner();
 
         hubDefiner.defineHubs(graph, numberOfHubs);

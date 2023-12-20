@@ -163,16 +163,6 @@ public class HubDefiner {
 
         return topNHubsMap;
     }
-    /**
-     * Defines hubs in a given graph based on specified criteria and a given number of hubs (n).
-     * This method calculates and assigns hub status to localities in the graph. It considers factors such as out-degree,
-     * vertex proximity, and additional criteria to create a map of localities with associated values. The top n localities
-     * based on these values are then identified as hubs, and their hub status is set in the graph.
-     *
-     * @param graph The graph containing localities to be considered for hub designation.
-     * @param n     The number of hubs to be defined in the graph.
-     * @return The original graph with hub status assigned to the top n localities based on specified criteria.
-     */
     public MapGraph<Locality, Integer> defineHubs(MapGraph<Locality, Integer> graph, Integer n) {
         Map<Locality, List<Integer>> map = new HashMap<>();
         for (Locality vertex : graph.vertices()) {
@@ -189,4 +179,5 @@ public class HubDefiner {
         }
         return graph;
     }
+
 }
