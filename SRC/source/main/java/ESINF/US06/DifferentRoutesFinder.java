@@ -47,12 +47,4 @@ public class DifferentRoutesFinder {
 
         return result;
     }
-
-    private static class LocalityPairComparator implements Comparator<LocalityPair> {
-        @Override
-        public int compare(LocalityPair o1, LocalityPair o2) {
-            // Compare LocalityPairs based on their first locality
-            return o1.getLocality1().compareTo(o2.getLocality1());
-        }
-    }
 }
