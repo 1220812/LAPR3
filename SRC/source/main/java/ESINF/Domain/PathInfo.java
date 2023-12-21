@@ -30,6 +30,11 @@ public class PathInfo {
         this.numberOfVehiclesCharges = numberOfVehiclesCharges;
     }
 
+    public PathInfo(double totalDistance, double totalTime) {
+        this.totalDistance = totalDistance;
+        this.totalTime = totalTime;
+    }
+
     /**
      * Gets
      */

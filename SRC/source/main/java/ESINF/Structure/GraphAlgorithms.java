@@ -558,4 +558,29 @@ public class GraphAlgorithms {
         }
     }
 
+    public static <V, E extends Comparable<E>> ArrayList <LinkedList<V>> dfsAlgorithm (Graph g, V vOrig, V vDest, E maxWeight){
+        ArrayList<LinkedList<V>> paths = new ArrayList<>();
+        Set<V> visitedSet = new HashSet<>();
+        LinkedList<V> currentPath = new LinkedList<>();
+        dfsAlgorithm(g, vOrig, vDest, maxWeight, visitedSet, currentPath, paths);
+        return paths;
+    }
+
+    private static <V, E extends Comparable<E>> void dfsAlgorithm(Graph<V, E> g, V vOrig, V vDest, E maxWeight, Set<V> visitedSet, LinkedList<V> path ,ArrayList<LinkedList<V>> paths){
+        visitedSet.add(vOrig);
+        path.add (vOrig);
+        if (vOrig. equals(vDest)) {
+            paths. add (new LinkedList<>(path));
+        } else {
+            for (V neighbor : g.adjVertices(vOrig)) {
+                if (!visitedSet.contains(neighbor)) {
+                    E cost = g.edge(vOrig, neighbor).getWeight();
+                    dfsAlgorithm(g, neighbor, vDest, maxWeight, visitedSet, path, paths);
+                }
+            }
+        }
+
+        visitedSet.remove(vOrig) ;
+        path.removeLast();
+    }
 }
