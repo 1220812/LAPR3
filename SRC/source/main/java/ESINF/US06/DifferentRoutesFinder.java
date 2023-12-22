@@ -33,15 +33,18 @@ public class DifferentRoutesFinder {
     public TreeMap<LocalityPair, PathInfo> routes(Locality origin, Locality hub, Vehicle vehicle) {
         TreeMap<LocalityPair, PathInfo> result = new TreeMap<>();
 
+        // Find all paths using the dfsAlgorithm method
         List<LinkedList<Locality>> allPaths = dfsAlgorithm(graph1, origin, hub, vehicle.getAutonomy());
 
+        // Process each path found
         for (LinkedList<Locality> path : allPaths) {
             double totalDistance = calculateTotalTravelDistance(path);
             double totalTravelTime = totalTravelTime(vehicle, totalDistance);
 
-            // Use LocalityPair as the key for the TreeMap
+            // Create a LocalityPair representing the current route
             LocalityPair localityPair = new LocalityPair(path.getFirst(), path.getLast());
 
+            // Create a PathInfo object with total distance and travel time
             result.put(localityPair, new PathInfo(totalDistance, totalTravelTime));
         }
 

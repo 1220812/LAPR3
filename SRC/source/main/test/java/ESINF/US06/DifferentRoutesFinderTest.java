@@ -67,16 +67,6 @@ public class DifferentRoutesFinderTest {
         singleLocality.add(new Locality("A"));
         assertEquals(0.0, routesFinder.calculateTotalTravelDistance(singleLocality));
 
-//        // Test case 3: Valid route with known distances
-//        List<Locality> validRoute = new ArrayList<>();
-//        validRoute.add(new Locality("A"));
-//        validRoute.add(new Locality("B"));
-//        validRoute.add(new Locality("C"));
-//
-//        // Assuming graph1 has appropriate edge weights set for A->B and B->C
-//        double expectedDistance = 15.0;
-//        assertEquals(expectedDistance, routesFinder.calculateTotalTravelDistance(validRoute), 0.001);
-
     }
 
     @Test
