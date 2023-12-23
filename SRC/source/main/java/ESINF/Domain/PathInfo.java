@@ -1,16 +1,38 @@
 package ESINF.Domain;
 
-import java.util.HashMap;
+import java.time.LocalTime;
 import java.util.Map;
-
+/**
+ * Represents information about a path, including total time, total distance,
+ * and distances between localities.
+ */
 public class PathInfo {
     private double totalDistance;
     private double totalTime;
+    private int numberOfVehiclesCharges;
     private Map<LocalityPair, Integer> distancesBetweenLocalities;
+    /**
+     * Constructs a new PathInfo instance with the specified total time,
+     * total distance, and distances between localities.
+     *
+     * @param totalTime                 The total time of the path.
+     * @param totalDistance             The total distance of the path.
+     * @param distancesBetweenLocalities Distances between pairs of localities.
+     */
     public PathInfo(double totalTime, double totalDistance, Map<LocalityPair, Integer> distancesBetweenLocalities){
         this.totalTime = totalTime;
         this.totalDistance = totalDistance;
         this.distancesBetweenLocalities = distancesBetweenLocalities;
+    }
+    public PathInfo(double totalTime, double totalDistance, int numberOfVehiclesCharges){
+        this.totalTime = totalTime;
+        this.totalDistance = totalDistance;
+        this.numberOfVehiclesCharges = numberOfVehiclesCharges;
+    }
+
+    public PathInfo(double totalDistance, double totalTime) {
+        this.totalDistance = totalDistance;
+        this.totalTime = totalTime;
     }
 
     /**
@@ -29,6 +51,10 @@ public class PathInfo {
         return distancesBetweenLocalities;
     }
 
+    public int getNumberOfVehiclesCharges() {
+        return numberOfVehiclesCharges;
+    }
+
     /**
      * Sets
      */
@@ -42,5 +68,9 @@ public class PathInfo {
 
     public void setDistancesBetweenLocalities(Map<LocalityPair, Integer> distancesBetweenLocalities) {
         this.distancesBetweenLocalities = distancesBetweenLocalities;
+    }
+
+    public void setNumberOfVehiclesCharges(int numberOfVehiclesCharges) {
+        this.numberOfVehiclesCharges = numberOfVehiclesCharges;
     }
 }

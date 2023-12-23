@@ -5,13 +5,14 @@ import java.util.*;
 /**
  * Represents a vertex in a graph
  *
- * @param <V>
- * @param <E>
+ * @param <V> the type parameter
+ * @param <E> the type parameter
  */
 public class MapVertex<V, E> {
 
     final private V element;                            // Vertex information
     final private Map<V, Edge<V, E>> outVerts;    // Adjacent vertices
+
     /**
      * Constructs a vertex with the specified element.
      *
@@ -23,14 +24,16 @@ public class MapVertex<V, E> {
         element = vert;
         outVerts = new LinkedHashMap<>();
     }
+
     /**
-     * Gets the element associated with the vertex.
+     * Returns the element associated with the vertex.
      *
      * @return The element associated with the vertex.
      */
     public V getElement() {
         return element;
     }
+
     /**
      * Adds an adjacent vertex along with the connecting edge.
      *
@@ -40,6 +43,7 @@ public class MapVertex<V, E> {
     public void addAdjVert(V vAdj, Edge<V, E> edge) {
         outVerts.put(vAdj, edge);
     }
+
     /**
      * Removes an adjacent vertex.
      *
@@ -48,6 +52,7 @@ public class MapVertex<V, E> {
     public void remAdjVert(V vAdj) {
         outVerts.remove(vAdj);
     }
+
     /**
      * Gets the edge connecting the vertex to the specified adjacent vertex.
      *
@@ -57,6 +62,7 @@ public class MapVertex<V, E> {
     public Edge<V, E> getEdge(V vAdj) {
         return outVerts.get(vAdj);
     }
+
     /**
      * Gets the number of adjacent vertices.
      *
@@ -65,6 +71,7 @@ public class MapVertex<V, E> {
     public int numAdjVerts() {
         return outVerts.size();
     }
+
     /**
      * Gets a collection of all adjacent vertices.
      *

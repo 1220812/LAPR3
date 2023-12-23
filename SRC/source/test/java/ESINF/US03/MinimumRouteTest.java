@@ -4,7 +4,9 @@ import ESINF.Algorithm.Algorithms;
 import ESINF.Domain.Coordinates;
 import ESINF.Domain.Locality;
 import ESINF.Structure.Auxiliary.Path;
+import ESINF.Structure.Graph;
 import ESINF.Structure.MapGraph;
+import ESINF.Structure.MoreGraphAlgorithms;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -84,6 +86,40 @@ public class MinimumRouteTest {
     }
 
     /**
+     * Test most distant vertex on graph.
+     */
+    @Test
+    void testMostDistantVertexOnGraph() {
+        // Crie um grafo de teste
+        MapGraph<String, Integer> graph = new MapGraph<>(false);
+
+        // Adicione vértices ao grafo
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addVertex("D");
+
+        // Adicione arestas ponderadas ao grafo
+        graph.addEdge("A", "B", 5);
+        graph.addEdge("A", "C", 8);
+        graph.addEdge("B", "D", 10);
+        graph.addEdge("C", "D", 6);
+
+        // Chame o método mostDistantVertexOnGraph
+        Path<String> result = MoreGraphAlgorithms.mostDistantVertexOnGraph(graph);
+
+        // Faça asserções para verificar se o resultado é o esperado
+        assertNotNull(result); // O resultado não deve ser nulo se o grafo não estiver vazio
+
+        // Adicione mais asserções conforme necessário com base na lógica do método
+        assertEquals("A", result.getOrigin()); // Verifique se o ponto de origem está correto
+        assertEquals("D", result.getDestination()); // Verifique se o ponto de destino está correto
+        // Adicione mais asserções com base na lógica específica do seu método
+
+    }
+
+
+    /**
      * Test distance equals.
      */
     @Test
@@ -119,6 +155,28 @@ public class MinimumRouteTest {
         Coordinates route3 = new Coordinates(-10, -10);
         assertNotEquals(-156065.3500008355, route3.distance(-9, -9), 0.001);
 
+
+    }
+
+    /**
+     * Test distance to.
+     */
+    @Test
+    public void testDistanceTo() {
+        // Criar instâncias de dois hubs para teste
+        Hub hub1 = new Hub( "Hub1", 40.7128, -74.0060);
+        Hub hub2 = new Hub( "Hub2", 34.0522, -118.2437);
+        Hub hub3 = new Hub( "Hub3", 41.8781, -87.6298);
+        Hub hub4 = new Hub( "Hub4", 29.7604, -95.3698);
+        Hub hub5 = new Hub( "Hub5", 32.7767, -96.7970);
+
+
+        assertEquals(1.5423443758958094E7, hub1.distanceTo(hub2), 0.1);
+        assertEquals(1.3077418011800507E7, hub2.distanceTo(hub1), 0.1);
+        assertEquals(1.265031125371605E7, hub2.distanceTo(hub3), 0.1);
+        assertEquals(1.350878825431042E7, hub3.distanceTo(hub4), 0.1);
+        assertEquals(1.3285602970991598E7, hub4.distanceTo(hub5), 0.1);
+        assertEquals(1.2835343466286177E7, hub5.distanceTo(hub4), 0.1);
 
     }
 

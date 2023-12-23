@@ -100,27 +100,13 @@ public class Partition {
         this.designation = designation;
     }
     /**
-     * Returns a string representation of the basic properties of the partition.
-     *
-     * The string includes the designation, time, and regularity of the partition.
-     *
-     * @return A string representation of the partition.
-     */
-    @Override
-    public String toString() {
-        return "Partition : " + "\n" +
-                "designation = " + designation +
-                ", time = " + time +
-                ", regularity = " + regularity;
-    }
-    /**
      * Returns a string representation of the extended properties of the partition.
      *
      * The string includes the designation, time, regularity, mix designation, and recurrence formula.
      *
      * @return A string representation of the partition with additional information.
      */
-    public String toString2(){
+    public String toString(){
         return "Partition : " + "\n" +
                 designation + ", time = " + time + ", regularity = " + regularity + ", mix designation : " + mixDesignation + ", recurrence formule : " + recurrenceFormule ;
     }
@@ -136,4 +122,5 @@ public class Partition {
         int div = Integer.parseInt(regularity);
         return day % div == 0;
     }
+
 }

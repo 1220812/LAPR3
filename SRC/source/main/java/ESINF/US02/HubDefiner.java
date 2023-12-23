@@ -3,6 +3,7 @@ package ESINF.US02;
 import ESINF.Domain.Locality;
 import ESINF.Structure.GraphAlgorithms;
 import ESINF.Structure.MapGraph;
+import ESINF.US01.NetworkBuilder;
 
 import java.util.*;
 
@@ -162,7 +163,6 @@ public class HubDefiner {
 
         return topNHubsMap;
     }
-
     public MapGraph<Locality, Integer> defineHubs(MapGraph<Locality, Integer> graph, Integer n) {
         Map<Locality, List<Integer>> map = new HashMap<>();
         for (Locality vertex : graph.vertices()) {
@@ -180,12 +180,4 @@ public class HubDefiner {
         return graph;
     }
 
-    public static Locality findLocalityByID (Map<Locality, List<Integer>> map , String ID){
-        for (Locality locality : map.keySet()) {
-            if(locality.getName().equals(ID)){
-                return locality;
-            }
-        }
-        return null;
-    }
 }
