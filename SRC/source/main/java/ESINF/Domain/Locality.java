@@ -149,5 +149,12 @@ public class Locality {
                 ", is a Hub = " + isHub +
                 ", schedules = " + schedule;
     }
+
+    public int getColaborator(){
+        int colaborator = 0;
+        String newName[]= name.split("T");
+        colaborator= Integer.parseInt(newName[1]);
+        return colaborator;
+    }
 }
 
