@@ -164,11 +164,11 @@ public class MinimumRouteTest {
     @Test
     public void testDistanceTo() {
         // Criar instâncias de dois hubs para teste
-        Hub hub1 = new Hub( "Hub1", 40.7128, -74.0060);
-        Hub hub2 = new Hub( "Hub2", 34.0522, -118.2437);
-        Hub hub3 = new Hub( "Hub3", 41.8781, -87.6298);
-        Hub hub4 = new Hub( "Hub4", 29.7604, -95.3698);
-        Hub hub5 = new Hub( "Hub5", 32.7767, -96.7970);
+        Locality hub1 = new Locality( "Hub1", 40.7128, -74.0060);
+        Locality hub2 = new Locality( "Hub2", 34.0522, -118.2437);
+        Locality hub3 = new Locality( "Hub3", 41.8781, -87.6298);
+        Locality hub4 = new Locality( "Hub4", 29.7604, -95.3698);
+        Locality hub5 = new Locality( "Hub5", 32.7767, -96.7970);
 
 
         assertEquals(1.5423443758958094E7, hub1.distanceTo(hub2), 0.1);
