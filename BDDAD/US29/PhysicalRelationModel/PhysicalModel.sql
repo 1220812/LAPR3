@@ -19,6 +19,7 @@ DROP TABLE GroundSensor CASCADE CONSTRAINTS;
 DROP TABLE Harvest CASCADE CONSTRAINTS;
 DROP TABLE Incorporation CASCADE CONSTRAINTS;
 DROP TABLE IrrigationSector CASCADE CONSTRAINTS;
+DROP TABLE Log CASCADE CONSTRAINTS;
 DROP TABLE Manufacturer CASCADE CONSTRAINTS;
 DROP TABLE Mill CASCADE CONSTRAINTS;
 DROP TABLE Mobilization CASCADE CONSTRAINTS;
@@ -67,10 +68,11 @@ CREATE TABLE GroundSensor (groundSensorID number(10) NOT NULL, humidity float(10
 CREATE TABLE Harvest (operationID number(10) NOT NULL, quantity float(10), cropID number(20) NOT NULL, plantID number(10) NOT NULL, PRIMARY KEY (operationID));
 CREATE TABLE Incorporation (operationID number(10) NOT NULL, area float(10), cropID number(20) NOT NULL, PRIMARY KEY (operationID));
 CREATE TABLE IrrigationSector (setorID number(10) NOT NULL, startDate date, endDate date, maximumFlow float(10), dispersionID number(10), PRIMARY KEY (setorID));
+CREATE TABLE Log (logID number(10) GENERATED AS IDENTITY, instant timestamp(0), operationType number(10), operationID number(10) NOT NULL, PRIMARY KEY (logID));
 CREATE TABLE Manufacturer (manufacturerID number(10) NOT NULL, name varchar2(40), PRIMARY KEY (manufacturerID));
 CREATE TABLE Mill (buildingID number(20) NOT NULL, PRIMARY KEY (buildingID));
 CREATE TABLE Mobilization (operationID number(10) NOT NULL, parcelID number(20) NOT NULL, PRIMARY KEY (operationID));
-CREATE TABLE Operation (operationID number(10) NOT NULL, operationDate date, PRIMARY KEY (operationID));
+CREATE TABLE Operation (operationID number(10) NOT NULL, operationDate date, state varchar2(30), PRIMARY KEY (operationID));
 CREATE TABLE ParcelApplication (operationID number(10) NOT NULL, parcelID number(20) NOT NULL, productionFactorID number(20) NOT NULL, modeID number(10) NOT NULL, quantity float(10), PRIMARY KEY (operationID));
 CREATE TABLE Plant (plantID number(10) NOT NULL, name varchar2(40), speciesID number(10) NOT NULL, plantTypeID number(20) NOT NULL, PRIMARY KEY (plantID));
 CREATE TABLE Plantation (operationID number(10) NOT NULL, plantsNumber number(10), compass float(10), queuesDistance float(10), cropID number(20) NOT NULL, PRIMARY KEY (operationID));
@@ -93,6 +95,7 @@ CREATE TABLE Watering (operationID number(10) NOT NULL, duration number(10), ini
 CREATE TABLE WateringSystem (buildingID number(20) NOT NULL, capacity float(10), unityID number(10) NOT NULL, PRIMARY KEY (buildingID));
 CREATE TABLE WeatherStation (id number(10) NOT NULL, airSensorID number(10) NOT NULL, groundSensorID number(10) NOT NULL, rainfallSensorID number(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Weed (operationID number(10) NOT NULL, area float(10), cropID number(20) NOT NULL, PRIMARY KEY (operationID));
+ALTER TABLE Log ADD CONSTRAINT FKLog811905 FOREIGN KEY (operationID) REFERENCES Operation (operationID);
 ALTER TABLE Fertigation ADD CONSTRAINT FKFertigatio685108 FOREIGN KEY (setorID) REFERENCES IrrigationSector (setorID);
 ALTER TABLE Fertigation ADD CONSTRAINT FKFertigatio720831 FOREIGN KEY (cropID) REFERENCES Crop (cropID);
 ALTER TABLE Mobilization ADD CONSTRAINT FKMobilizati355731 FOREIGN KEY (parcelID) REFERENCES AgriculturalParcel (parcelID);
