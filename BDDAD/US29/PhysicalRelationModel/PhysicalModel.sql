@@ -68,7 +68,7 @@ CREATE TABLE GroundSensor (groundSensorID number(10) NOT NULL, humidity float(10
 CREATE TABLE Harvest (operationID number(10) NOT NULL, quantity float(10), cropID number(20) NOT NULL, plantID number(10) NOT NULL, PRIMARY KEY (operationID));
 CREATE TABLE Incorporation (operationID number(10) NOT NULL, area float(10), cropID number(20) NOT NULL, PRIMARY KEY (operationID));
 CREATE TABLE IrrigationSector (setorID number(10) NOT NULL, startDate date, endDate date, maximumFlow float(10), dispersionID number(10), PRIMARY KEY (setorID));
-CREATE TABLE Log (logID number(10) GENERATED AS IDENTITY, instant timestamp(0), operationType number(10), operationID number(10) NOT NULL, PRIMARY KEY (logID));
+CREATE TABLE Log (logID number(10) GENERATED AS IDENTITY, instant timestamp(0), operationDate date, cropID number(10), parcelID number(10), operationID number(10) NOT NULL, PRIMARY KEY (logID));
 CREATE TABLE Manufacturer (manufacturerID number(10) NOT NULL, name varchar2(40), PRIMARY KEY (manufacturerID));
 CREATE TABLE Mill (buildingID number(20) NOT NULL, PRIMARY KEY (buildingID));
 CREATE TABLE Mobilization (operationID number(10) NOT NULL, parcelID number(20) NOT NULL, PRIMARY KEY (operationID));
