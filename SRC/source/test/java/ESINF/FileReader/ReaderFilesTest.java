@@ -89,15 +89,39 @@ class ReaderFilesTest {
      * @throws IOException If an I/O error occurs while reading the file.
      */
     @Test
-    void importNewSchedulesTest() {
+    void importNewSchedulesValidFile() {
         try {
-            Map<Locality, Schedule> result = ReaderFiles.importNewSchedules("SRC/source/main/resources/ESINF/schedulesHub.txt");
+            String[] result = ReaderFiles.importNewSchedules("SRC/source/main/resources/ESINF/schedulesHub.txt");
 
             assertNotNull(result);
+            assertEquals(3,result.length);
+
+            assertEquals("CT1,14:00,17:00", result[0]);
+            assertEquals("CT214,11:00,15:30", result[1]);
+            assertEquals("CT700,12:00,15:00", result[2]);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            fail("Unexpected error: " + e.getMessage());
         }
     }
-
+    /**
+     * Test method for importing schedules from a non-existent TXT file.
+     * @throws IOException If an I/O error occurs while reading the file.
+     */
+    @Test
+    void importNewSchedulesFromNonExistentFile(){
+        assertThrows(IOException.class, () -> {
+            ReaderFiles.importNewSchedules("nonexistentfile.txt");
+        });
+    }
+    /**
+     * Test method for importing schedules from a TXT file with invalid data.
+     * @throws IOException If an I/O error occurs while reading the file.
+     */
+    @Test
+    void importNewSchedulesInvalidData() {
+        assertThrows(IOException.class, () -> {
+            ReaderFiles.importNewSchedules("SRC/source/main/resources/ESINF/schedulesHub_invalid.txt");
+        });
+    }
 }

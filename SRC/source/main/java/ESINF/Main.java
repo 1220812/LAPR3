@@ -1,10 +1,12 @@
 package ESINF;
 
 import ESINF.Domain.Locality;
+import ESINF.Domain.Schedule;
 import ESINF.FileReader.ReaderFiles;
 import ESINF.Structure.MapGraph;
 import ESINF.US01.NetworkBuilder;
 import ESINF.US02.HubDefiner;
+import ESINF.US11.ScheduleSetter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ public class Main {
         NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
 
         MapGraph<Locality, Integer> graph = networkBuilder.getDistribution();
-        graph.printGraph();
+        //graph.printGraph();
 
         System.out.println();
 
@@ -31,6 +33,11 @@ public class Main {
 
         hubDefiner.defineHubs(graph, numberOfHubs);
 
-        graph.printGraph();
+        //graph.printGraph();
+
+        //ScheduleSetter.importFromFile("SRC/source/main/resources/ESINF/schedulesHub.txt", graph);
+
+        String[] schedules = ReaderFiles.importNewSchedules("SRC/source/main/resources/ESINF/schedulesHub.txt");
+        ScheduleSetter.ScheduleSetter(schedules, graph);
     }
 }

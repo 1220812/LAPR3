@@ -89,10 +89,14 @@ public class Vehicle {
      *
      * @param averageSpeed The average speed of the vehicle in kilometers per hour.
      * @param autonomy     The autonomy of the vehicle in kilometers.
+     * @param chargeTime   The time, in minutes, that takes to charge the vehicle
+     * @param unloadingTime The time, in minutes, that takes to unload the products from the vehicles in the hubs
      */
-    public Vehicle(double averageSpeed, double autonomy){
+    public Vehicle(double averageSpeed, double autonomy, double chargeTime, double unloadingTime){
         this.autonomy = autonomy;
         this.averageSpeed = averageSpeed;
+        this.chargeTime = chargeTime;
+        this.unloadingTime = unloadingTime;
     }
     /**
      * Constructs a new vehicle instance with the specified average speed and autonomy.
