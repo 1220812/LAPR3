@@ -7,7 +7,7 @@ typedef struct {
     int write;
 } BufferCircular;
 
-BufferCircular *createBufferCircular(int length);
+BufferCircular *BufferCircular_create(int length);
 void insertValue(BufferCircular *buffer, int value);
 int readValue(BufferCircular *buffer);
 void freeBuffer(BufferCircular *buffer);

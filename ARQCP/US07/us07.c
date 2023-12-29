@@ -10,7 +10,7 @@ typedef struct{
 	int write;
 } BufferCircular;
 
-BufferCircular *createBufferCircular (int length, char *path){
+BufferCircular *BufferCircular_create (int length, char *path){
 	BufferCircular *buffer =(BufferCircular *) malloc(sizeof(BufferCircular));
 
 	if(buffer ==NULL){
@@ -35,16 +35,18 @@ BufferCircular *createBufferCircular (int length, char *path){
 	if (stat(path, &st) == -1) {
 		//O diretório não existe
 		if(mkdir(path, 0777)!=0){
-				perror("Erro a criar diretório.");
+				perror("Erro na criação de diretório.");
 				exit(EXIT_FAILURE);
-
 		}
-		printf("Diretório criado com sucesso.");
+		printf("Sucesso!");
+		printf("Diretória criado.");
 	}else if (S_ISDIR(st.st_mode)){
 			//O caminho existe e é um diretório
+			printf("Errro!");
 			printf ("O caminho já existe.");
 		}else{
 				//O caminho existe mas não é um diretório
+				printf("Errro!");
 				printf("O caminho não é um diretório.");
 			}
 	return buffer;
@@ -78,7 +80,7 @@ void freeBuffer(BufferCircular *buffer){
 int main(){
 	int length = 5;
 	char* path= "diretorio1";
-	BufferCircular *buffer = createBufferCircular(length, path);
+	BufferCircular *buffer = BufferCircular_create(length, path);
 
 	for(int i=1; i<=10; i++){
 		insertValue(buffer, i);
