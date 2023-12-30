@@ -572,6 +572,8 @@ public class GraphAlgorithms {
         }
     }
 
+
+//------------------------------ DFS Algorithm ----------------------------------
     public static <V, E extends Comparable<E>> ArrayList <LinkedList<V>> dfsAlgorithm (Graph g, V vOrig, V vDest, E maxWeight){
         ArrayList<LinkedList<V>> paths = new ArrayList<>();
         Set<V> visitedSet = new HashSet<>();
