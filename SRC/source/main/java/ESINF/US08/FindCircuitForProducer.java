@@ -70,11 +70,6 @@ public class FindCircuitForProducer {
             currentLocation = maxLocal;
             counter++;
             alreadyPassed.add(currentLocation);
-//            LinkedList<Trajetory> list= putInListFirstPath(currentLocation, maxLocal, graph.edge(maxLocal, currentLocation).getWeight());
-//            for (int i = 0; i < list.size() ; i++) {
-//                System.out.println(list.get(i).toString());
-//            }
-
 
         }
 
