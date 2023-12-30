@@ -156,5 +156,8 @@ public class Locality {
         colaborator= Integer.parseInt(newName[1]);
         return colaborator;
     }
+    public boolean isPromoted() {
+        return isHub;
+    }
 }
 

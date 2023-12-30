@@ -105,7 +105,15 @@ public class HubDefiner {
         }
         return topNHubs;
     }
-
+    public static int numHubs(MapGraph<Locality, Double> graph) {
+        int count = 0;
+        for (Locality vertex : graph.vertices()) {
+            if (vertex.getHub()) {
+                count++;
+            }
+        }
+        return count;
+    }
     /**
      * Retrieves the top N hubs based on a map of localities and lists of values.
      * The sorting order is based on centrality, influence, and a third criterion.
