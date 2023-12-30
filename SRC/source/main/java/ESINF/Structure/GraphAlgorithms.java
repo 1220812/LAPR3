@@ -19,6 +19,12 @@ import java.util.function.BinaryOperator;
 
 public class GraphAlgorithms {
 
+    private static final GraphAlgorithms instance = new GraphAlgorithms();
+
+    public static GraphAlgorithms getInstance() {
+        return instance;
+    }
+
     /**
      * Performs breadth-first search of a Graph starting in a Vertex
      *
