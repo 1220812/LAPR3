@@ -38,9 +38,9 @@ public class DifferentRoutesFinderTest {
 
         DifferentRoutesFinder routesFinder = new DifferentRoutesFinder();
 
-        double travelTime = routesFinder.totalTravelTime(new Vehicle(70, 300),270);
-        double travelTime1 = routesFinder.totalTravelTime(new Vehicle(50, 600),320);
-        double travelTime2 = routesFinder.totalTravelTime(new Vehicle(65, 450),0);
+        double travelTime = routesFinder.totalTravelTime(new Vehicle("50", 70, 300),270);
+        double travelTime1 = routesFinder.totalTravelTime(new Vehicle("1", 50, 600),320);
+        double travelTime2 = routesFinder.totalTravelTime(new Vehicle("95", 65, 450),0);
 
         double expected = (double) 270 /70;
         double expected1 = (double) 320 /50;
