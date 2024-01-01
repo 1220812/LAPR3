@@ -1,5 +1,9 @@
 package LAPR.Interface.dataAccess;
 
+//import LAPR.Interface.Domain.WateringData;
+
+import LAPR.Interface.Domain.ResultEntry;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,6 +14,7 @@ public class OperationRepository {
     public OperationRepository() {
 
     }
+    IrrigationProgramRepository irrigationProgramRepository = new IrrigationProgramRepository();
 
     public void registerSowingOperation(Date date, int plantationID) throws SQLException {
 
@@ -27,11 +32,14 @@ public class OperationRepository {
     public void registerFertilizationOperation( Date date, int plantation, int productID, String mode) {
     }
 
+    public int wateringRegister(ResultEntry wateringData) throws SQLException {
+        return irrigationProgramRepository.registerWatering(wateringData);
+    }
     public void sowingRegister( Date date, int PlantationplantationID) throws SQLException {
         CallableStatement callableStatement = null;
         try {
             Connection connection = DatabaseConnection.getInstance().getConnection();
-            callableStatement = connection.prepareCall("{call prcRegisterOperation(?, ?)}");
+            callableStatement = connection.prepareCall("{call prcRegisterOperation(?, ?, ?, ?, ?)}");
 
             callableStatement.setDate(1, (java.sql.Date) date);
             callableStatement.setInt(2, PlantationplantationID);
