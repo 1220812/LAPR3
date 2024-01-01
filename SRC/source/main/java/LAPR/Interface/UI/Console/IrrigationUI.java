@@ -3,9 +3,8 @@ package LAPR.Interface.UI.Console;
 import LAPR.Interface.Domain.ResultEntry;
 import LAPR.Interface.Readers.ReadInstructionsFromFile;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class IrrigationUI implements Runnable {
 
@@ -27,8 +26,6 @@ public class IrrigationUI implements Runnable {
             System.out.println("error");
             throw new RuntimeException(e);
         }
-
-
     }
 }
 

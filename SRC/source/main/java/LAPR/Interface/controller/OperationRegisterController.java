@@ -1,5 +1,7 @@
 package LAPR.Interface.controller;
 
+//import LAPR.Interface.Domain.WateringData;
+import LAPR.Interface.dataAccess.IrrigationProgramRepository;
 import LAPR.Interface.dataAccess.OperationRepository;
 import LAPR.Interface.dataAccess.Repositories;
 
@@ -9,15 +11,25 @@ import java.util.Objects;
 
 public class OperationRegisterController {
     private OperationRepository operationRepository;
+    private IrrigationProgramRepository irrigationProgramRepository;
     public OperationRegisterController(){
         getOperationRepository();
+
     }
     private OperationRepository getOperationRepository(){
         if(Objects.isNull(operationRepository)){
             Repositories repositories = Repositories.getInstance();
             operationRepository = repositories.getOperationRepository();
+
         }
         return operationRepository;
+    }
+    private IrrigationProgramRepository getIrrigationProgramRepository(){
+        if(Objects.isNull(irrigationProgramRepository)){
+            Repositories repositories = Repositories.getInstance();
+            irrigationProgramRepository = repositories.getIrrigationProgramRepository();
+        }
+        return irrigationProgramRepository;
     }
     public void registerSowingOperation( int plantationID, Date date) throws SQLException{
         operationRepository.registerSowingOperation(date, plantationID);
@@ -34,4 +46,10 @@ public class OperationRegisterController {
     public void registerFertilizationOperation( Date date, int plantation, int productID, String mode) throws SQLException{
         operationRepository.registerFertilizationOperation( date, plantation, productID, mode);
     }
+    /*
+    public void registerWateringOperation (WateringData wateringDay) throws SQLException{
+        irrigationProgramRepository.registerWatering(wateringDay);
+    }
+    */
+
 }
