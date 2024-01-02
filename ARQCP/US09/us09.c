@@ -38,3 +38,4 @@ void insertData(Sensor *sensores, int numSensores, int sensor_id, int valor) {
         printf("Sensor com ID %d nao encontrado.\n", sensor_id);
     }
 }
+

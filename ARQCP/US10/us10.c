@@ -22,3 +22,4 @@ void serializeAndWrite(Sensor *sensor, const char filename) {
 
     fclose(file);
 }
+
