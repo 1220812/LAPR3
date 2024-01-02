@@ -1,16 +1,12 @@
 package LAPR.Interface.Domain;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 public class SprinklingSystem {
     private List<Partition> partitions;
-
     public SprinklingSystem(List<Partition> partitions) {
         this.partitions = partitions;
     }
-
     /**
      * Generate a simulation list for a sprinkling system.
      *
@@ -30,12 +26,10 @@ public class SprinklingSystem {
                 }
                 int startHour = getHour(time);
                 int startMinute = getMinute(time);
-
                 // Check if it's time to stop for the day
                 if (time.compareTo(endTime)<0){
                     break;
                 }
-
                 int endHour = startHour;
                 int endMinute = startMinute + partition.getTime();
                 if (endMinute >= 60) {
@@ -63,20 +57,16 @@ public class SprinklingSystem {
         if (startMinute < 10) return startHour + ":0" + startMinute;
         return startHour + ":" + startMinute;
     }
-
     /**
      * Get the hour from a time string in "HH:mm" format.
      */
     public int getHour(String time) {
         return Integer.parseInt(time.split(":")[0]);
     }
-
     /**
      * Get the minute from a time string in "HH:mm" format.
      */
     public int getMinute(String time) {
         return Integer.parseInt(time.split(":")[1]);
     }
-
-
 }
