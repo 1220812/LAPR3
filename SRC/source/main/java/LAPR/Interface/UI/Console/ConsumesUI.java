@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-public class ConsumesUI implements Runnable {
+public class ConsumesUI implements Runnable{
     @Override
     public void run() {
         try {
