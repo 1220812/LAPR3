@@ -495,6 +495,18 @@ INSERT INTO IrrigationSector(setorID, startDate, endDate, maximumFlow, dispersio
 INSERT INTO IrrigationSector(setorID, startDate, endDate, maximumFlow, dispersionID) values (22, TO_DATE('01/05/2019', 'DD-MM-YYYY'), TO_DATE('', 'DD-MM-YYYY'), 3500, 1);
 INSERT INTO IrrigationSector(setorID, startDate, endDate, maximumFlow, dispersionID) values (41, TO_DATE('01/04/2023', 'DD-MM-YYYY'), TO_DATE('', 'DD-MM-YYYY'), 2500, 1);
 INSERT INTO IrrigationSector(setorID, startDate, endDate, maximumFlow, dispersionID) values (42, TO_DATE('01/04/2023', 'DD-MM-YYYY'), TO_DATE('', 'DD-MM-YYYY'), 3500, 2);
+INSERT INTO IrrigationSector (setorID, startDate, endDate, maximumFlow, dispersionID)
+VALUES(1, NULL, NULL, NULL, NULL);
+INSERT INTO IrrigationSector (setorID, startDate, endDate, maximumFlow, dispersionID)
+VALUES(2, NULL, NULL, NULL, NULL);
+INSERT INTO IrrigationSector (setorID, startDate, endDate, maximumFlow, dispersionID)
+VALUES(3, NULL, NULL, NULL, NULL);
+INSERT INTO IrrigationSector (setorID, startDate, endDate, maximumFlow, dispersionID)
+VALUES(4, NULL, NULL, NULL, NULL);
+INSERT INTO IrrigationSector (setorID, startDate, endDate, maximumFlow, dispersionID)
+VALUES(5, NULL, NULL, NULL, NULL);
+INSERT INTO IrrigationSector (setorID, startDate, endDate, maximumFlow, dispersionID)
+VALUES(6, NULL, NULL, NULL, NULL);
 
 INSERT INTO Crop_AgriculturalParcel_IrrigationSector(cropID, parcelID, setorID) values (11, 102, 10);
 INSERT INTO Crop_AgriculturalParcel_IrrigationSector(cropID, parcelID, setorID) values (12, 102, 10);

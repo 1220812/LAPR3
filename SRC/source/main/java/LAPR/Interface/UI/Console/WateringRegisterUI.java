@@ -1,6 +1,7 @@
 package LAPR.Interface.UI.Console;
 
 import LAPR.Interface.Domain.ResultEntry;
+import LAPR.Interface.controller.OperationRegisterController;
 import LAPR.Interface.dataAccess.IrrigationProgramRepository;
 
 import java.io.*;
@@ -11,7 +12,11 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class WateringRegisterUI implements Runnable {
-    IrrigationProgramRepository irrigationProgramRepository = new IrrigationProgramRepository();
+    private OperationRegisterController controller;
+
+    public WateringRegisterUI(){
+        controller = new OperationRegisterController();
+    }
     @Override
     public void run() {
         try {
@@ -40,8 +45,8 @@ public class WateringRegisterUI implements Runnable {
                     }
 
                     ResultEntry watering = new ResultEntry(date, setor, duration, start, end, mix, formule);
-
-                    int status = irrigationProgramRepository.registerWatering(watering);
+                    controller.registerWateringOperation(watering);
+                    int status = (controller.registerWateringOperation(watering));
 
                     if(status == 1){
                         System.out.println("Operation successfully registered");

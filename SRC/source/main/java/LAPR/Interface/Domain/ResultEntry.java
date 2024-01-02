@@ -49,6 +49,11 @@ public class ResultEntry {
     public String getMixDesignation() {
         return mixDesignation;
     }
+
+    public void setMixDesignation(String mixDesignation) {
+        this.mixDesignation = mixDesignation;
+    }
+
     public String toString(){
         return String.format("%10s %10s %10d %10s %10s %10s %10d", new SimpleDateFormat("dd/MM/yyyy").format(date), designation, duration,startTime, endTime, mixDesignation, recurrenceFormule);
     }

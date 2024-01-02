@@ -18,6 +18,13 @@ public class IrrigationUI implements Runnable {
             pw.printf("%10s %10s %10s %10s %10s %10s %10s\n", "Day", "Sector", "Duration", "Start", "End", "Mix", "Formule");
             System.out.printf("%10s  %10s  %10s  %10s  %10s  %10s  %10s\n", "Day", "Sector", "Duration", "Start", "End", "Mix", "Formule");
             for (ResultEntry resultEntry : result) {
+                if(resultEntry.getMixDesignation() != null) {
+                    if (resultEntry.getMixDesignation().equals("mix1")) {
+                        resultEntry.setMixDesignation("10");
+                    } else {
+                        resultEntry.setMixDesignation("11");
+                    }
+                }
                 pw.println(resultEntry);
                 System.out.println(resultEntry);
             }
