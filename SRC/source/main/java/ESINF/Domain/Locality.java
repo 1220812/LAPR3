@@ -151,10 +151,13 @@ public class Locality {
     }
 
     public int getColaborator(){
-        int colaborator = 0;
+        int colaborator;
         String newName[]= name.split("T");
         colaborator= Integer.parseInt(newName[1]);
         return colaborator;
+    }
+    public boolean isPromoted() {
+        return isHub;
     }
 }
 
