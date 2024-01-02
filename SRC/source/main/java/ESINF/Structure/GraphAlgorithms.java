@@ -4,6 +4,12 @@
  */
 package ESINF.Structure;
 
+import ESINF.Domain.Locality;
+import ESINF.Structure.Auxiliary.Pair;
+import java.util.Comparator;
+import ESINF.Structure.Auxiliary.Pair;
+
+
 import java.util.*;
 import java.util.function.BinaryOperator;
 
@@ -64,11 +70,13 @@ public class GraphAlgorithms {
     }
 
     /**
-     * @param g    Graph instance
-     * @param vert information of the Vertex that will be the source of the search
+     * @param g               Graph instance
+     * @param vert            information of the Vertex that will be the source of the search
+     * @param visited
+     * @param clusterVertices
      * @return qdfs a queue with the vertices of depth-first search
      */
-    public static <V, E> LinkedList<V> depthFirstSearch(Graph<V, E> g, V vert) {
+    public static <V, E> LinkedList<V> depthFirstSearch(Graph<V, E> g, V vert, boolean[] visited, LinkedList<Locality> clusterVertices) {
         if (!g.validVertex(vert)) {
             return null;
         }
@@ -589,4 +597,99 @@ public class GraphAlgorithms {
         visitedSet.remove(vOrig) ;
         path.removeLast();
     }
+
+
+ //   -----------------------------------------------------------------------------------
+ //   -----------------------------------------------------------------------------------
+
+    private static <V, E> Edge<V, E> findEdgeWithHighestBetweenness(Map<Edge<V, E>, Double> edgeBetweenness) {
+        Edge<V, E> highestBetweennessEdge = null;
+        double maxBetweenness = Double.NEGATIVE_INFINITY;
+
+        for (Map.Entry<Edge<V, E>, Double> entry : edgeBetweenness.entrySet()) {
+            if (entry.getValue() > maxBetweenness) {
+                maxBetweenness = entry.getValue();
+                highestBetweennessEdge = entry.getKey();
+            }
+        }
+
+        return highestBetweennessEdge;
+    }
+
+    // Helper method to find connected components in a graph
+    private static <V, E> List<Set<V>> connectedComponents(Graph<V, E> g) {
+        List<Set<V>> connectedComponents = new ArrayList<>();
+        Set<V> visited = new HashSet<>();
+
+        for (V vertex : g.vertices()) {
+            if (!visited.contains(vertex)) {
+                Set<V> component = new HashSet<>();
+                depthFirstSearch(g, vertex, visited, component);
+                connectedComponents.add(component);
+            }
+        }
+
+        return connectedComponents;
+    }
+
+    // Helper method for depth-first search
+    private static <V, E> void depthFirstSearch(Graph<V, E> g, V vertex, Set<V> visited, Set<V> component) {
+        visited.add(vertex);
+        component.add(vertex);
+
+        for (V adj : g.adjVertices(vertex)) {
+            if (!visited.contains(adj)) {
+                depthFirstSearch(g, adj, visited, component);
+            }
+        }
+    }
+    public static <V, E> boolean shortestPathsUS09(Graph<V, E> g, V vOrig, Comparator<E> ce, BinaryOperator<E> sum, E zero, ArrayList<LinkedList<V>> paths, ArrayList<E> dists) {
+        if (!g.validVertex(vOrig)) return false;
+
+        int nverts = g.numVertices();
+        boolean[] visited = new boolean[nverts];
+        int[] pathKeys = new int[nverts];
+        V[] vertices = g.allkeyVerts();
+
+        Comparator<Pair<V, E>> pairComparator = Comparator.<Pair<V, E>, E>comparing(Pair::getSecond, Comparator.<E>nullsFirst((Comparator<? super E>) Comparator.naturalOrder()));
+        PriorityQueue<Pair<V, E>> queue = new PriorityQueue<>(pairComparator);
+
+        for (int i = 0; i < nverts; i++) {
+            dists.add(zero);
+            paths.add(null);
+            pathKeys[i] = -1;
+        }
+
+        dists.set(g.key(vOrig), zero);
+        queue.add(new Pair<>(vOrig, zero));
+
+        while (!queue.isEmpty()) {
+            Pair<V, E> pair = queue.poll();
+            V vertex = pair.getFirst();
+            if (!visited[g.key(vertex)]) {
+                visited[g.key(vertex)] = true;
+                for (Edge<V, E> edge : g.outgoingEdges(vertex)) {
+                    V neighbor = edge.getVDest();
+                    if (!visited[g.key(neighbor)]) {
+                        E newDist = sum.apply(dists.get(g.key(vertex)), edge.getWeight());
+                        if (ce.compare(newDist, dists.get(g.key(neighbor))) < 0) {
+                            dists.set(g.key(neighbor), newDist);
+                            pathKeys[g.key(neighbor)] = g.key(vertex);
+                            queue.add(new Pair<>(neighbor, newDist));
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < nverts; i++) {
+            LinkedList<V> shortPath = new LinkedList<>();
+            if (dists.get(i).equals(zero))
+                getPath(g, vOrig, vertices[i], vertices, pathKeys, shortPath);
+            paths.set(i, shortPath);
+        }
+
+        return true;
+    }
+
 }
