@@ -24,8 +24,13 @@ public class FindCircuitForProducerTest {
     @BeforeAll
     static void setUp() throws IOException {
 
-        readerFiles.importLocalData("C:\\Users\\Utilizador\\Desktop\\sem3pi2023_24_g081_sprint3\\SRC\\source\\main\\resources\\ESINF\\locais_small.csv");
-        readerFiles.importDistanceData("C:\\Users\\Utilizador\\Desktop\\sem3pi2023_24_g081_sprint3\\SRC\\source\\main\\resources\\ESINF\\distancias_small.csv ", "C:\\Users\\Utilizador\\Desktop\\sem3pi2023_24_g081_sprint3\\SRC\\source\\main\\resources\\ESINF\\locais_small.csv");
+
+        String userDir = System.getProperty("user.dir");
+        String basePath = userDir + "/SRC/source/main/resources/ESINF/";
+
+        readerFiles.importLocalData(basePath + "locais_small.csv");
+        readerFiles.importDistanceData(basePath + "distancias_small.csv", basePath + "locais_small.csv");
+
 
         networkBuilder = NetworkBuilder.getInstance();
         findCircuitProducer = new FindCircuitForProducer();
