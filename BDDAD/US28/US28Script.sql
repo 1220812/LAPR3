@@ -1,90 +1,37 @@
-CREATE TABLE CanceledOperations (
-                                    operationID NUMBER(10) NOT NULL,
-                                    cancelationDate DATE,
-                                    cancelationReason VARCHAR2(255),
-                                    PRIMARY KEY (operationID)
+-- Tabela para armazenar o histórico de operações anuladas
+CREATE TABLE CanceledOperation (
+                                   operationID number(10) NOT NULL,
+                                   cancelationDate date,
+                                   PRIMARY KEY (operationID)
 );
 
--- Fertigation Trigger antes da exclusão
--- Impede a exclusão direta de registros em Fertigation, permitindo apenas a anulação.
-CREATE OR REPLACE TRIGGER prevent_delete_fertigation
-BEFORE DELETE ON Fertigation
-FOR EACH ROW
-BEGIN
-    RAISE_APPLICATION_ERROR(-20001, 'Não é possível excluir diretamente uma Fertigation. Utilize a anulação.');
-END;
-/
-
--- Trigger após a exclusão para Fertigation
-CREATE OR REPLACE TRIGGER after_delete_fertigation
-AFTER DELETE ON Fertigation
-FOR EACH ROW
+-- Trigger para verificar e anular operações antes de serem excluídas
+CREATE OR REPLACE TRIGGER PreventOperationDeletion
+    BEFORE DELETE ON Operation
+    FOR EACH ROW
 DECLARE
-cancelationReason CONSTANT VARCHAR2(255) := 'Fertigation anulada';
+    v_operation_state varchar2(30);
 BEGIN
-INSERT INTO CanceledOperations (operationID, cancelationDate, cancelationReason)
-VALUES (:old.operationID, SYSDATE, cancelationReason);
-END;
+    -- Verifica o estado da operação
+    SELECT operationState INTO v_operation_state
+    FROM Operation
+    WHERE operationID = :OLD.operationID;
 
---Mobilization
-/-- Trigger antes da exclusão para Mobilization
-CREATE OR REPLACE TRIGGER prevent_delete_mobilization
-BEFORE DELETE ON Mobilization
-FOR EACH ROW
-BEGIN
-    RAISE_APPLICATION_ERROR(-20001, 'Não é possível excluir diretamente uma Mobilization. Utilize a anulação.');
-END;
-/
--- Trigger após a exclusão para Mobilization
-CREATE OR REPLACE TRIGGER after_delete_mobilization
-AFTER DELETE ON Mobilization
-FOR EACH ROW
-DECLARE
-cancelationReason CONSTANT VARCHAR2(255) := 'Mobilization anulada';
-BEGIN
-INSERT INTO CanceledOperations (operationID, cancelationDate, cancelationReason)
-VALUES (:old.operationID, SYSDATE, cancelationReason);
-END;
+    -- Se a operação estiver no estado 'Anulado', permita a exclusão
+    IF v_operation_state = 'Anulado' THEN
+        NULL; -- Não faz nada, permite a exclusão
+    ELSE
+        -- Se não estiver anulada, anula a operação e registra no histórico
+        INSERT INTO CanceledOperation (operationID, cancelationDate)
+        VALUES (:OLD.operationID, SYSDATE);
 
---ParcelApplication
-/-- Trigger antes da exclusão para ParcelApplication
-CREATE OR REPLACE TRIGGER prevent_delete_parcel_application
-BEFORE DELETE ON ParcelApplication
-FOR EACH ROW
-BEGIN
-    RAISE_APPLICATION_ERROR(-20001, 'Não é possível excluir diretamente uma ParcelApplication. Utilize a anulação.');
-END;
-/
+        -- Atualiza o estado da operação para 'Anulado'
+        UPDATE Operation
+        SET operationState = 'Anulado'
+        WHERE operationID = :OLD.operationID;
 
--- Trigger após a exclusão para ParcelApplication
-CREATE OR REPLACE TRIGGER after_delete_parcel_application
-AFTER DELETE ON ParcelApplication
-FOR EACH ROW
-DECLARE
-cancelationReason CONSTANT VARCHAR2(255) := 'ParcelApplication anulada';
-BEGIN
-INSERT INTO CanceledOperations (operationID, cancelationDate, cancelationReason)
-VALUES (:old.operationID, SYSDATE, cancelationReason);
-END;
-
---CropApplication
-/-- Trigger antes da exclusão para CropApplication
-CREATE OR REPLACE TRIGGER prevent_delete_crop_application
-BEFORE DELETE ON CropApplication
-FOR EACH ROW
-BEGIN
-    RAISE_APPLICATION_ERROR(-20001, 'Não é possível excluir diretamente uma CropApplication. Utilize a anulação.');
-END;
-/
-
--- Trigger após a exclusão para CropApplication
-CREATE OR REPLACE TRIGGER after_delete_crop_application
-AFTER DELETE ON CropApplication
-FOR EACH ROW
-DECLARE
-cancelationReason CONSTANT VARCHAR2(255) := 'CropApplication anulada';
-BEGIN
-INSERT INTO CanceledOperations (operationID, cancelationDate, cancelationReason)
-VALUES (:old.operationID, SYSDATE, cancelationReason);
+        -- Impede a exclusão da operação
+        RAISE_APPLICATION_ERROR(-20001, 'Operações não podem ser excluídas, apenas anuladas.');
+    END IF;
 END;
 /
