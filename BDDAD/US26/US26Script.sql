@@ -15,5 +15,11 @@ BEGIN
         INSERT INTO Log (logID, instant, operationID)
         VALUES (Id, SYSTIMESTAMP, :OLD.operationID);
     END IF;
+
+      COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
 END;
 /
