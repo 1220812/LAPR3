@@ -1,3 +1,4 @@
+
 // Definicao da estrutura para o sensor
 typedef struct {
     int sensor_id;
