@@ -1,4 +1,4 @@
-CREATE GLOBAL TEMPORARY TABLE ArrayTable
+CREATE GLOBAL TEMPORARY TABLE NewTable
 (
     ProductionFactor VARCHAR(255),
     Quantity Number(10)
@@ -11,7 +11,7 @@ CREATE OR REPLACE FUNCTION RevenueRegister(
     p_ProductionFactorName VARCHAR2(255);
     p_Quantity FLOAT(10);
 BEGIN
-FOR rec IN (SELECT ProductionFactor, Quantity FROM ArrayTable)
+FOR rec IN (SELECT ProductionFactor, Quantity FROM NewTable)
         LOOP
             p_ProductionFactorName := rec.ProductionFactor;
 SELECT productionFactorID INTO p_ProductionFactorID FROM ProductionFactor WHERE comercialname = p_ProductionFactorName;
@@ -61,16 +61,18 @@ END IF;
 END;
 
 DECLARE
-v_RevenueID NUMBER := 12;
+v_RevenueID NUMBER := 14;
     X NUMBER;
 
 BEGIN
-INSERT INTO ArrayTable (ProductionFactor, Quantity)
+INSERT INTO NewTable (ProductionFactor, Quantity)
 VALUES('Tecniferti MOL', 60);
 
-INSERT INTO ArrayTable (ProductionFactor, Quantity)
+INSERT INTO NewTable (ProductionFactor, Quantity)
 VALUES('Calda Bordalesa ASCENZA', 50);
 
 x := RevenueRegister(v_RevenueID);
 
 END;
+
+
