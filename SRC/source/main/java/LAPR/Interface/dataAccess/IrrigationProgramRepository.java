@@ -21,7 +21,7 @@ public class IrrigationProgramRepository {
 
                 String[] errorMsg = {null};
 
-                callStat = connection.prepareCall("{ call PRCWATERINGREGISTER(?, ?, ?, ?, ?, ?, ?, ?)}");
+                callStat = connection.prepareCall("{ call PRCWATERINGREGISTER(?, ?, ?, ?, ?, ?, ?, ?) }");
 
                 java.sql.Date sqlDate = new java.sql.Date(wateringData.getDate().getTime());
                 callStat.setDate(1, sqlDate);
@@ -48,7 +48,9 @@ public class IrrigationProgramRepository {
         } catch (SQLException e){
             throw new RuntimeException(e);
         } finally {
-            callStat.close();
+            if (callStat != null) {
+                callStat.close();
+            }
         }
         return status;
     }
