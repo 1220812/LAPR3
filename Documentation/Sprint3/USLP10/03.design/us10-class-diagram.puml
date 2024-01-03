@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam linetype ortho
+
+Class SprinklingSystem{
++ SprinklingSystem(partitions)
++ generateSimulation(days, startTime, endTime)
+- formattHour(int startHour, int startMinute)
++ getHour(String time)
++ getMinute(String time)
+}
+
+Class ResultEntry{
++ ResultEntry(date, designation, duration, startTime, endTime)
++ ResultEntry(date, designation, duration, startTime, endTime, mixDesignation, recurrenceFormule)
++ getDate()
++ getDesignation()
++ getDuration()
++ getStartTime()
++ getEndTime()
++ getRecurrenceFormule()
++ getMixDesignation()
++ setMixDesignation(mixDesignation)
++ toString()
+}
+
+Class Partition{
++ Partition(designation, time, regularity)
++ Partition(designation, time, regularity, mixDesignation, recurrenceFormule)
++ getDesignation()
++ getTime()
++ getRegularity()
++ getRecurrenceFormule()
++ getMixDesignation(mixDesignation)
++ setRecurrenceFormule(recurrenceFormule)
++ setRegularity(regularity)
++ setTime(time)
++ setDesignation(designation)
++ toString()
++ isDay(day)
+}
+
+Class ReadInstructionsFromFile{
++ readInformation(fileName)
+}
+
+Class IrrigationUI{
++ run()
+}
+
+
+ReadInstructionsFromFile ..> SprinklingSystem
+ReadInstructionsFromFile ..> ResultEntry
+IrrigationUI ..> ResultEntry
+SprinklingSystem ..> ResultEntry
+ReadInstructionsFromFile ..> Partition
+SprinklingSystem ..> Partition
+
+@enduml

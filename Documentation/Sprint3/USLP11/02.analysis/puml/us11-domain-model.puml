@@ -1,0 +1,107 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype ortho
+
+title US10 - Domain Model
+
+class IrrigationSector{
+setorID
+startDate
+endDate
+maximumFlow
+dispersionID
+}
+
+class DispersionTypes{
+dispersionID
+designation
+}
+
+class Watering{
+operationID
+duration
+inicialHour
+setorID
+}
+
+class ProductionFactorApplication{
+revenueID
+operationID
+}
+
+class Revenue{
+revenueID
+}
+
+class FormulationType{
+formulationTypeID
+formulationTypeName
+}
+
+class Classification{
+classificationID
+classificationName
+}
+
+class Datasheet{
+compositionID
+productionFactorID
+}
+
+class Component{
+componentID
+componentName
+}
+
+class Manufacturer{
+manufacturerID
+name
+}
+
+class ApplicationType{
+aplicationID
+name
+}
+
+class ProductionFactor{
+productionFactorID
+commercialName
+classificationID
+formulationTypeID
+manufacturerID
+}
+
+class Operation{
+operationID
+operationDate
+operationState
+designation
+cropID
+parcelID
+instant
+}
+
+ProductionFactor "*" -- "1" Classification
+ProductionFactor "*" -- "1" FormulationType
+ProductionFactor "*" -- "1" Manufacturer
+ProductionFactor "*" -- "*" ApplicationType
+ProductionFactor "1" -- "1" Datasheet
+ProductionFactor "1" -- "*" ParcelApplication
+ProductionFactor "*" -- "*" Revenue
+ProductionFactor "1" -- "*" CropApplication
+
+Datasheet "*" -- "*" Component
+
+Operation "1" -- "1" Watering
+
+ProductionFactorApplication "1" -- "1" Watering
+ProductionFactorApplication "1" -- "*" Revenue
+
+IrrigationSector "*" -- "1" Watering
+IrrigationSector "*" -- "1" DispersionTypes
+
+@enduml

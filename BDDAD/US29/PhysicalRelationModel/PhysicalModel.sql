@@ -63,7 +63,7 @@ CREATE TABLE Log (logID number(10) NOT NULL, instant timestamp(0), operationID n
 CREATE TABLE Manufacturer (manufacturerID number(10) NOT NULL, name varchar2(40), PRIMARY KEY (manufacturerID));
 CREATE TABLE Mill (buildingID number(20) NOT NULL, PRIMARY KEY (buildingID));
 CREATE TABLE Mobilization (operationID number(10) NOT NULL, parcelID number(20) NOT NULL, PRIMARY KEY (operationID));
-CREATE TABLE Operation (operationID number(10) NOT NULL, operationDate date, operationState varchar2(30), designation varchar2(30), cropID number(20) NOT NULL, parcelID number(20) NOT NULL, PRIMARY KEY (operationID));
+CREATE TABLE Operation (operationID number(10) NOT NULL, operationDate date, operationState varchar2(30), designation varchar2(30), cropID number(20) NOT NULL, parcelID number(20) NOT NULL, instant timestamp(0), PRIMARY KEY (operationID));
 CREATE TABLE ParcelApplication (operationID number(10) NOT NULL, parcelID number(20) NOT NULL, productionFactorID number(20) NOT NULL, modeID number(10) NOT NULL, quantity float(10), PRIMARY KEY (operationID));
 CREATE TABLE Plant (plantID number(10) NOT NULL, name varchar2(40), speciesID number(10) NOT NULL, plantTypeID number(20) NOT NULL, PRIMARY KEY (plantID));
 CREATE TABLE Plantation (operationID number(10) NOT NULL, plantsNumber number(10), compass float(10), queuesDistance float(10), PRIMARY KEY (operationID));

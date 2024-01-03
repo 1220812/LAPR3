@@ -15,12 +15,12 @@ import java.util.function.BinaryOperator;
 public class OrganizeClustersWithHubs {
 
     NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
-    /*
-    public Graph<Locality, Double> getGraph() {
+
+    public MapGraph<Locality, Integer> getGraph() {
         return networkBuilder.getDistribution();
     }
 
-     */
+
 
     public static boolean formClusters(Graph<Locality, Double> g, int desiredNumClusters) {
 

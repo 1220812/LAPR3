@@ -1,0 +1,197 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam linetype ortho
+
+Class Repositories{
+- Repositories()
+- instance()
++ getInstance()
++ getOperationRepository()
++ getIrrigationProgramRepository()
+}
+
+Class OperationRepository{
++ OperationRepository()
++ registerSowingOperation(date, plantationID)
++ registerWeedOperation(date, plantationID)
++ registerHarvestOperation(date, plantationID, quantity)
++ registerPruningOperation(date, plantationID)
++ registerFertilizationOperation(date, plantationID, productId, mode)
++ wateringRegister(wateringData)
++ sowingRegister(date, plantationID)
++ pruningRegister(date, plantationID)
++ weedRegister(date, plantationID)
++ harvestRegister(date, plantationID, quantity)
++ fertilizationRegister(date, plantationID, productID, mode)
+}
+
+Class IrrigationProgramRepository{
++ registerWatering (wateringData)
+}
+
+Class DatabaseConnection{
++ DatabaseConnection()
++ getConnection()
++ testConnection()
++ closeConnection()
+- url()
+- user()
+- password()
++ getInstance()
+}
+
+Class DatabaseConnectionTestController{
++ DatabaseConnectionTestController()
++ DatabaseConnectionTest()
+}
+
+Class ExitController{
++ ExitController()
++ exit()
+}
+
+Class OperationRegisterController{
++ OperationRegisterController()
++ getOperationRepository()
++ getIrrigationProgramRepository()
++ registerSowingOperation(plantationID, date)
++ registerWeedOperation(plantation, date)
++ registerHarvestOperation(date, plantationID, quantity)
++ registerPruningOperation(date, plantationID)
++ registerFertilizationOperation(date, plantation, productID, mode)
++ registerWateringOperation(wateringDay
+}
+
+Class SprinklingSystem{
++ SprinklingSystem(partitions)
++ generateSimulation(days, startTime, endTime)
+- formattHour(int startHour, int startMinute)
++ getHour(String time)
++ getMinute(String time)
+}
+
+Class ResultEntry{
++ ResultEntry(date, designation, duration, startTime, endTime)
++ ResultEntry(date, designation, duration, startTime, endTime, mixDesignation, recurrenceFormule)
++ getDate()
++ getDesignation()
++ getDuration()
++ getStartTime()
++ getEndTime()
++ getRecurrenceFormule()
++ getMixDesignation()
++ setMixDesignation(mixDesignation)
++ toString()
+}
+
+Class Partition{
++ Partition(designation, time, regularity)
++ Partition(designation, time, regularity, mixDesignation, recurrenceFormule)
++ getDesignation()
++ getTime()
++ getRegularity()
++ getRecurrenceFormule()
++ getMixDesignation(mixDesignation)
++ setRecurrenceFormule(recurrenceFormule)
++ setRegularity(regularity)
++ setTime(time)
++ setDesignation(designation)
++ toString()
++ isDay(day)
+}
+
+Class ReadInstructionsFromFile{
++ readInformation(fileName)
+}
+
+Class ProductOwnerUI{
++ run()
+}
+
+Class MenuItem{
++ MenuItem(description, ui)
++ run()
++ hasDescription()
++ toString()
+}
+
+Class MainMenuUI{
++ run()
+}
+
+Class GestorAgricolaUI{
++ GestorAgricolaUI()
++ run()
+}
+
+Class ExitUI{
++ ExitUI()
++ run()
+}
+
+Class DatabaseConnectionTestUI{
++ DatabaseConnectionTestUI()
++ run()
+}
+
+Class AuthenticationUI{
++ run()
+}
+
+Class WateringRegisterUI{
++ WateringRegisterUI()
++ run()
+}
+
+Class SecheduleSetterUI{
++ run()
+- fileValidation(filePath)
+- promptForFilePath()
+}
+
+Class IrrigationUI{
++ run()
+}
+
+DatabaseConnectionTestUI ..> DatabaseConnectionTestController
+ExitUI ..> ExitController
+WateringRegisterUI ..> OperationRegisterController
+GestorAgricolaUI ..> OperationRegisterController
+DatabaseConnectionTestUI ..> DatabaseConnection
+DatabaseConnectionTestController ..> DatabaseConnection
+ExitController ..> DatabaseConnection
+IrrigationProgramRepository ..> DatabaseConnection
+OperationRepository ..> DatabaseConnection
+WateringRegisterUI ..> IrrigationProgramRepository
+OperationRegisterController ..> IrrigationProgramRepository
+OperationRepository ..> IrrigationProgramRepository
+Repositories ..> IrrigationProgramRepository
+OperationRegisterController ..> OperationRepository
+Repositories ..> OperationRepository
+OperationRegisterController ..> Repositories
+ReadInstructionsFromFile ..> SprinklingSystem
+ReadInstructionsFromFile ..> ResultEntry
+IrrigationUI ..> ResultEntry
+WateringRegisterUI ..> ResultEntry
+OperationRegisterController ..> ResultEntry
+IrrigationProgramRepository ..> ResultEntry
+OperationRepository ..> ResultEntry
+SprinklingSystem ..> ResultEntry
+ReadInstructionsFromFile ..> Partition
+SprinklingSystem ..> Partition
+IrrigationUI ..> ReadInstructionsFromFile
+AuthenticationUI ..> ProductOwnerUI
+MenuItem <.. AuthenticationUI
+MenuItem <.. MainMenuUI
+MenuItem <.. ProductOwnerUI
+GestorAgricolaUI ..> AuthenticationUI
+MainMenuUI ..> ExitUI
+MainMenuUI ..> DatabaseConnectionTestUI
+MainMenuUI ..> AuthenticationUI
+ProductOwnerUI ..> WateringRegisterUI
+ProductOwnerUI ..> SecheduleSetterUI
+ProductOwnerUI ..> IrrigationUI
+
+
+
+@enduml
