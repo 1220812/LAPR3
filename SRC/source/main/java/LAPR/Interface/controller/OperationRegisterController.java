@@ -14,7 +14,6 @@ public class OperationRegisterController {
     private OperationRepository operationRepository;
     private IrrigationProgramRepository irrigationProgramRepository;
     public OperationRegisterController(){
-        //getOperationRepository();
         getIrrigationProgramRepository();
     }
     private OperationRepository getOperationRepository(){

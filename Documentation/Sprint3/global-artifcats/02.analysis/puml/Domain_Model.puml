@@ -1,0 +1,275 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype ortho
+
+title Domain Model
+hide circle
+hide methods
+
+class AgriculturalParcel {
+parcelID
+parcelDesignation
+area
+}
+
+class Operation {
+operationID
+operationDate
+operationState
+designation
+cropID
+parcelID
+instant
+}
+
+class Building {
+buildingID
+designation
+}
+
+class UnityOfMeasurement {
+unityID
+name
+}
+
+class Crop {
+cropID
+startDate
+endDate
+plantID
+}
+
+class Species {
+speciesID
+speciesName
+commonName
+plantationPeriod
+pruningPeriod
+floweringPeriod
+harvestPeriod
+}
+
+class Manufacturer {
+manufacturerID
+name
+}
+
+class FormulationType {
+formulationTypeID
+formulationTypeName
+}
+
+class Classification {
+classificationID
+classificationName
+}
+
+class ApplicationType {
+applicationID
+name
+}
+
+class ProductionFactor {
+productionFactorID
+commercialName
+classificationID
+formulationTypeID
+manufacturerID
+}
+
+class Datasheet{
+compositionID
+productionFactorID
+}
+
+class Component{
+componentID
+componentName
+}
+
+
+class Weed{
+operationID
+area
+}
+
+class Plantation{
+operationID
+plantsNumber
+compass
+queuesDistance
+}
+
+class Harvest{
+operationID
+quantity
+plantID
+}
+
+class Sowing{
+operationID
+quantity
+}
+
+class Pruning{
+operationID
+quantity
+}
+
+class Incorporation{
+operationID
+area
+}
+
+class Watering{
+operationID
+duration
+inicialHour
+setorID
+}
+
+class DispersionTypes{
+dispersionID
+designation
+}
+
+class IrrigationSector{
+setorID
+startDate
+endDate
+maximumFlow
+dispersionID
+}
+
+
+class Storage{
+area
+buildingID
+unityID
+}
+
+class WateringSystem{
+capacity
+buildingID
+unityID
+}
+
+class Mill{
+buildingID
+}
+
+class Garage{
+area
+buildingID
+unityID
+}
+
+class Plant{
+plantID
+name
+speciesID
+plantTypeID
+}
+
+class Product{
+plantID
+designation
+}
+
+class ParcelApplication{
+operationID
+parcelID
+productionFactorID
+modeID
+quantity
+}
+
+class ApplicationMode{
+modeID
+designation
+}
+
+class CropApplication{
+operationID
+modeID
+productionFactorID
+quantity
+}
+
+class Log{
+logID
+instant
+operationID
+}
+
+class Mobilization{
+operationID
+parcelID
+}
+
+class ProductionFactorApplication{
+revenueID
+operationID
+}
+
+class Revenue{
+revenueID
+}
+
+class PlantType{
+plantTypeID
+typeName
+}
+
+ProductionFactor "*" -- "1" Classification
+ProductionFactor "*" -- "1" FormulationType
+ProductionFactor "*" -- "1" Manufacturer
+ProductionFactor "*" -- "*" ApplicationType
+ProductionFactor "1" -- "1" Datasheet
+ProductionFactor "1" -- "*" ParcelApplication
+ProductionFactor "*" -- "*" Revenue
+ProductionFactor "1" -- "*" CropApplication
+
+Datasheet "*" -- "*" Component
+
+Species "1" -- "*" Plant
+
+Plant "1" -- "*" Product
+Plant "*" -- "1" PlantType
+Plant "1" -- "*" Crop
+
+Crop "*" -- "*" ParcelApplication
+
+Storage "1" -- "1" Building
+Garage "1" -- "1" Building
+Mill "1" -- "1" Building
+WateringSystem "1" -- "1" Building
+
+UnityOfMeasurement "1" -- "*" Storage
+UnityOfMeasurement "1" -- "*" Garage
+UnityOfMeasurement "1" -- "*" WateringSystem
+
+Operation "1" -- "*" Log
+Operation "1" -- "1" Mobilization
+Operation "1" -- "1" Incorporation
+Operation "1" -- "1" Watering
+Operation "1" -- "1" Pruning
+Operation "1" -- "1" Plantation
+Operation "1" -- "1" Weed
+Operation "1" -- "1" Sowing
+Operation "1" -- "1" CropApplication
+Operation "1" -- "1" Harvest
+Operation "1" --- "1" ParcelApplication
+
+ProductionFactorApplication "1" -- "1" Watering
+ProductionFactorApplication "1" -- "*" Revenue
+
+IrrigationSector "*" -- "1" Watering
+IrrigationSector "*" -- "1" DispersionTypes
+IrrigationSector "*" -- "*" AgriculturalParcel
+
+AgriculturalParcel "*" -- "*" Crop
+
+@enduml

@@ -159,5 +159,6 @@ public class Locality {
     public boolean isPromoted() {
         return isHub;
     }
+
 }
 

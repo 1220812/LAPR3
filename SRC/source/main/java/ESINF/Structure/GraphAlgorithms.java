@@ -366,7 +366,7 @@ public class GraphAlgorithms {
 
         return true;
     }
-    private static <V, E> void getPath(Graph<V, E> g, V vOrig, V vDest,
+    public static <V, E> void getPath(Graph<V, E> g, V vOrig, V vDest,
                                        V [] pathKeys, LinkedList<V> path) {
 
         if (vOrig.equals(vDest))
@@ -693,5 +693,72 @@ public class GraphAlgorithms {
 
         return true;
     }
+
+    public static <V,E> void shortestPathDijkstraOnAutonomy(Graph<V, E> g, E autonomy, V vOrig, Comparator<E> ce, BinaryOperator<E> sum,
+                                                            E zero, boolean[] visited, V[] pathKeys, E[] dist){
+        int vKey = g.key(vOrig);
+        dist[vKey] = zero;
+        pathKeys[vKey] = vOrig;
+
+        while (vOrig != null){
+            vKey = g.key(vOrig);
+            visited[vKey] = true;
+
+            for (Edge<V, E> edge : g.outgoingEdges(vOrig)) {
+                int vKeyAdj = g.key(edge.getVDest());
+                if(!visited[vKeyAdj]){
+                    E remainingAutonomy = sum.apply(autonomy, dist[vKey]);
+                    if(ce.compare(edge.getWeight(), remainingAutonomy) <= 0){
+                        E s = sum.apply(dist[vKey], edge.getWeight());
+                        if(dist[vKeyAdj] == null || ce.compare(dist[vKeyAdj], s) < 0){
+                            dist[vKeyAdj] = s;
+                            pathKeys[vKeyAdj] = vOrig;
+                        }
+                    }
+                }
+            }
+
+            E minDist = null;
+            vOrig = null;
+
+            for (V vert : g.vertices()) {
+                int i = g.key(vert);
+                if(!visited[i] && (dist[i] != null) && (minDist == null) || ce.compare(dist[i], minDist) <0){
+                    minDist = dist[i];
+                    vOrig = vert;
+                }
+            }
+        }
+    }
+    // Graph<V, E> g, V vOrig,
+    //                                               Comparator<E> ce, BinaryOperator<E> sum, E zero,
+    //                                               ArrayList<LinkedList<V>> paths, ArrayList<E> dists
+
+    public static <V, E> E shortestPathWithAutonomy(Graph<V, E> g, V vOrig, V vDest,
+                                                    Comparator<E> ce, BinaryOperator<E> sum, E zero,
+                                                    LinkedList<V> shortPath, E autonomy) {
+        if (!g.validVertex(vOrig) || !g.validVertex(vDest)) {
+            return null;
+        }
+
+        shortPath.clear();
+        int numVerts = g.numVertices();
+        boolean[] visited = new boolean[numVerts];
+        V[] pathKeys = (V[]) new Object[numVerts];
+        E[] dist = (E[]) new Object[numVerts];
+        initializePathDist(numVerts, pathKeys, dist);
+
+        shortestPathDijkstraOnAutonomy(g, autonomy, vOrig, ce, sum, zero, visited, pathKeys, dist);
+
+        E lengthPath = dist[g.key(vDest)];
+
+        if (lengthPath != null) {
+            getPath(g, vOrig, vDest, pathKeys, shortPath);
+            return lengthPath;
+        }
+
+        return null;
+}
+
 
 }

@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title US10 - System Sequence Diagram (SSD)
+
+autonumber
+
+actor "Product Owner" as PO
+participant ":System" as System
+
+activate PO
+
+PO -> System : I intend to simulate an irrigation system controller, modeling \nthe fertigation parameters using the information on a text file.
+activate System
+
+"System" --> PO: prints the results retrived from the file in the user interface and generates a text file
+
+deactivate System
+
+@enduml

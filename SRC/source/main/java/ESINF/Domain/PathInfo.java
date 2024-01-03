@@ -1,33 +1,39 @@
 package ESINF.Domain;
 
+import java.awt.*;
 import java.time.LocalTime;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
+
 /**
  * Represents information about a path, including total time, total distance,
  * and distances between localities.
  */
 public class PathInfo {
     private double totalDistance;
+    private LinkedList<Locality> path;
+    private List<Integer> chargements;
+    private Map<Locality, List<LocalTime>> arrivalTimes;
+    private boolean flag;
+    private Locality origin;
+    private Map<List<Locality>, String> info = new HashMap<>();
+    private TotalTime totalPathTime;
     private double totalTime;
     private int numberOfVehiclesCharges;
     private Map<LocalityPair, Integer> distancesBetweenLocalities;
-    /**
-     * Constructs a new PathInfo instance with the specified total time,
-     * total distance, and distances between localities.
-     *
-     * @param totalTime                 The total time of the path.
-     * @param totalDistance             The total distance of the path.
-     * @param distancesBetweenLocalities Distances between pairs of localities.
-     */
-    public PathInfo(double totalTime, double totalDistance, Map<LocalityPair, Integer> distancesBetweenLocalities){
-        this.totalTime = totalTime;
+
+    public PathInfo(double totalDistance, LinkedList<Locality> path, ArrayList<Integer> chargements, boolean flag){
         this.totalDistance = totalDistance;
-        this.distancesBetweenLocalities = distancesBetweenLocalities;
+        this.path = path;
+        this.chargements = chargements;
+        this.flag = flag;
     }
-    public PathInfo(double totalTime, double totalDistance, int numberOfVehiclesCharges){
-        this.totalTime = totalTime;
+    public PathInfo(double totalDistance, LinkedList<Locality> path, ArrayList<Integer> chargements, Map<Locality, List<LocalTime>> arrivalTimes, boolean flag){
         this.totalDistance = totalDistance;
-        this.numberOfVehiclesCharges = numberOfVehiclesCharges;
+        this.path = path;
+        this.chargements = chargements;
+        this.arrivalTimes = arrivalTimes;
+        this.flag = flag;
     }
 
     public PathInfo(double totalDistance, double totalTime) {
@@ -55,6 +61,30 @@ public class PathInfo {
         return numberOfVehiclesCharges;
     }
 
+    public Locality getOrigin() {
+        return origin;
+    }
+
+    public TotalTime getTotalPathTime() {
+        return totalPathTime;
+    }
+
+    public Map<List<Locality>, String> getInfo() {
+        return info;
+    }
+
+    public LinkedList<Locality> getPath() {
+        return path;
+    }
+
+    public List<Integer> getChargements() {
+        return chargements;
+    }
+
+    public Map<Locality, List<LocalTime>> getArrivalTimes() {
+        return arrivalTimes;
+    }
+
     /**
      * Sets
      */
@@ -72,5 +102,42 @@ public class PathInfo {
 
     public void setNumberOfVehiclesCharges(int numberOfVehiclesCharges) {
         this.numberOfVehiclesCharges = numberOfVehiclesCharges;
+    }
+
+    public void setOrigin(Locality origin) {
+        this.origin = origin;
+    }
+    public void setTotalPathTime(TotalTime totalPathTime) {
+        this.totalPathTime = totalPathTime;
+    }
+
+    public void setInfo(Map<List<Locality>, String> info) {
+        this.info = info;
+    }
+
+    public void setArrivalTimes(Map<Locality, List<LocalTime>> arrivalTimes) {
+        this.arrivalTimes = arrivalTimes;
+    }
+
+    public void setChargements(List<Integer> chargements) {
+        this.chargements = chargements;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+
+    public void setPath(LinkedList<Locality> path) {
+        this.path = path;
+    }
+    public boolean isFlag(boolean flag){
+        return flag;
+    }
+
+    @Override
+    public String toString() {
+        return "PathInfo{" +
+                ", info=" + info +
+                '}';
     }
 }
