@@ -1,6 +1,8 @@
 package java.ESINF.US06;
 
 import ESINF.Domain.Locality;
+import ESINF.Domain.LocalityPair;
+import ESINF.Domain.PathInfo;
 import ESINF.Domain.Vehicle;
 import ESINF.FileReader.ReaderFiles;
 import ESINF.Structure.MapGraph;
@@ -13,8 +15,9 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DifferentRoutesFinderTest {
 
@@ -72,6 +75,22 @@ public class DifferentRoutesFinderTest {
     @Test
     void testRoutes() {
 
+        DifferentRoutesFinder routesFinder = new DifferentRoutesFinder();
+        NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
+        HubDefiner hubDefiner = new HubDefiner();
+        MapGraph<Locality, Integer> graph = networkBuilder.getDistribution();
+        int numberOfHubs = 5;
+        graph = networkBuilder.getDistribution();
+        hubDefiner.defineHubs(graph, numberOfHubs);
 
+
+        Vehicle vehicle = new Vehicle("1", 50, 600);
+        Locality origin = graph.vertex(10);
+        Locality destination = graph.vertex(20);
+
+
+        TreeMap<LocalityPair, PathInfo> result = routesFinder.routes(origin, destination, vehicle);
+
+        assertNotNull(result);
     }
 }

@@ -5,7 +5,6 @@ import LAPR.Interface.dataAccess.DatabaseConnection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -40,7 +39,7 @@ public class Main {
     private static void loadProperties() throws IOException{
         Properties properties = new Properties(System.getProperties());
 
-        InputStream inputStream = new Main().getClass().getClassLoader().getResource("SRC/source/main/resources/application.properties").openStream();
+        InputStream inputStream = new Main().getClass().getClassLoader().getResource("application.properties").openStream();
 
         if(inputStream != null){
             properties.load(inputStream);
