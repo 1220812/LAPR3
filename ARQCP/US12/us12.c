@@ -16,7 +16,7 @@ void processSensorData(FILE *outputFile, const char *fileName) {
     FILE *file = fopen(fileName, "r");
 
     if (file == NULL) {
-        fprintf(stderr, "Erro ao abrir o arquivo %s\n", fileName);
+        fprintf(stderr, "Error opening the file %s\n", fileName);
         return;
     }
 
@@ -33,7 +33,7 @@ void processSensorData(FILE *outputFile, const char *fileName) {
             fprintf(outputFile, "Sensor ID: %d, Type: %s, Unidade: %s, Valor: %.2f\n",
                     sensor.sensorId, sensor.type, sensor.unit, sensor.value);
         } else {
-            fprintf(stderr, "Erro ao ler a linha: %s\n", line);
+            fprintf(stderr, "Error reading line: %s\n", line);
         }
     }
 
@@ -44,7 +44,7 @@ int main() {
     FILE *outputFile = fopen("output.txt", "w");
 
     if (outputFile == NULL) {
-        fprintf(stderr, "Erro ao criar o arquivo de saída.\n");
+        fprintf(stderr, "Error creating output file.\n");
         return 1;
     }
 
