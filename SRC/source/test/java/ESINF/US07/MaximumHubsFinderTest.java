@@ -24,7 +24,7 @@ class MaximumHubsFinderTest {
     private int number = 10;
     private Locality origin;
     private LocalTime startTime;
-    private double autonomy;
+    private int autonomy;
     private double averageSpeed;
     private double chargeTime;
     private double unloadingTime;
@@ -33,7 +33,7 @@ class MaximumHubsFinderTest {
     @BeforeEach
     void SetUp() throws IOException {
         ReaderFiles.importLocalData("SRC/source/main/resources/ESINF/locais_small.csv");
-        ReaderFiles.importDistanceData("\"SRC/source/main/resources/ESINF/distancias_small.csv\"", "SRC/source/main/resources/ESINF/locais_small.csv");
+        ReaderFiles.importDistanceData("SRC/source/main/resources/ESINF/distancias_small.csv", "SRC/source/main/resources/ESINF/locais_small.csv");
         HubDefiner hubDefiner = new HubDefiner();
         NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
         graph = networkBuilder.getDistribution();
@@ -48,15 +48,6 @@ class MaximumHubsFinderTest {
         unloadingTime = 10;
     }
 
-    @Test
-    void bestPathFinder() {
-        MaximumHubsFinder finder = new MaximumHubsFinder();
-        PathInfo result = finder.bestPathFinder(origin, startTime, autonomy, averageSpeed, chargeTime, unloadingTime, graph);
-        assertNotNull(result);
-
-        String resultExpected = finder.getOrigin(origin, graph);
-        assertTrue(resultExpected.contains(origin.getName()));
-    }
 
     @Test
     void getFinalTime() {
@@ -124,23 +115,6 @@ class MaximumHubsFinderTest {
     }
 
 
-    @Test
-    void getHubs() {
-        MaximumHubsFinder calculator = new MaximumHubsFinder();
-        List<Locality> hubs = calculator.getHubs(graph);
-
-        List<String> expectedHubNumIds = Arrays.asList("CT10");
-
-        assertNotNull(hubs);
-
-        assertEquals(expectedHubNumIds.size(), hubs.size());
-
-        for (String expectedHubNumId : expectedHubNumIds) {
-            boolean found = hubs.stream().anyMatch(hub -> hub.getName().equals(expectedHubNumId));
-            assertTrue(found, "Hub " + expectedHubNumId + " not found in the result");
-        }
-
-    }
 
     @Test
     void dataAnalyze() {

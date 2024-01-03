@@ -30,7 +30,8 @@ public class MaximumHubsFinder {
         }
         return stringBuilder.toString();
     }
-    public static PathInfo bestPathFinder(Locality origin, LocalTime startTime, double autonomy, double averageSpeed, double chargeTime, double unloadingTime, MapGraph<Locality, Integer> graph) {
+    public static PathInfo bestPathFinder(Locality origin, LocalTime startTime, int autonomy, double averageSpeed,
+                                          double chargeTime, double unloadingTime, MapGraph<Locality, Integer> graph) {
         int numberOfOpenHubs = 0;
         Locality locality = origin;
         LocalTime hour = startTime, remainingTime = LocalTime.of(0, 0), inicialHour = startTime;
@@ -42,7 +43,7 @@ public class MaximumHubsFinder {
             for (Locality hub : getHubs(graph)) {
                 if (!visitedLocalities.contains(hub)) {
                     LinkedList<Locality> donePath = new LinkedList<>();
-                    //GraphAlgorithms.shortestPathWithAutonomy(graph, origin, hub, Comparator.naturalOrder(), Integer::sum, 0, donePath, autonomy);
+                    GraphAlgorithms.shortestPathWithAutonomy(graph, origin, hub, Comparator.naturalOrder(), Integer::sum, 0, donePath, autonomy);
                     if (getFinalTime(donePath, inicialHour, autonomy, averageSpeed, chargeTime, unloadingTime,
                             getAllHubsOnPath(donePath, visitedLocalities).size(), graph).isBefore(hub.getSchedules().getClosing()) &&
                             getFinalTime(donePath, inicialHour, autonomy, averageSpeed, chargeTime, unloadingTime,
@@ -124,9 +125,9 @@ public class MaximumHubsFinder {
     public static LocalTime minusTime (LocalTime time, LocalTime time2){
         return time.minusHours(time2.getHour()).minusMinutes(time2.getMinute());
     }
-    public static Map<Locality, List<LocalTime>> getTimeTable (PathInfo pathInfo, LocalTime startTime, double averageSpeed, double chargeTime, double unloadingTime, MapGraph<Locality, Integer> graph){
+    public static Map<Locality, List<LocalTime>> getTimeTable (PathInfo pathInfo, LocalTime startTime, double averageSpeed,
+                                                               double chargeTime, double unloadingTime, MapGraph<Locality, Integer> graph){
         Map<Locality, List<LocalTime>> timeTable = new LinkedHashMap<>();
-
         for (int i = 1 ; i < pathInfo.getPath().size() ; i++) {
             LocalTime end = getFinalTimeOnRoute(graph.edge(pathInfo.getPath().get(i - 1), pathInfo.getPath().get(i)).getWeight(), averageSpeed, startTime);
             List<LocalTime> hoursList = new ArrayList<>();
