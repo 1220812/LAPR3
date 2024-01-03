@@ -25,7 +25,7 @@ public class FindCircuitForProducer {
         System.out.println("#### US08 ####");
 
 
-        Locality origin = graph.vertices().get(1);
+        Locality origin = graph.vertices().get(0);
 
         Locality firstEnd = firstPath(origin);
 
@@ -36,7 +36,9 @@ public class FindCircuitForProducer {
 
         System.out.println();
 
-        System.out.println("Total Distance: " + totalDistance);
+
+
+        System.out.println("\u001B[31mTotal Distance: \u001B[0m" + totalDistance);
 
         double time = calculateTime(totalDistance, VM);
         System.out.println("Time: " + time + " horas");
@@ -69,19 +71,13 @@ public class FindCircuitForProducer {
                     }
                 }
             }
-
             System.out.println(currentLocation.getName() + " -> " + maxLocal.getName());
             System.out.println(" Distance: " + graph.edge(maxLocal, currentLocation).getWeight());
             totalDistance = totalDistance + graph.edge(maxLocal, currentLocation).getWeight();
-
-
             currentLocation = maxLocal;
             counter++;
             alreadyPassed.add(currentLocation);
-
         }
-
-
         System.out.println("------------------------------------");
         return maxLocal;
     }
@@ -105,7 +101,6 @@ public class FindCircuitForProducer {
 
             trajetory.add(new Trajetory(start, local, distanceBeetween));
             start = local;
-
 
         }
         for (int i = 0; i < trajetory.size(); i++) {
