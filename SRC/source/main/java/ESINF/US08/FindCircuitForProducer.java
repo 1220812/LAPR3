@@ -14,13 +14,18 @@ import java.util.List;
 public class FindCircuitForProducer {
     private static final int N = 5;
     private static final double VM = 60;
+    private static final double AUTONOMY = 300;
     NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
     MapGraph<Locality, Integer> graph = networkBuilder.getDistribution();
 
     double totalDistance = 0;
 
     public void runUS08() {
-        Locality origin = graph.vertices().get(0);
+
+        System.out.println("#### US08 ####");
+
+
+        Locality origin = graph.vertices().get(1);
 
         Locality firstEnd = firstPath(origin);
 
@@ -35,6 +40,9 @@ public class FindCircuitForProducer {
 
         double time = calculateTime(totalDistance, VM);
         System.out.println("Time: " + time + " horas");
+        totalDistance = totalDistance / 1000;
+        System.out.println("Number of Chargers= " + calculateNrCharges(totalDistance, AUTONOMY));
+
     }
 
     public Locality firstPath(Locality currentLocation) {
@@ -62,7 +70,7 @@ public class FindCircuitForProducer {
                 }
             }
 
-            System.out.print(currentLocation.getName() + " -> " + maxLocal.getName());
+            System.out.println(currentLocation.getName() + " -> " + maxLocal.getName());
             System.out.println(" Distance: " + graph.edge(maxLocal, currentLocation).getWeight());
             totalDistance = totalDistance + graph.edge(maxLocal, currentLocation).getWeight();
 
@@ -72,6 +80,7 @@ public class FindCircuitForProducer {
             alreadyPassed.add(currentLocation);
 
         }
+
 
         System.out.println("------------------------------------");
         return maxLocal;
@@ -92,23 +101,35 @@ public class FindCircuitForProducer {
 
             Double distanceBeetween = Double.valueOf(graph.edge(start, local).getWeight());
             totalDistance = totalDistance + graph.edge(start, local).getWeight();
-            trajetory.add( new Trajetory(start, local, distanceBeetween));
+
+
+            trajetory.add(new Trajetory(start, local, distanceBeetween));
             start = local;
 
 
         }
-        for (int i = 0; i <trajetory.size() ; i++) {
+        for (int i = 0; i < trajetory.size(); i++) {
             System.out.println(trajetory.get(i).toString());
         }
-
         System.out.println("------------------------------------");
         return trajetory;
     }
 
     public double calculateTime(double totalDistance, double VM) {
         double totalDistanceInKm;
-        totalDistanceInKm = totalDistance / 1000;
-        return (totalDistanceInKm) / VM;
+        totalDistanceInKm = totalDistance / 1000.00;
+        return (totalDistanceInKm / VM);
+    }
+
+    public int calculateNrCharges(double totalDistance, double AUTONOMY) {
+        int nrCharges = (int) (totalDistance / AUTONOMY);
+        double nrChargesDouble = totalDistance / AUTONOMY;
+
+        if (nrChargesDouble > nrCharges) {
+            nrCharges++;
+        }
+
+        return nrCharges;
     }
 
 }

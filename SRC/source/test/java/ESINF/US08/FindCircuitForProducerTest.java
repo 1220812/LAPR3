@@ -311,5 +311,24 @@ public class FindCircuitForProducerTest {
         assertEquals(100, findCircuitProducer.calculateTime(totalDistance2, VM2));
         assertEquals(61.728, findCircuitProducer.calculateTime(totalDistance3, VM3));
     }
+
+    @Test
+    void calculateNumberOfChargers() {
+
+        double totalDistance = 500;
+        double totalDistance2 = 100;
+        double totalDistance3 = 123;
+
+
+        double AUTONOMY = 300;
+        double AUTONOMY2 = 100;
+        double AUTONOMY3 = 200;
+
+
+        assertEquals(2, findCircuitProducer.calculateNrCharges(totalDistance, AUTONOMY));
+        assertEquals(1, findCircuitProducer.calculateNrCharges(totalDistance2, AUTONOMY2));
+        assertEquals(1, findCircuitProducer.calculateNrCharges(totalDistance3, AUTONOMY3));
+
+    }
 }
 
