@@ -15,10 +15,12 @@ import java.util.function.BinaryOperator;
 public class OrganizeClustersWithHubs {
 
     NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
-
-    public MapGraph<Locality, Integer> getGraph() {
+    /*
+    public Graph<Locality, Double> getGraph() {
         return networkBuilder.getDistribution();
     }
+
+     */
 
     public static boolean formClusters(Graph<Locality, Double> g, int desiredNumClusters) {
 
@@ -59,7 +61,7 @@ public class OrganizeClustersWithHubs {
     }
 
 
-    private static boolean canRemoveEdge(Graph<Locality, Double> g, Edge<Locality, Double> edge) {
+    static boolean canRemoveEdge(Graph<Locality, Double> g, Edge<Locality, Double> edge) {
         Graph<Locality, Double> clone = g.clone();
         clone.removeEdge(edge.getVOrig(), edge.getVDest());
         List<Set<Locality>> clusters = getClusters(clone);
