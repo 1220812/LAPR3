@@ -13,14 +13,10 @@ import java.util.*;
 import java.util.function.BinaryOperator;
 
 public class OrganizeClustersWithHubs {
-
     NetworkBuilder networkBuilder = NetworkBuilder.getInstance();
-
     public MapGraph<Locality, Integer> getGraph() {
         return networkBuilder.getDistribution();
     }
-
-
 
     public static boolean formClusters(Graph<Locality, Double> g, int desiredNumClusters) {
 
@@ -40,8 +36,7 @@ public class OrganizeClustersWithHubs {
                 break;
             }
         }
-        return true;
-    }
+        return true;}
 
 
     public static List<Set<Locality>> getClusters(Graph<Locality, Double> g) {
@@ -59,8 +54,6 @@ public class OrganizeClustersWithHubs {
         }
         return clusters;
     }
-
-
     static boolean canRemoveEdge(Graph<Locality, Double> g, Edge<Locality, Double> edge) {
         Graph<Locality, Double> clone = g.clone();
         clone.removeEdge(edge.getVOrig(), edge.getVDest());
@@ -82,8 +75,6 @@ public class OrganizeClustersWithHubs {
         }
         return false;
     }
-
-
     public static void calculateEdgeBetweenness(Graph<Locality, Double> g, Map<Edge<Locality, Double>, Integer> edgeBetweenness) {
         Comparator<Double> ce = Comparator.naturalOrder();
         BinaryOperator<Double> sum = Double::sum;
@@ -95,16 +86,12 @@ public class OrganizeClustersWithHubs {
             if (reverseEdge != null && !edgeBetweenness.containsKey(reverseEdge)) {
                 edgeBetweenness.putIfAbsent(edge, 0);
             }
-
-
         }
-
         for (int i = 0; i < numVertices; i++) {
             Locality source = vertices.get(i);
             ArrayList<LinkedList<Locality>> allPaths = new ArrayList<>();
             ArrayList<Double> allDists = new ArrayList<>();
             GraphAlgorithms.shortestPathsUS09(g, source, ce, sum, 0.0, allPaths, allDists);
-
             for (int j = i + 1; j < numVertices; j++) {
                 LinkedList<Locality> path = allPaths.get(j);
                 if (path != null && path.size() > 1) {
@@ -136,8 +123,6 @@ public class OrganizeClustersWithHubs {
         Edge<Locality, Double> reverseEdge = g.edge(v2, v1);
         return (directEdge != null) ? directEdge : reverseEdge;
     }
-
-
     public static Edge<Locality, Double> getEdgeWithHighestBetweenness(Map<Edge<Locality, Double>, Integer> edgeBetweenness) {
         Edge<Locality, Double> maxEdge = null;
         int maxBetweenness = -1;
@@ -146,11 +131,9 @@ public class OrganizeClustersWithHubs {
         for (Map.Entry<Edge<Locality, Double>, Integer> entry : edgeBetweenness.entrySet()) {
             Edge<Locality, Double> edge = entry.getKey();
             int betweenness = entry.getValue();
-
             String v1Name = edge.getVOrig().toString();
             String v2Name = edge.getVDest().toString();
             String edgeName = v1Name.compareTo(v2Name) < 0 ? v1Name + v2Name : v2Name + v1Name;
-
             if (betweenness > maxBetweenness || (betweenness == maxBetweenness && (minEdgeName == null || edgeName.compareTo(minEdgeName) < 0))) {
                 maxEdge = edge;
                 maxBetweenness = betweenness;
