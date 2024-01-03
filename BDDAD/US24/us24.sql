@@ -1,0 +1,7 @@
+CREATE OR REPLACE TRIGGER data_Criacao
+BEFORE INSERT ON Operation
+FOR EACH ROW
+BEGIN
+    :NEW.operationDate := CURRENT_TIMESTAMP;
+END;
+/
