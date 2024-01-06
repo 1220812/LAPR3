@@ -25,10 +25,7 @@ public class MainMenuUI implements Runnable {
         options.add(new MenuItem(ANSI_GREEN + ANSI_BOLD+ "Do Login" +ANSI_RESET , new AuthenticationUI()));
         options.add(new MenuItem(ANSI_GREEN+ANSI_BOLD +"Database Connection Test" +ANSI_RESET, new DatabaseConnectionTestUI()));
         options.add(new MenuItem(ANSI_GREEN+ANSI_BOLD+ "Exit" + ANSI_RESET, new ExitUI()));
-
-
-
-
+        options.add(new MenuItem(ANSI_GREEN+ANSI_BOLD+ "ESINF" + ANSI_RESET, new ESINF_UI()));
 
         int option = 0;
         do {

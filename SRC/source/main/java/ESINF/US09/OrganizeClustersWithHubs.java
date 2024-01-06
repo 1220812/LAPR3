@@ -18,15 +18,15 @@ public class OrganizeClustersWithHubs {
         return networkBuilder.getDistribution();
     }
 
-    public static boolean formClusters(Graph<Locality, Double> g, int desiredNumClusters) {
+    public static boolean formClusters(Graph<Locality, Integer> g, int desiredNumClusters) {
 
-        Map<Edge<Locality, Double>, Integer> edgeBetweenness = new HashMap<>();
+        Map<Edge<Locality, Integer>, Integer> edgeBetweenness = new HashMap<>();
         calculateEdgeBetweenness(g, edgeBetweenness);
-        if(HubDefiner.numHubs((MapGraph<Locality, Double>) g)<desiredNumClusters){
+        if(HubDefiner.numHubs((MapGraph<Locality, Integer>) g)<desiredNumClusters){
             return false;
         }
         while (getClusters(g).size() < desiredNumClusters) {
-            Edge<Locality, Double> edgeToRemove = getEdgeWithHighestBetweenness(edgeBetweenness);
+            Edge<Locality, Integer> edgeToRemove = getEdgeWithHighestBetweenness(edgeBetweenness);
             if (edgeToRemove != null) {
                 edgeBetweenness.remove(edgeToRemove);
                 if (canRemoveEdge(g, edgeToRemove)) {
@@ -39,7 +39,7 @@ public class OrganizeClustersWithHubs {
         return true;}
 
 
-    public static List<Set<Locality>> getClusters(Graph<Locality, Double> g) {
+    public static List<Set<Locality>> getClusters(Graph<Locality, Integer> g) {
         boolean[] visited = new boolean[g.numVertices()];
         List<Set<Locality>> clusters = new ArrayList<>();
 
@@ -54,8 +54,8 @@ public class OrganizeClustersWithHubs {
         }
         return clusters;
     }
-    static boolean canRemoveEdge(Graph<Locality, Double> g, Edge<Locality, Double> edge) {
-        Graph<Locality, Double> clone = g.clone();
+    static boolean canRemoveEdge(Graph<Locality, Integer> g, Edge<Locality, Integer> edge) {
+        Graph<Locality, Integer> clone = g.clone();
         clone.removeEdge(edge.getVOrig(), edge.getVDest());
         List<Set<Locality>> clusters = getClusters(clone);
         for (Set<Locality> cluster : clusters) {
@@ -75,14 +75,14 @@ public class OrganizeClustersWithHubs {
         }
         return false;
     }
-    public static void calculateEdgeBetweenness(Graph<Locality, Double> g, Map<Edge<Locality, Double>, Integer> edgeBetweenness) {
-        Comparator<Double> ce = Comparator.naturalOrder();
-        BinaryOperator<Double> sum = Double::sum;
+    public static void calculateEdgeBetweenness(Graph<Locality, Integer> g, Map<Edge<Locality, Integer>, Integer> edgeBetweenness) {
+        Comparator<Integer> ce = Comparator.naturalOrder();
+        BinaryOperator<Integer> sum = Integer::sum;
         List<Locality> vertices = g.vertices();
         int numVertices = vertices.size();
 
-        for (Edge<Locality, Double> edge : g.edges()) {
-            Edge<Locality, Double> reverseEdge = g.edge(edge.getVDest(), edge.getVOrig());
+        for (Edge<Locality, Integer> edge : g.edges()) {
+            Edge<Locality, Integer> reverseEdge = g.edge(edge.getVDest(), edge.getVOrig());
             if (reverseEdge != null && !edgeBetweenness.containsKey(reverseEdge)) {
                 edgeBetweenness.putIfAbsent(edge, 0);
             }
@@ -90,8 +90,8 @@ public class OrganizeClustersWithHubs {
         for (int i = 0; i < numVertices; i++) {
             Locality source = vertices.get(i);
             ArrayList<LinkedList<Locality>> allPaths = new ArrayList<>();
-            ArrayList<Double> allDists = new ArrayList<>();
-            GraphAlgorithms.shortestPathsUS09(g, source, ce, sum, 0.0, allPaths, allDists);
+            ArrayList<Integer> allDists = new ArrayList<>();
+            GraphAlgorithms.shortestPathsUS09(g, source, ce, sum, 0, allPaths, allDists);
             for (int j = i + 1; j < numVertices; j++) {
                 LinkedList<Locality> path = allPaths.get(j);
                 if (path != null && path.size() > 1) {
@@ -100,8 +100,8 @@ public class OrganizeClustersWithHubs {
 
                     while (it.hasNext()) {
                         Locality v2 = it.next();
-                        Edge<Locality, Double> edge = g.edge(v1, v2);
-                        Edge<Locality, Double> reverseEdge = g.edge(v2, v1);
+                        Edge<Locality, Integer> edge = g.edge(v1, v2);
+                        Edge<Locality, Integer> reverseEdge = g.edge(v2, v1);
 
                         if (edge != null) {
                             if (edgeBetweenness.containsKey(reverseEdge)) {
@@ -118,18 +118,18 @@ public class OrganizeClustersWithHubs {
     }
 
 
-    private static Edge<Locality, Double> normalizeEdge(Graph<Locality, Double> g, Locality v1, Locality v2) {
-        Edge<Locality, Double> directEdge = g.edge(v1, v2);
-        Edge<Locality, Double> reverseEdge = g.edge(v2, v1);
+    private static Edge<Locality, Integer> normalizeEdge(Graph<Locality, Integer> g, Locality v1, Locality v2) {
+        Edge<Locality, Integer> directEdge = g.edge(v1, v2);
+        Edge<Locality, Integer> reverseEdge = g.edge(v2, v1);
         return (directEdge != null) ? directEdge : reverseEdge;
     }
-    public static Edge<Locality, Double> getEdgeWithHighestBetweenness(Map<Edge<Locality, Double>, Integer> edgeBetweenness) {
-        Edge<Locality, Double> maxEdge = null;
+    public static Edge<Locality, Integer> getEdgeWithHighestBetweenness(Map<Edge<Locality, Integer>, Integer> edgeBetweenness) {
+        Edge<Locality, Integer> maxEdge = null;
         int maxBetweenness = -1;
         String minEdgeName = null;
 
-        for (Map.Entry<Edge<Locality, Double>, Integer> entry : edgeBetweenness.entrySet()) {
-            Edge<Locality, Double> edge = entry.getKey();
+        for (Map.Entry<Edge<Locality, Integer>, Integer> entry : edgeBetweenness.entrySet()) {
+            Edge<Locality, Integer> edge = entry.getKey();
             int betweenness = entry.getValue();
             String v1Name = edge.getVOrig().toString();
             String v2Name = edge.getVDest().toString();
@@ -158,7 +158,7 @@ public class OrganizeClustersWithHubs {
     }
 
 
-    public static Map<Locality, List<Locality>> formClustersAndMapHubs(Graph<Locality, Double> g, int desiredNumClusters) {
+    public static Map<Locality, List<Locality>> formClustersAndMapHubs(Graph<Locality, Integer> g, int desiredNumClusters) {
         boolean clustersFormed = formClusters(g, desiredNumClusters);
         if (!clustersFormed) {
             return null;

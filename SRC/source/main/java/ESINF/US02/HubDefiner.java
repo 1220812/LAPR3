@@ -105,7 +105,7 @@ public class HubDefiner {
         }
         return topNHubs;
     }
-    public static int numHubs(MapGraph<Locality, Double> graph) {
+    public static int numHubs(MapGraph<Locality, Integer> graph) {
         int count = 0;
         for (Locality vertex : graph.vertices()) {
             if (vertex.getHub()) {

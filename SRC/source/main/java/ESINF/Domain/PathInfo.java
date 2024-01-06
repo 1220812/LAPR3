@@ -136,8 +136,16 @@ public class PathInfo {
 
     @Override
     public String toString() {
-        return "PathInfo{" +
-                ", info=" + info +
-                '}';
+        return "PathInfo : " + "\n" +
+                "totalDistance =" + totalDistance +
+                ", path = " + path +
+                ", chargements =" + chargements +
+                ", arrivalTimes =" + arrivalTimes +
+                ", origin = " + origin +
+                ", info = " + info +
+                ", totalPathTime = " + totalPathTime +
+                ", totalTime = " + totalTime +
+                ", numberOfVehiclesCharges = " + numberOfVehiclesCharges +
+                ", distancesBetweenLocalities = " + distancesBetweenLocalities;
     }
 }

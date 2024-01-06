@@ -30,7 +30,7 @@ public class DifferentRoutesFinder {
         return totalDistance;
     }
 
-    public TreeMap<LocalityPair, PathInfo> routes(Locality origin, Locality hub, Vehicle vehicle) {
+    public TreeMap<LocalityPair, PathInfo> routes(Locality origin, Locality hub, Vehicle vehicle, MapGraph<Locality, Integer> graph1) {
         TreeMap<LocalityPair, PathInfo> result = new TreeMap<>();
 
         // Find all paths using the dfsAlgorithm method

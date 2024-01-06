@@ -193,7 +193,7 @@ public class MaximumHubsFinder {
         boolean flag = true;
         double distance = 0, battery = autonomy;
         if(path1 != null){
-            for (int i = 0; i < path1.size(); i++) {
+            for (int i = 0; i < path1.size() - 1; i++) {
                 double distanceBetweenHubs = graph.edge(path1.get(i), path1.get(i + 1)).getWeight();
                 distance += distanceBetweenHubs;
                 if(distanceBetweenHubs / 1000 > battery){

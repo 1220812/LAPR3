@@ -39,7 +39,7 @@ public class Main {
     private static void loadProperties() throws IOException{
         Properties properties = new Properties(System.getProperties());
 
-        InputStream inputStream = new Main().getClass().getClassLoader().getResource("application.properties").openStream();
+        InputStream inputStream = new Main().getClass().getClassLoader().getResource("SRC/source/main/resources/application.properties").openStream();
 
         if(inputStream != null){
             properties.load(inputStream);

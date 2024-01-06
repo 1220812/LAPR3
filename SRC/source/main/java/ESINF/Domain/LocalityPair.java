@@ -6,7 +6,7 @@ import java.util.Objects;
  * Instances of this class are immutable.
  */
 
-public class LocalityPair {
+public class LocalityPair implements Comparable<LocalityPair>{
     /**
      * The first locality in the pair.
      */
@@ -61,6 +61,7 @@ public class LocalityPair {
         LocalityPair that = (LocalityPair) o;
         return Objects.equals(locality1, that.locality1) && Objects.equals(locality2, that.locality2);
     }
+
     /**
      * Generates a hash code for this LocalityPair.
      * The hash code is based on the hash codes of the localities,
@@ -71,5 +72,22 @@ public class LocalityPair {
     @Override
     public int hashCode() {
         return Objects.hash(locality1, locality2);
+    }
+
+    @Override
+    public int compareTo(LocalityPair other) {
+        int originComparison = this.locality1.getName().compareTo(other.locality1.getName());
+        if (originComparison != 0) {
+            return originComparison;
+        }
+
+        return this.locality2.getName().compareTo(other.locality2.getName());
+    }
+
+    @Override
+    public String toString() {
+        return "LocalityPair : " +
+                "locality1 = " + locality1 +
+                ", locality2 = " + locality2;
     }
 }

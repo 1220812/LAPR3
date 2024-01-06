@@ -668,15 +668,17 @@ public class GraphAlgorithms {
         while (!queue.isEmpty()) {
             Pair<V, E> pair = queue.poll();
             V vertex = pair.getFirst();
-            if (!visited[g.key(vertex)]) {
-                visited[g.key(vertex)] = true;
+            int vKey = g.key(vertex);
+            if (!visited[vKey]) {
+                visited[vKey] = true;
                 for (Edge<V, E> edge : g.outgoingEdges(vertex)) {
                     V neighbor = edge.getVDest();
-                    if (!visited[g.key(neighbor)]) {
-                        E newDist = sum.apply(dists.get(g.key(vertex)), edge.getWeight());
-                        if (ce.compare(newDist, dists.get(g.key(neighbor))) < 0) {
-                            dists.set(g.key(neighbor), newDist);
-                            pathKeys[g.key(neighbor)] = g.key(vertex);
+                    int neighborKey = g.key(neighbor);
+                    if (!visited[neighborKey]) {
+                        E newDist = sum.apply(dists.get(vKey), edge.getWeight());
+                        if (ce.compare(newDist, dists.get(neighborKey)) < 0) {
+                            dists.set(neighborKey, newDist);
+                            pathKeys[neighborKey] = vKey;
                             queue.add(new Pair<>(neighbor, newDist));
                         }
                     }
@@ -723,7 +725,7 @@ public class GraphAlgorithms {
 
             for (V vert : g.vertices()) {
                 int i = g.key(vert);
-                if(!visited[i] && (dist[i] != null) && (minDist == null) || ce.compare(dist[i], minDist) <0){
+                if (!visited[i] && (dist[i] != null) && ((minDist == null) || ce.compare(dist[i], minDist) < 0)) {
                     minDist = dist[i];
                     vOrig = vert;
                 }
